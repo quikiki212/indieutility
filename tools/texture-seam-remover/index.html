@@ -3,14 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
     <title>Texture Seam Remover | IndieUtility</title>
+    <meta name="description" content="Tile and fix texture seams by blending opposite edges. Preview as a 3x3 grid and export a tiled texture.">
+    <link rel="canonical" href="https://indieutility.com/tools/texture-seam-remover/">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <script src="/assets/site-header.js?v=tools-3" defer></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        .preview-card { min-height: 220px; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-850 min-h-screen flex flex-col font-sans antialiased">
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-7 bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50"></header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <section class="mb-8">
+            <div class="max-w-3xl">
+                <p class="text-sm uppercase tracking-widest text-indigo-600 font-bold">Design Tools</p>
+                <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold text-gray-900">Texture Seam Remover</h1>
+                <p class="mt-4 text-base text-gray-600">Import a texture, preview tiled 3x3, and blend seams to create seamless patterns for web or game assets.</p>
+            </div>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-[1.5fr_1fr] mb-8">
+            <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
                 <h1 class="text-2xl font-extrabold text-gray-900">Texture Seam Remover</h1>
                 <p class="mt-2 text-sm text-gray-600">Import a texture and tile it into a 3x3 preview. Adjust seam width to blend opposite edges and remove visible seams.</p>
 
@@ -31,9 +50,9 @@
                 </div>
 
                 <div class="mt-6 text-sm text-gray-500">Tip: Use a small seam width (4-16px) for photographic textures; larger widths may blur details.</div>
-            </div>
 
-            <div class="lg:col-span-5 bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+            </article>
+            <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
                 <h2 class="text-sm font-semibold text-gray-800 mb-2">Preview</h2>
                 <div class="mb-3">
                     <canvas id="tile-canvas" width="256" height="256" class="w-full border rounded"></canvas>
@@ -53,8 +72,8 @@
                     /* reveal processed tiles on preview hover */
                     .group:hover #after-wrapper { opacity: 1 !important; }
                 </style>
-            </div>
-        </div>
+            </article>
+        </section>
     </main>
 
     <footer class="bg-gray-900 text-gray-400 mt-8 border-t border-gray-800">
