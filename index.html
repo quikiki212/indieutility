@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Primary SEO Metadata -->
-    <title>Free YouTube Transcript Cleaner & Formatter | Advanced Overlap Deduplication</title>
-    <meta name="description" content="Fix duplicate, repeating words from YouTube rolling auto-captions. Clean, stitch overlaps, and format raw YouTube transcripts client-side with complete privacy.">
-    <meta name="keywords" content="youtube transcript duplicate words, youtube rolling captions fix, transcript cleaner, format youtube transcript, remove timestamps youtube">
-    <meta name="author" content="YouTube Transcript Tool">
-    <link rel="canonical" href="https://yourdomain.com/">
+    <title>IndieUtility | Free, Privacy-First Creator & Developer Tools</title>
+    <meta name="description" content="A curated suite of free, client-side web tools. Clean YouTube transcripts, validate JSON, write markdown, and generate CSS layout parameters securely inside your browser.">
+    <meta name="keywords" content="indie utility, free web tools, developer tools, youtube transcript cleaner, json formatter, css glassmorphism, markdown editor, client-side tools">
+    <meta name="author" content="IndieUtility">
+    <link rel="canonical" href="http://indieutility.com/">
 
-    <!-- Pre-compiled, Production-Ready CSS -->
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://indieutility.com/">
+    <meta property="og:title" content="IndieUtility | Free, Privacy-First Creator & Developer Tools">
+    <meta property="og:description" content="Lightning-fast web tools built with 100% local client-side privacy. Clean transcripts, validate JSON, optimize SVGs, and more.">
+    <meta property="og:image" content="http://indieutility.com/og-landing.png">
+
+    <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 
     <!-- Schema.org JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "YouTube Transcript Cleaner & Formatter",
-      "description": "An online utility designed to stitch rolling caption overlaps and format raw transcripts inside the client browser.",
-      "url": "https://yourdomain.com",
-      "applicationCategory": "UtilityApplication",
-      "operatingSystem": "All",
-      "browserRequirements": "Requires JavaScript. Requires HTML5.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0.00",
-        "priceCurrency": "USD"
+      "@type": "WebSite",
+      "name": "IndieUtility",
+      "url": "http://indieutility.com/",
+      "description": "A curated collection of privacy-focused developer and creator utilities running entirely in the client's browser.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://indieutility.com/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
       }
     }
     </script>
@@ -54,376 +58,152 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+<body class="bg-gray-50 text-gray-850 min-h-screen flex flex-col font-sans antialiased">
 
     <!-- Top Navigation Bar -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
+            
+            <!-- Logo -->
+            <a href="http://indieutility.com/" class="flex items-center space-x-3 focus:outline-none">
                 <div class="bg-indigo-600 text-white p-2 rounded-lg flex items-center justify-center shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                     </svg>
                 </div>
                 <div>
-                    <span class="text-xl font-bold text-gray-900 tracking-tight">Transcript<span class="text-indigo-600">Cleaner</span></span>
-                    <span class="hidden sm:inline-block ml-2 text-xs font-semibold px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded-full">v1.6</span>
+                    <span class="text-xl font-bold text-gray-900 tracking-tight">Indie<span class="text-indigo-600">Utility</span></span>
                 </div>
+            </a>
+
+            <!-- Dropdown Menu and Links -->
+            <div class="flex items-center space-x-6">
+                
+                <!-- Utilities Navigation Dropdown Toggle -->
+                <div class="relative inline-block text-left" id="nav-dropdown-wrapper">
+                    <button type="button" id="nav-dropdown-toggle" class="inline-flex items-center justify-center font-semibold text-sm text-gray-750 hover:text-indigo-600 transition focus:outline-none py-2 px-1">
+                        Select Utility
+                        <svg class="w-4 h-4 ml-1.5 mt-0.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Dropdown Panel (Populated dynamically) -->
+                    <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-3 w-80 rounded-xl bg-white border border-gray-200 shadow-xl ring-1 ring-black ring-opacity-5 z-50">
+                        <div class="p-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
+                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Quick Switch Tool</span>
+                        </div>
+                        <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50">
+                            <!-- Injected dynamically from JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#faq" class="text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">FAQs</a>
             </div>
-            <div class="flex items-center space-x-4">
-                <a href="#how-it-works" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">How to Use</a>
-                <a href="#faq" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition">FAQ</a>
-            </div>
+
         </div>
     </header>
 
-    <!-- Main Content Grid -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <!-- Main Workspace -->
+    <main class="flex-grow">
         
-        <!-- Hero Title -->
-        <div class="text-center max-w-3xl mx-auto mb-8">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
-                YouTube Transcript <span class="text-indigo-600">Cleaner</span> & Formatter
+        <!-- Hero Search Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 text-center">
+            <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full mb-4">100% Secure & Client-Side</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+                Simple, Fast, & Ad-Free<br class="hidden sm:inline" />
+                <span class="text-indigo-600">Utilities for Creators & Developers</span>
             </h1>
-            <p class="text-lg text-gray-600 leading-relaxed">
-                Clean and automatically structure raw transcripts. Instantly filter out duplicate, repeating word blocks common in YouTube's auto-generated subtitle tracks.
+            <p class="text-lg text-gray-650 max-w-2xl mx-auto leading-relaxed mb-8">
+                IndieUtility runs entirely in your local browser window. There are no databases, no cloud storage backups, and zero background analytics tools. Your data remains yours.
             </p>
-        </div>
 
-        <!-- App Layout Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- Left Panel: Input & Options -->
-            <div class="lg:col-span-7 space-y-6">
-                
-                <!-- Unified Input Card (Tabs: Fetch URL vs Manual Paste) -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                    
-                    <!-- Tab Headers -->
-                    <div class="border-b border-gray-250 mb-5">
-                        <nav class="flex space-x-8" aria-label="Tabs">
-                            <button type="button" id="tab-url-btn" class="border-indigo-600 text-indigo-600 whitespace-nowrap py-3 px-1 border-b-2 font-bold text-sm focus:outline-none">
-                                🔗 Fetch by Video URL
-                            </button>
-                            <button type="button" id="tab-paste-btn" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm focus:outline-none">
-                                📝 Paste Text Manually
-                            </button>
-                        </nav>
-                    </div>
-
-                    <!-- TAB 1: Fetch via URL Workspace -->
-                    <div id="workspace-url" class="space-y-4">
-                        <div>
-                            <label for="yt-url-input" class="block text-sm font-semibold text-gray-800 mb-2">
-                                Enter YouTube Video, Short, or Mobile Link
-                            </label>
-                            <div class="flex flex-col sm:flex-row gap-3">
-                                <input type="text" id="yt-url-input" class="flex-grow rounded-xl border-gray-250 border bg-gray-50 p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                                
-                                <div class="w-full sm:w-40 shrink-0">
-                                    <select id="fetch-lang" class="w-full rounded-xl border-gray-250 border bg-gray-50 p-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium">
-                                        <option value="" selected>Detect Lang</option>
-                                        <option value="en">English (en)</option>
-                                        <option value="es">Spanish (es)</option>
-                                        <option value="fr">French (fr)</option>
-                                        <option value="de">German (de)</option>
-                                        <option value="ja">Japanese (ja)</option>
-                                        <option value="pt">Portuguese (pt)</option>
-                                        <option value="it">Italian (it)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Action buttons for Fetch URL -->
-                        <div class="flex items-center justify-between pt-2">
-                            <span class="text-xs text-gray-500">Retrieves native subtitles and auto-captions.</span>
-                            <button type="button" id="btn-fetch-url" class="flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-sm transition focus:outline-none">
-                                <svg id="fetch-loading-spinner" class="hidden animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                <span class="btn-text">Fetch & Clean</span>
-                            </button>
-                        </div>
-
-                        <!-- Fetch Error Banner -->
-                        <div id="fetch-error" class="hidden bg-red-50 border-l-4 border-red-400 p-4 rounded-r-xl mt-4">
-                            <div class="flex">
-                                <svg class="h-5 w-5 text-red-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                </svg>
-                                <span id="fetch-error-msg" class="ml-3 text-sm text-red-800"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TAB 2: Manual Paste Workspace -->
-                    <div id="workspace-paste" class="hidden space-y-4">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs text-gray-500">Paste raw text from YouTube or other transcribers.</span>
-                            <div class="flex space-x-2">
-                                <button type="button" id="btn-load-sample" class="text-xs font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded transition">
-                                    Load Demo Sample
-                                </button>
-                                <button type="button" id="btn-clear-input" class="text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded transition">
-                                    Clear
-                                </button>
-                            </div>
-                        </div>
-                        <textarea id="input-text" rows="8" class="w-full rounded-xl border-gray-200 border bg-gray-50 p-4 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono resize-y" placeholder="Paste your raw YouTube transcript or auto-generated subtitle text here..."></textarea>
-                    </div>
-
-                </div>
-
-                <!-- Custom Cleaning Options Card -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                    <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            <!-- Hero Search Selector -->
+            <div class="max-w-xl mx-auto relative" id="hero-search-wrapper">
+                <div class="bg-white p-2 rounded-2xl shadow-md border border-gray-200 flex items-center justify-between">
+                    <div class="flex items-center pl-3 flex-grow">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        Cleaning Controls
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Left Option Column -->
-                        <div class="space-y-4">
-                            <label class="flex items-start gap-3 cursor-pointer">
-                                <input type="checkbox" id="opt-remove-timestamps" checked class="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <div class="ml-2">
-                                    <span class="block text-sm font-semibold text-gray-800">Remove Timestamps</span>
-                                    <span class="block text-xs text-gray-500">Cleans matches like [12:34], 00:00, (1:23)</span>
-                                </div>
-                            </label>
-
-                            <label class="flex items-start gap-3 cursor-pointer">
-                                <input type="checkbox" id="opt-remove-speakers" checked class="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <div class="ml-2">
-                                    <span class="block text-sm font-semibold text-gray-800">Remove Speaker Names</span>
-                                    <span class="block text-xs text-gray-500">Strips names like "John:" or "[Speaker 1]:"</span>
-                                </div>
-                            </label>
-
-                            <label class="flex items-start gap-3 cursor-pointer">
-                                <input type="checkbox" id="opt-remove-fillers" class="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <div class="ml-2">
-                                    <span class="block text-sm font-semibold text-gray-800">Strip Filler Words</span>
-                                    <span class="block text-xs text-gray-500">Filters out "um", "uh", "err", "ah"</span>
-                                </div>
-                            </label>
-                        </div>
-
-                        <!-- Right Option Column -->
-                        <div class="space-y-4">
-                            <label class="flex items-start gap-3 cursor-pointer">
-                                <input type="checkbox" id="opt-deduplicate" checked class="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <div class="ml-2">
-                                    <span class="block text-sm font-semibold text-gray-800">Deduplicate Rolling Captions</span>
-                                    <span class="block text-xs text-gray-500">Identifies and deletes consecutive repeating words</span>
-                                </div>
-                            </label>
-
-                            <label class="flex items-start gap-3 cursor-pointer">
-                                <input type="checkbox" id="opt-capitalize" checked class="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <div class="ml-2">
-                                    <span class="block text-sm font-semibold text-gray-800">Capitalize Sentences</span>
-                                    <span class="block text-xs text-gray-500">Ensures sentence-starts are properly capitalized</span>
-                                </div>
-                            </label>
-
-                            <label class="flex items-start gap-3 cursor-pointer">
-                                <input type="checkbox" id="opt-preserve-paragraphs" class="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <div class="ml-2">
-                                    <span class="block text-sm font-semibold text-gray-800">Preserve Original Paragraphs</span>
-                                    <span class="block text-xs text-gray-500">Keeps original double-spaced splits intact</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Paragraphing Options -->
-                    <div class="mt-6 border-t border-gray-100 pt-6">
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                            <label class="flex items-start gap-3 cursor-pointer">
-                                <input type="checkbox" id="opt-smart-paragraphs" checked class="mt-1 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                                <div class="ml-2">
-                                    <span class="block text-sm font-semibold text-gray-800">Auto-Structure Paragraphs</span>
-                                    <span class="block text-xs text-gray-500">Group sentences into digestible paragraph blocks</span>
-                                </div>
-                            </label>
-                            
-                            <!-- Paragraph Length Selector -->
-                            <div class="flex items-center gap-2 pl-7 sm:pl-0">
-                                <span class="text-xs text-gray-500">Paragraph Length:</span>
-                                <select id="opt-paragraph-length" class="text-xs bg-gray-50 border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                    <option value="3">3 Sentences</option>
-                                    <option value="5" selected>5 Sentences</option>
-                                    <option value="7">7 Sentences</option>
-                                    <option value="10">10 Sentences</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Custom Find and Replace -->
-                    <div class="mt-6 border-t border-gray-100 pt-6">
-                        <button type="button" id="toggle-find-replace" class="flex items-center gap-2 text-xs font-bold text-gray-500 hover:text-gray-800 transition focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                            </svg>
-                            Toggle Custom Find & Replace
-                        </button>
-                        <div id="find-replace-panel" class="hidden mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <input type="text" id="find-text" placeholder="Find text..." class="text-sm bg-gray-50 border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                            <input type="text" id="replace-text" placeholder="Replace with..." class="text-sm bg-gray-50 border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Right Panel: Output & Controls -->
-            <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
-                
-                <!-- Output Card -->
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col">
-                    <div class="flex items-center justify-between mb-3">
-                        <h2 class="text-sm font-semibold text-gray-800">Formatted Results</h2>
-                        <span id="toast" class="hidden text-xs bg-green-500 text-white font-medium px-2 py-1 rounded transition-opacity duration-300">Copied!</span>
-                    </div>
-
-                    <div id="output-box" class="relative" style="min-height: 280px;">
-                        <textarea id="output-text" readonly class="w-full h-72 rounded-xl border-gray-200 border bg-gray-50 p-4 text-sm text-gray-700 focus:outline-none font-mono resize-y" placeholder="Cleaned text will instantly appear here..."></textarea>
-                        
-                        <!-- Dynamic Overlay when Input is Empty -->
-                        <div id="empty-state-overlay" class="absolute inset-0 bg-gray-50 rounded-xl border border-gray-200 border-dashed flex flex-col items-center justify-center p-6 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                            <span class="text-sm font-medium text-gray-500">Waiting for Raw Text Input</span>
-                            <p class="text-xs text-gray-400 mt-1">Paste your transcript or insert a URL to begin.</p>
-                        </div>
-                    </div>
-
-                    <!-- Meta / Word Count Stats -->
-                    <div class="grid grid-cols-3 gap-2 py-4 border-b border-gray-100 text-center my-3">
-                        <div class="bg-gray-50 rounded-lg py-2 border border-gray-100">
-                            <span id="stat-words" class="block text-lg font-bold text-gray-900">0</span>
-                            <span class="text-[10px] uppercase font-bold tracking-wider text-gray-400">Words</span>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg py-2 border border-gray-100">
-                            <span id="stat-chars" class="block text-lg font-bold text-gray-900">0</span>
-                            <span class="text-[10px] uppercase font-bold tracking-wider text-gray-400">Characters</span>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg py-2 border border-gray-100">
-                            <span id="stat-time" class="block text-lg font-bold text-gray-900">0m</span>
-                            <span class="text-[10px] uppercase font-bold tracking-wider text-gray-400">Est. Read Time</span>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <button type="button" id="btn-copy" class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-sm transition focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                            </svg>
-                            Copy Text
-                        </button>
-                        <button type="button" id="btn-download" class="w-full flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl shadow-sm transition focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                            </svg>
-                            Export .TXT
-                        </button>
-                    </div>
-
-                </div>
-
-                <!-- Tip Card -->
-                <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 flex items-start gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <div class="text-xs text-indigo-900 leading-relaxed ml-2">
-                        <strong class="font-bold">Pro-tip:</strong> YouTube's rolling subtitle duplication occurs because the auto-generated caption track repeats words from previous frames to keep text dynamically scrolling on the screen.
+                        <input type="text" id="hero-search-input" class="w-full text-sm text-gray-850 bg-transparent focus:outline-none" placeholder="Search tools (e.g., Transcript, JSON, Glassmorphism)..." />
                     </div>
                 </div>
 
-            </div>
-
-        </div>
-
-        <!-- SEO Article / Instructions Block -->
-        <section id="how-it-works" class="mt-16 bg-white rounded-3xl border border-gray-200 p-8 sm:p-12 shadow-sm max-w-4xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 text-center">
-                How to Format and Clean YouTube Transcripts
-            </h2>
-            
-            <div class="space-y-8 text-gray-650 leading-relaxed">
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-                        <span class="flex items-center justify-center bg-indigo-100 text-indigo-700 h-6 w-6 rounded-full text-xs font-bold mr-1">1</span>
-                        Fetch Automatically using video URL
-                    </h3>
-                    <p class="pl-8 text-gray-600">
-                        Simply paste the URL of your target video (e.g., watch links, youtu.be shares, or vertical YouTube Shorts) in the URL fetcher tab. Our client-side pipeline will pull raw subtitle tracks directly from open-CORS edge endpoints, completely bypassing manual interaction.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-                        <span class="flex items-center justify-center bg-indigo-100 text-indigo-700 h-6 w-6 rounded-full text-xs font-bold mr-1">2</span>
-                        Stitch rolling word duplications
-                    </h3>
-                    <p class="pl-8 text-gray-600">
-                        By turning on the <strong>"Deduplicate Rolling Captions"</strong> filter, the utility scans sentences word-by-word, analyzes matching word slices at transition points, and removes duplicated rolling sequences.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
-                        <span class="flex items-center justify-center bg-indigo-100 text-indigo-700 h-6 w-6 rounded-full text-xs font-bold mr-1">3</span>
-                        Format and Download
-                    </h3>
-                    <p class="pl-8 text-gray-600">
-                        Once text is populated, select your custom options. Strip out repetitive timestamps or speaker names, fix low-case sentence flows, structure lines into standard reading paragraphs, and export the file as a clean `.txt` document.
-                    </p>
+                <!-- Instant Search Dropdown Panel -->
+                <div id="search-dropdown-menu" class="hidden absolute left-0 right-0 mt-2 rounded-2xl bg-white border border-gray-200 shadow-2xl z-40 overflow-hidden divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                    <div id="search-items-container" class="p-2 space-y-1">
+                        <!-- Search results injected dynamically -->
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- SEO FAQ Block -->
-        <section id="faq" class="mt-12 max-w-4xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-8 text-center">
-                Frequently Asked Questions
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-                    <h3 class="font-bold text-gray-900 mb-2">Why does YouTube repeat sentences in its transcript?</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed">
-                        YouTube auto-generated subtitle lines overlap because they are designed as dynamic rolling blocks for on-screen readability. This tool's algorithm detects and automatically stitches these overlapping lines.
-                    </p>
-                </div>
-
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-                    <h3 class="font-bold text-gray-900 mb-2">Can I remove timestamps automatically?</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed">
-                        Yes. This formatting utility recognizes and isolates numerical time patterns (such as brackets, hours, minutes, and milliseconds) and cleanses them instantly.
-                    </p>
-                </div>
+        <!-- Dynamic Grid of Utilities Directory -->
+        <section class="bg-white border-t border-b border-gray-200 py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-                    <h3 class="font-bold text-gray-900 mb-2">Does this support multi-lingual texts?</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed">
-                        Yes. By changing the language code parameter in the URL fetcher interface, you can fetch German, Spanish, French, Japanese, or any other supported native captions.
-                    </p>
+                <!-- Category Filters Header -->
+                <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-6">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Browse Utility Directory</h2>
+                        <p class="text-sm text-gray-500 mt-1">Select a filter or search our full index below.</p>
+                    </div>
+                    
+                    <!-- Filter Buttons -->
+                    <div class="flex flex-wrap gap-2" id="filter-btn-group">
+                        <button type="button" data-category="all" class="filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm">All Utilities</button>
+                        <button type="button" data-category="text" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Text & Copy</button>
+                        <button type="button" data-category="dev" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Developer Tools</button>
+                        <button type="button" data-category="design" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Web Design</button>
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-                    <h3 class="font-bold text-gray-900 mb-2">Is my data secure?</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed">
-                        Completely. Processing runs inside your personal browser window. No transcripts, URLs, or modified files are uploaded, stored, or sent to external servers.
-                    </p>
+                <!-- Dynamic Cards Grid -->
+                <div id="tools-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Cards populated via JavaScript -->
+                </div>
+
+                <!-- Empty State Filter Panel -->
+                <div id="grid-empty-state" class="hidden text-center py-16">
+                    <p class="text-sm text-gray-500 font-medium">No results match your search keywords or active filters.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEO FAQ Block -->
+        <section id="faq" class="bg-gray-50 border-b border-gray-200 py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-10 text-center">Frequently Asked Questions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">How can a web tool run 100% client-side?</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            Modern web APIs allow your browser to handle complex calculations, array sorting, regular expressions, and parsing. By utilizing vanilla JavaScript directly in your browser, we eliminate server roundtrips.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Are my code snippets or outputs saved?</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            No. IndieUtility runs without databases or application servers. Your transcriptions, JSON records, or formatting inputs remain purely inside local storage or active memory on your personal computer.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Are there conversion limits or paid tiers?</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            No. All available modules inside the utility are free and run indefinitely without pricing limits, premium features, registration blockades, or subscription setups.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Can I request tool integrations?</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            We continue to add lightweight modules to our database. Suggest new tools, report bugs, or submit static scripts to our developers to expand our local-first tool ecosystem.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -431,404 +211,311 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 mt-16 border-t border-gray-800">
+    <footer class="bg-gray-900 text-gray-400 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="flex items-center space-x-3">
-                <span class="text-lg font-bold text-white tracking-tight">Transcript<span class="text-indigo-500">Cleaner</span></span>
-                <span class="text-sm border-l border-gray-700 pl-3 ml-3">Client-Side Utilitarian Tool</span>
+                <span class="text-lg font-bold text-white tracking-tight">Indie<span class="text-indigo-500">Utility</span></span>
+                <span class="text-sm border-l border-gray-700 pl-3 ml-3 text-gray-500">Static Creator Suite</span>
             </div>
             <div class="flex gap-6 text-sm">
                 <a href="#" class="hover:text-white transition">Back to Top</a>
-                <a href="#how-it-works" class="hover:text-white transition">Tutorial</a>
                 <a href="#faq" class="hover:text-white transition">FAQs</a>
             </div>
             <p class="text-xs text-gray-500">
-                &copy; 2026 Transcript Tool. Free to use, open-source static software.
+                &copy; 2026 IndieUtility. Free privacy-first utilitarian software licensed under MIT.
             </p>
         </div>
     </footer>
 
-    <!-- Logic Script (Vanilla JS) -->
+    <!-- Vanilla Javascript Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // Tab Elements
-            const tabUrlBtn = document.getElementById('tab-url-btn');
-            const tabPasteBtn = document.getElementById('tab-paste-btn');
-            const workspaceUrl = document.getElementById('workspace-url');
-            const workspacePaste = document.getElementById('workspace-paste');
 
-            // Workspace Inputs
-            const ytUrlInput = document.getElementById('yt-url-input');
-            const fetchLang = document.getElementById('fetch-lang');
-            const btnFetchUrl = document.getElementById('btn-fetch-url');
-            const fetchError = document.getElementById('fetch-error');
-            const fetchErrorMsg = document.getElementById('fetch-error-msg');
-            const fetchLoadingSpinner = document.getElementById('fetch-loading-spinner');
-
-            const inputText = document.getElementById('input-text');
-            const outputText = document.getElementById('output-text');
-            const emptyOverlay = document.getElementById('empty-state-overlay');
-            
-            // Utility Buttons
-            const btnLoadSample = document.getElementById('btn-load-sample');
-            const btnClearInput = document.getElementById('btn-clear-input');
-            const btnCopy = document.getElementById('btn-copy');
-            const btnDownload = document.getElementById('btn-download');
-            const btnToggleFindReplace = document.getElementById('toggle-find-replace');
-            const panelFindReplace = document.getElementById('find-replace-panel');
-            const toast = document.getElementById('toast');
-
-            // Cleaning Rules Controls
-            const optRemoveTimestamps = document.getElementById('opt-remove-timestamps');
-            const optRemoveSpeakers = document.getElementById('opt-remove-speakers');
-            const optRemoveFillers = document.getElementById('opt-remove-fillers');
-            const optDeduplicate = document.getElementById('opt-deduplicate');
-            const optCapitalize = document.getElementById('opt-capitalize');
-            const optPreserveParagraphs = document.getElementById('opt-preserve-paragraphs');
-            const optSmartParagraphs = document.getElementById('opt-smart-paragraphs');
-            const optParagraphLength = document.getElementById('opt-paragraph-length');
-            const findText = document.getElementById('find-text');
-            const replaceText = document.getElementById('replace-text');
-
-            // Statistics Elements
-            const statWords = document.getElementById('stat-words');
-            const statChars = document.getElementById('stat-chars');
-            const statTime = document.getElementById('stat-time');
-
-            // Demo Payload (Has overlapping duplication simulation)
-            const sampleRawText = `0:01 [Music]
-0:05 Microsoft just got sued, but the weird Microsoft just got sued, but the weird thing is
-0:10 thing is it's Valve's fault. And that thing is it's Valve's fault. And that
-0:15 And that might sound completely insane, but in a might sound completely insane, but in a
-0:20 way it isn't. What's happened is a new way it isn't.`;
-
-            // Tab Switching Logic
-            tabUrlBtn.addEventListener('click', () => {
-                tabUrlBtn.className = "border-indigo-600 text-indigo-600 whitespace-nowrap py-3 px-1 border-b-2 font-bold text-sm focus:outline-none";
-                tabPasteBtn.className = "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm focus:outline-none";
-                workspaceUrl.classList.remove('hidden');
-                workspacePaste.classList.add('hidden');
-            });
-
-            tabPasteBtn.addEventListener('click', () => {
-                tabPasteBtn.className = "border-indigo-600 text-indigo-600 whitespace-nowrap py-3 px-1 border-b-2 font-bold text-sm focus:outline-none";
-                tabUrlBtn.className = "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm focus:outline-none";
-                workspacePaste.classList.remove('hidden');
-                workspaceUrl.classList.add('hidden');
-            });
-
-            // Extract 11-char Video ID
-            function extractVideoId(url) {
-                if (!url) return null;
-                url = url.trim();
-                if (/^[a-zA-Z0-9_-]{11}$/.test(url)) {
-                    return url;
+            // DYNAMIC TOOLS ARRAY DATABASE: Populates dropdowns, search menus, and cards
+            const toolsDb = [
+                {
+                    id: 'yt-transcript',
+                    name: 'YouTube Transcript Cleaner',
+                    desc: 'Fetch raw transcripts via video link, strip timestamps, and automatically deduplicate overlapping rolling sentences.',
+                    path: 'http://indieutility.com/tools/youtube-transcript-cleaner/',
+                    category: 'text',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                           </svg>`
+                },
+                {
+                    id: 'markdown-preview',
+                    name: 'Markdown Live Editor',
+                    desc: 'A split-screen markdown editor to parse prose, customize text patterns, and instantly export HTML code packages.',
+                    path: '#',
+                    category: 'text',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                           </svg>`
+                },
+                {
+                    id: 'json-formatter',
+                    name: 'JSON Beautifier & Validator',
+                    desc: 'Prettify nested API payloads, validate key-value arrays, locate formatting errors, and minify raw JSON lists.',
+                    path: '#',
+                    category: 'dev',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                           </svg>`
+                },
+                {
+                    id: 'svg-patterns',
+                    name: 'SVG Pattern Generator',
+                    desc: 'Create seamless repeating vector design patterns, modify element parameters, and grab static inline XML output.',
+                    path: '#',
+                    category: 'design',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                           </svg>`
+                },
+                {
+                    id: 'glass-morphism',
+                    name: 'Glassmorphism UI Engine',
+                    desc: 'Build gorgeous translucent components, apply localized backdrop-blur styling, and capture cross-browser CSS.',
+                    path: '#',
+                    category: 'design',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                           </svg>`
+                },
+                {
+                    id: 'slug-creator',
+                    name: 'SEO Slug Permalinker',
+                    desc: 'Remove illegal unicode symbols, strip punctuation parameters, and transform raw text fields into clean URL strings.',
+                    path: '#',
+                    category: 'dev',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                           </svg>`
                 }
-                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
-                const match = url.match(regExp);
-                return (match && match[2].length === 11) ? match[2] : null;
-            }
+            ];
 
-            // Remote Fetch Handler
-            btnFetchUrl.addEventListener('click', async () => {
-                const url = ytUrlInput.value.trim();
-                const videoId = extractVideoId(url);
-                fetchError.classList.add('hidden');
+            // Selector References
+            const navDropdownToggle = document.getElementById('nav-dropdown-toggle');
+            const navDropdownMenu = document.getElementById('nav-dropdown-menu');
+            const navDropdownItems = document.getElementById('nav-dropdown-items');
+            const navDropdownWrapper = document.getElementById('nav-dropdown-wrapper');
 
-                if (!videoId) {
-                    showFetchError("Please enter a valid YouTube link or 11-character video ID.");
-                    return;
-                }
+            const heroSearchWrapper = document.getElementById('hero-search-wrapper');
+            const heroSearchInput = document.getElementById('hero-search-input');
+            const searchDropdownMenu = document.getElementById('search-dropdown-menu');
+            const searchItemsContainer = document.getElementById('search-items-container');
 
-                setFetchLoading(true);
-                const lang = fetchLang.value;
-                const queryLang = lang ? `?lang=${lang}` : '';
-                const apiUrl = `https://youtube-transcript.ai/transcript/${videoId}.txt${queryLang}`;
+            const toolsCardsGrid = document.getElementById('tools-cards-grid');
+            const filterBtnGroup = document.getElementById('filter-btn-group');
+            const gridEmptyState = document.getElementById('grid-empty-state');
 
-                try {
-                    const response = await fetch(apiUrl);
-                    if (!response.ok) {
-                        throw new Error(`Server returned status code: ${response.status}`);
+            // --- 1. Populate Dropdown Options ---
+            function buildNavDropdown() {
+                navDropdownItems.innerHTML = '';
+                toolsDb.forEach(tool => {
+                    let element;
+                    if (tool.active) {
+                        element = document.createElement('a');
+                        element.href = tool.path;
+                        element.className = "w-full text-left p-3 flex items-center gap-3.5 hover:bg-gray-50 transition focus:outline-none";
+                        element.innerHTML = `
+                            <div class="bg-indigo-50 text-indigo-600 p-2 rounded-xl shrink-0">
+                                ${tool.icon}
+                            </div>
+                            <div class="min-w-0">
+                                <span class="block text-sm font-bold text-gray-900 truncate">${tool.name}</span>
+                                <span class="block text-[10px] text-gray-400 truncate max-w-[210px] mt-0.5">${tool.desc}</span>
+                            </div>
+                        `;
+                    } else {
+                        element = document.createElement('div');
+                        element.className = "w-full text-left p-3 flex items-center gap-3.5 opacity-60 select-none cursor-not-allowed";
+                        element.innerHTML = `
+                            <div class="bg-gray-100 text-gray-400 p-2 rounded-xl shrink-0">
+                                ${tool.icon}
+                            </div>
+                            <div class="min-w-0">
+                                <span class="block text-sm font-bold text-gray-500 truncate">
+                                    ${tool.name}
+                                    <span class="inline-block ml-1.5 text-[8px] font-extrabold bg-gray-200 text-gray-600 rounded px-1 uppercase tracking-wider">Soon</span>
+                                </span>
+                                <span class="block text-[10px] text-gray-400 truncate max-w-[210px] mt-0.5">${tool.desc}</span>
+                            </div>
+                        `;
                     }
-                    const rawMarkdown = await response.text();
-                    
-                    const lines = rawMarkdown.split('\n');
-                    const filteredLines = lines.filter(line => {
-                        const low = line.toLowerCase();
-                        return !low.startsWith('# transcript') &&
-                               !low.startsWith('source video:') &&
-                               !low.startsWith('language:') &&
-                               !low.startsWith('duration:') &&
-                               !low.startsWith('words:') &&
-                               !low.startsWith('other available languages:') &&
-                               !low.trim().startsWith('---');
-                    });
-
-                    const parsedText = filteredLines.join('\n').trim();
-                    if (!parsedText) {
-                        throw new Error("Empty content returned from remote transcript source.");
-                    }
-
-                    // Populate and trigger clean rendering
-                    inputText.value = parsedText;
-                    runFormattingPipeline();
-                    
-                    tabPasteBtn.click();
-
-                } catch (err) {
-                    console.error(err);
-                    showFetchError("Could not retrieve transcript automatically. Captions may be disabled, or the video is restricted.");
-                } finally {
-                    setFetchLoading(false);
-                }
-            });
-
-            function showFetchError(msg) {
-                fetchErrorMsg.innerText = msg;
-                fetchError.classList.remove('hidden');
-            }
-
-            function setFetchLoading(isLoading) {
-                if (isLoading) {
-                    btnFetchUrl.disabled = true;
-                    btnFetchUrl.classList.add('opacity-75', 'cursor-not-allowed');
-                    fetchLoadingSpinner.classList.remove('hidden');
-                    btnFetchUrl.querySelector('.btn-text').innerText = "Fetching...";
-                } else {
-                    btnFetchUrl.disabled = false;
-                    btnFetchUrl.classList.remove('opacity-75', 'cursor-not-allowed');
-                    fetchLoadingSpinner.classList.add('hidden');
-                    btnFetchUrl.querySelector('.btn-text').innerText = "Fetch & Clean";
-                }
-            }
-
-            // Continuous Sliding Window Rolling Duplicator
-            function cleanContinuousRollingDuplicates(text) {
-                if (!text) return "";
-                let words = text.split(/\s+/).filter(w => w.length > 0);
-                if (words.length === 0) return "";
-                
-                let i = 0;
-                while (i < words.length) {
-                    let foundDup = false;
-                    
-                    // Scans windows from length 2 to 35 words
-                    for (let length = 2; length <= 35; length++) {
-                        if (i + length * 2 > words.length) {
-                            break;
-                        }
-                        
-                        let match = true;
-                        for (let k = 0; k < length; k++) {
-                            let w1 = words[i + k].toLowerCase().replace(/[^a-z0-9]/g, '');
-                            let w2 = words[i + length + k].toLowerCase().replace(/[^a-z0-9]/g, '');
-                            if (w1 !== w2) {
-                                match = false;
-                                break;
-                            }
-                        }
-                        
-                        if (match) {
-                            words.splice(i, length); // Delete first instance
-                            foundDup = true;
-                            break; // Restart evaluation window checks at index i
-                        }
-                    }
-                    
-                    if (!foundDup) {
-                        i++;
-                    }
-                }
-                return words.join(' ');
-            }
-
-            // Workspace and Options Listeners
-            inputText.addEventListener('input', runFormattingPipeline);
-            
-            [
-                optRemoveTimestamps, 
-                optRemoveSpeakers, 
-                optRemoveFillers, 
-                optDeduplicate, 
-                optCapitalize, 
-                optPreserveParagraphs, 
-                optSmartParagraphs, 
-                optParagraphLength
-            ].forEach(el => el.addEventListener('change', runFormattingPipeline));
-
-            [findText, replaceText].forEach(el => el.addEventListener('input', runFormattingPipeline));
-
-            // Setup helper buttons
-            btnLoadSample.addEventListener('click', () => {
-                inputText.value = sampleRawText;
-                runFormattingPipeline();
-            });
-
-            btnClearInput.addEventListener('click', () => {
-                inputText.value = '';
-                runFormattingPipeline();
-            });
-
-            btnToggleFindReplace.addEventListener('click', () => {
-                panelFindReplace.classList.toggle('hidden');
-            });
-
-            btnCopy.addEventListener('click', () => {
-                if (!outputText.value) return;
-                
-                navigator.clipboard.writeText(outputText.value).then(() => {
-                    toast.classList.remove('hidden');
-                    toast.style.opacity = '1';
-                    setTimeout(() => {
-                        toast.style.opacity = '0';
-                        setTimeout(() => toast.classList.add('hidden'), 300);
-                    }, 2000);
+                    navDropdownItems.appendChild(element);
                 });
-            });
+            }
 
-            btnDownload.addEventListener('click', () => {
-                const textToDownload = outputText.value;
-                if (!textToDownload) return;
+            // --- 2. Populate Card List ---
+            function buildCardsGrid(categoryFilter = 'all', searchQuery = '') {
+                toolsCardsGrid.innerHTML = '';
+                const normQuery = searchQuery.toLowerCase().trim();
 
-                const blob = new Blob([textToDownload], { type: 'text/plain;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `cleaned-transcript-${new Date().toISOString().slice(0,10)}.txt`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            });
+                const filtered = toolsDb.filter(tool => {
+                    const matchesCategory = (categoryFilter === 'all' || tool.category === categoryFilter);
+                    const matchesSearch = (!normQuery || 
+                                           tool.name.toLowerCase().includes(normQuery) || 
+                                           tool.desc.toLowerCase().includes(normQuery));
+                    return matchesCategory && matchesSearch;
+                });
 
-            // Core Cleaning Pipeline Engine
-            function runFormattingPipeline() {
-                const raw = inputText.value;
-
-                if (!raw || raw.trim() === '') {
-                    outputText.value = '';
-                    emptyOverlay.classList.remove('hidden');
-                    updateStats('', 0);
-                    return;
-                }
-
-                emptyOverlay.classList.add('hidden');
-                
-                // Helper to scrub line features
-                function processParagraphLines(textBlock) {
-                    let lines = textBlock.split(/\r?\n/).map(line => {
-                        let l = line;
-                        // 1. Clean Timestamps
-                        if (optRemoveTimestamps.checked) {
-                            const timestampRegex = /(?:\[?\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{3})?\]?)|(?:\(\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{3})?\)?)|(?:\b\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{3})?\b)/g;
-                            l = l.replace(timestampRegex, '');
-                            l = l.replace(/\[Music\]|\[Applause\]|\[Laughter\]/gi, '');
-                        }
-                        // 2. Clean Speaker Tags
-                        if (optRemoveSpeakers.checked) {
-                            const speakerRegex = /(?:^[A-Z][A-Za-z0-9\s_]{1,15}:\s*)|(?:\[[^\]]+\]:\s*)|(?:\([^)]+\):\s*)/gm;
-                            l = l.replace(speakerRegex, '');
-                        }
-                        return l.trim();
-                    }).filter(l => l.length > 0);
-
-                    if (lines.length === 0) return "";
-                    return lines.join(' ');
-                }
-
-                let result = "";
-
-                // Apply paragraph separation
-                if (optPreserveParagraphs.checked) {
-                    const paragraphs = raw.split(/\n\s*\n/);
-                    const processedParagraphs = paragraphs.map(p => {
-                        let cleanP = processParagraphLines(p);
-                        if (optDeduplicate.checked) {
-                            cleanP = cleanContinuousRollingDuplicates(cleanP);
-                        }
-                        return cleanP;
-                    });
-                    result = processedParagraphs.filter(p => p.length > 0).join('\n\n');
+                if (filtered.length === 0) {
+                    gridEmptyState.classList.remove('hidden');
                 } else {
-                    result = processParagraphLines(raw);
-                    if (optDeduplicate.checked) {
-                        result = cleanContinuousRollingDuplicates(result);
-                    }
-                }
-
-                // 4. Remove Filler Words
-                if (optRemoveFillers.checked) {
-                    const fillers = /\b(um|uh|err|ah|uhm|ahm)\b/gi;
-                    result = result.replace(fillers, '');
-                }
-
-                // Clean spaces and handle punctuation spacing
-                result = result.replace(/[ \t]+/g, ' ').trim();
-                result = result.replace(/\s+([.,!?])/g, '$1');
-
-                // 5. Capitalize Sentences
-                if (optCapitalize.checked) {
-                    result = result.replace(/(?:^|[.!?]\s+)([a-z])/g, function(match, capture) {
-                        return match.toUpperCase();
-                    });
-                }
-
-                // 6. Smart Paragraph Structure
-                if (optSmartParagraphs.checked) {
-                    const sentenceLimit = parseInt(optParagraphLength.value) || 5;
-                    const sentences = result.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [result];
-                    let structuredParagraphs = [];
-                    let trackingGroup = [];
-
-                    sentences.forEach((sentence, index) => {
-                        trackingGroup.push(sentence.trim());
-                        if (trackingGroup.length >= sentenceLimit || index === sentences.length - 1) {
-                            structuredParagraphs.push(trackingGroup.join(' '));
-                            trackingGroup = [];
+                    gridEmptyState.classList.add('hidden');
+                    filtered.forEach(tool => {
+                        const card = document.createElement('article');
+                        
+                        if (tool.active) {
+                            card.className = "bg-white rounded-3xl border border-gray-200 p-6 flex flex-col justify-between hover:shadow-md transition duration-200";
+                            card.innerHTML = `
+                                <div>
+                                    <div class="bg-indigo-50 text-indigo-600 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
+                                        ${tool.icon}
+                                    </div>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-2">${tool.name}</h3>
+                                    <p class="text-sm text-gray-500 leading-relaxed mb-6">${tool.desc}</p>
+                                </div>
+                                <a href="${tool.path}" class="w-full inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3.5 px-4 rounded-xl transition focus:outline-none text-center">
+                                    Open Utility &nbsp;🚀
+                                </a>
+                            `;
+                        } else {
+                            card.className = "bg-gray-100 rounded-3xl border border-gray-200 p-6 flex flex-col justify-between select-none cursor-not-allowed opacity-60";
+                            card.innerHTML = `
+                                <div>
+                                    <div class="bg-gray-200 text-gray-400 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
+                                        ${tool.icon}
+                                    </div>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <h3 class="text-lg font-bold text-gray-500">${tool.name}</h3>
+                                        <span class="px-2 py-0.5 text-[8px] font-extrabold bg-gray-200 text-gray-650 rounded-full tracking-wider uppercase shrink-0">Coming Soon</span>
+                                    </div>
+                                    <p class="text-sm text-gray-400 leading-relaxed mb-6">${tool.desc}</p>
+                                </div>
+                                <button disabled type="button" class="w-full inline-flex items-center justify-center bg-gray-250 text-gray-400 text-xs font-bold py-3.5 px-4 rounded-xl cursor-not-allowed">
+                                    Coming Soon &nbsp;🔒
+                                </button>
+                            `;
                         }
+                        toolsCardsGrid.appendChild(card);
                     });
-                    result = structuredParagraphs.join('\n\n');
                 }
-
-                // 7. Custom Find and Replace Actions
-                const toFind = findText.value;
-                const toReplace = replaceText.value;
-                if (toFind && toFind.trim() !== '') {
-                    try {
-                        const escapedFind = toFind.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                        const findRegex = new RegExp(escapedFind, 'gi');
-                        result = result.replace(findRegex, toReplace);
-                    } catch (e) {
-                        result = result.split(toFind).join(toReplace);
-                    }
-                }
-
-                // Update interface output text and metrics
-                outputText.value = result.trim();
-                updateStats(outputText.value, raw.length);
             }
 
-            function updateStats(processedString, originalLength) {
-                if (!processedString) {
-                    statWords.innerText = '0';
-                    statChars.innerText = '0';
-                    statTime.innerText = '0m';
+            // --- 3. Instant Search Engine ---
+            function runHeroSearch(query) {
+                searchItemsContainer.innerHTML = '';
+                const normQuery = query.toLowerCase().trim();
+
+                if (!normQuery) {
+                    searchDropdownMenu.classList.add('hidden');
                     return;
                 }
 
-                const cleanedWordsArr = processedString.trim().split(/\s+/).filter(w => w.length > 0);
-                const wordCount = cleanedWordsArr.length;
-                const charCount = processedString.length;
+                const matches = toolsDb.filter(t => t.name.toLowerCase().includes(normQuery) || t.desc.toLowerCase().includes(normQuery));
 
-                const readMinutes = Math.max(1, Math.round(wordCount / 200));
-
-                statWords.innerText = wordCount.toLocaleString();
-                statChars.innerText = charCount.toLocaleString();
-                statTime.innerText = `${readMinutes}m`;
+                if (matches.length === 0) {
+                    searchItemsContainer.innerHTML = `
+                        <div class="p-4 text-xs font-medium text-gray-400 text-center">
+                            No match found. Clear and try another keyword.
+                        </div>
+                    `;
+                } else {
+                    matches.forEach(tool => {
+                        let element;
+                        if (tool.active) {
+                            element = document.createElement('a');
+                            element.href = tool.path;
+                            element.className = "w-full text-left p-3 flex items-center gap-3 hover:bg-gray-50 transition rounded-xl focus:outline-none";
+                            element.innerHTML = `
+                                <div class="bg-indigo-50 text-indigo-600 p-2.5 rounded-xl shrink-0">
+                                    ${tool.icon}
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="block text-sm font-bold text-gray-900 truncate">${tool.name}</span>
+                                    <span class="block text-xs text-gray-450 truncate">${tool.desc}</span>
+                                </div>
+                            `;
+                        } else {
+                            element = document.createElement('div');
+                            element.className = "w-full text-left p-3 flex items-center gap-3 opacity-60 rounded-xl select-none cursor-not-allowed";
+                            element.innerHTML = `
+                                <div class="bg-gray-100 text-gray-400 p-2.5 rounded-xl shrink-0">
+                                    ${tool.icon}
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="block text-sm font-bold text-gray-500 truncate">
+                                        ${tool.name}
+                                        <span class="inline-block ml-1.5 text-[8px] font-extrabold bg-gray-200 text-gray-600 rounded px-1 uppercase tracking-wider">Soon</span>
+                                    </span>
+                                    <span class="block text-xs text-gray-400 truncate">${tool.desc}</span>
+                                </div>
+                            `;
+                        }
+                        searchItemsContainer.appendChild(element);
+                    });
+                }
+                searchDropdownMenu.classList.remove('hidden');
             }
 
-            runFormattingPipeline();
+            // --- 4. Interactive Event Triggers ---
+
+            // Toggle Navigation Dropdown
+            navDropdownToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navDropdownMenu.classList.toggle('hidden');
+            });
+
+            // Interactive filtering buttons
+            filterBtnGroup.addEventListener('click', (e) => {
+                const targetBtn = e.target.closest('.filter-btn');
+                if (!targetBtn) return;
+
+                // Adjust focus classes
+                filterBtnGroup.querySelectorAll('.filter-btn').forEach(b => {
+                    b.className = "filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none";
+                });
+                targetBtn.className = "filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm";
+
+                const category = targetBtn.getAttribute('data-category');
+                buildCardsGrid(category, heroSearchInput.value);
+            });
+
+            // Input monitoring inside hero search
+            heroSearchInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+                runHeroSearch(heroSearchInput.value);
+            });
+
+            heroSearchInput.addEventListener('input', () => {
+                runHeroSearch(heroSearchInput.value);
+                const activeCategoryBtn = filterBtnGroup.querySelector('.bg-indigo-600');
+                const category = activeCategoryBtn ? activeCategoryBtn.getAttribute('data-category') : 'all';
+                buildCardsGrid(category, heroSearchInput.value);
+            });
+
+            // Universal dismissal when clicking off elements
+            document.addEventListener('click', (e) => {
+                if (!navDropdownWrapper.contains(e.target)) {
+                    navDropdownMenu.classList.add('hidden');
+                }
+                if (!heroSearchWrapper.contains(e.target)) {
+                    searchDropdownMenu.classList.add('hidden');
+                }
+            });
+
+            // Init page elements
+            buildNavDropdown();
+            buildCardsGrid();
         });
     </script>
 </body>
