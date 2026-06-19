@@ -30,7 +30,7 @@
                             <span class="sm:hidden">Home</span>
                         </a>
                     ` : `
-                        <a href="#utilities" class="hidden md:inline text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">Browse all</a>
+                        
                     `}
                 </nav>
             </div>
