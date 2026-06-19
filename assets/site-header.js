@@ -58,7 +58,8 @@
     `;
 
     const isPalettePage = window.location.pathname.includes('/color-palette-generator');
-    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage && !isRegexPage && !isUrlEncoderPage && !isImageConverterPage && !isPalettePage) return;
+    const isAnimationPage = window.location.pathname.includes('/css-animation-generator');
+    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage && !isRegexPage && !isUrlEncoderPage && !isImageConverterPage && !isPalettePage && !isAnimationPage) return;
 
     const tools = [
         {
