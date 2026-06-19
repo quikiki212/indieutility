@@ -9,6 +9,7 @@
     const isSqlPage = window.location.pathname.includes('/sql-formatter');
     const isRegexPage = window.location.pathname.includes('/regex-editor');
     const isUrlEncoderPage = window.location.pathname.includes('/url-encoder-decoder');
+    const isImageConverterPage = window.location.pathname.includes('/image-format-converter');
     const localFaqHref = isToolPage ? '#faq' : '/#faq';
 
     header.innerHTML = `
@@ -56,7 +57,7 @@
         ` : ''}
     `;
 
-    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage && !isRegexPage && !isUrlEncoderPage) return;
+    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage && !isRegexPage && !isUrlEncoderPage && !isImageConverterPage) return;
 
     const tools = [
         {
@@ -93,6 +94,11 @@
             name: 'URL Encoder & Decoder',
             description: 'Encode and decode URLs with multiple encoding options.',
             href: '/tools/url-encoder-decoder/'
+        },
+        {
+            name: 'Image Format Converter',
+            description: 'Convert images between PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, and more.',
+            href: '/tools/image-format-converter/'
         }
     ];
 
