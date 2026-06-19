@@ -111,12 +111,6 @@
             category: 'design'
         },
         {
-            name: 'Video Converter and Compressor',
-            description: 'Convert and compress video files with ease.',
-            href: '/tools/video-converter-compressor/',
-            category: 'design'
-        },
-        {
             name: 'Color Palette Generator',
             description: 'Generate harmonious palettes, export CSS variables, and copy HEX/RGB/HSL values.',
             href: '/tools/color-palette-generator/',
