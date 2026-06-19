@@ -14,6 +14,10 @@
         * { box-sizing: border-box; }
         body { overflow-x: hidden; }
         .preview-card { min-height: 220px; }
+        .diff-preview:hover #before-wrapper { opacity: 1 !important; }
+        .diff-preview:hover #after-wrapper { opacity: 0 !important; }
+        #before-wrapper { opacity: 0; }
+        #after-wrapper { opacity: 1; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
@@ -30,48 +34,60 @@
 
         <section class="grid gap-6 lg:grid-cols-[1.5fr_1fr] mb-8">
             <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
-                <h1 class="text-2xl font-extrabold text-gray-900">Texture Seam Remover</h1>
-                <p class="mt-2 text-sm text-gray-600">Import a texture and tile it into a 3x3 preview. Adjust seam width to blend opposite edges and remove visible seams.</p>
+                <div class="flex flex-wrap gap-4 items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Texture Settings</h2>
+                        <p class="mt-1 text-sm text-gray-500">Import a texture and refine the seams with live preview updates.</p>
+                    </div>
+                    <button id="btn-apply" class="inline-flex items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Update Preview</button>
+                </div>
 
-                <div class="mt-4 space-y-4">
+                <div class="space-y-4">
                     <label class="block text-sm font-semibold text-gray-700">Import Texture</label>
-                    <input type="file" id="file-input" accept="image/*" class="block" />
+                    <input type="file" id="file-input" accept="image/*" class="block text-sm text-gray-600" />
 
-                    <div class="flex items-center gap-4">
-                        <label class="text-sm text-gray-600">Seam Width: <span id="seam-value" class="font-bold">8</span>px</label>
-                        <input type="range" id="seam-slider" min="1" max="128" value="8" class="flex-grow" />
-                        <label class="flex items-center text-sm"><input type="checkbox" id="opt-remove-seams" checked class="mr-2">Remove Seams</label>
-                    </div>
+                    <label class="space-y-2 text-sm font-semibold text-gray-700">
+                        Seam Width
+                        <div class="flex items-center gap-3">
+                            <input type="range" id="seam-slider" min="1" max="128" value="8" class="flex-grow accent-indigo-600" />
+                            <span id="seam-value" class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-gray-700">8px</span>
+                        </div>
+                    </label>
 
-                    <div class="flex gap-2">
-                        <button id="btn-apply" class="bg-indigo-600 text-white rounded-xl px-4 py-2 font-semibold">Apply</button>
-                        <button id="btn-download" class="bg-gray-800 text-white rounded-xl px-4 py-2 font-semibold">Download Tile</button>
-                    </div>
+                    <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm text-gray-500">Use a small seam width (4-16px) for photographic textures; larger widths may blur details.</div>
                 </div>
 
-                <div class="mt-6 text-sm text-gray-500">Tip: Use a small seam width (4-16px) for photographic textures; larger widths may blur details.</div>
-
+                <div class="mt-6 flex gap-2">
+                    <button id="btn-download" class="inline-flex items-center rounded-full bg-gray-800 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-900 transition">Download Tile</button>
+                </div>
             </article>
+
             <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
-                <h2 class="text-sm font-semibold text-gray-800 mb-2">Preview</h2>
-                <div class="mb-3">
-                    <canvas id="tile-canvas" width="256" height="256" class="w-full border rounded"></canvas>
-                </div>
-                <div class="relative group h-96">
-                    <!-- before/after stacked canvases; hover to reveal AFTER (processed) -->
-                    <div class="absolute inset-0 border rounded overflow-hidden z-0" style="background:#fff">
-                        <canvas id="before-tiled-canvas" width="768" height="768" class="w-full h-full block"></canvas>
+                <h2 class="text-xl font-bold text-gray-900">Preview</h2>
+                <p class="mt-2 text-sm text-gray-500">A compact single-tile preview sits beside the 3x3 comparison view.</p>
+
+                <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                    <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4">
+                        <h3 class="text-sm font-semibold text-gray-800">Single Tile</h3>
+                        <div class="mt-3 flex items-center justify-center rounded-2xl border border-gray-200 bg-white p-3">
+                            <canvas id="tile-canvas" width="160" height="160" class="block w-full max-w-[140px]"></canvas>
+                        </div>
                     </div>
-                    <div class="absolute inset-0 border rounded overflow-hidden transition-opacity duration-200 z-10" style="opacity:0;" id="after-wrapper">
-                        <canvas id="after-tiled-canvas" width="768" height="768" class="w-full h-full block"></canvas>
+
+                    <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4">
+                        <h3 class="text-sm font-semibold text-gray-800">3x3 Tiling</h3>
+                        <p class="mt-1 text-xs text-gray-500">After first. Hover to compare before.</p>
+                        <div class="mt-3 relative diff-preview overflow-hidden rounded-2xl border border-gray-200 bg-white h-44 sm:h-48">
+                            <div id="after-wrapper" class="absolute inset-0 z-10 transition-opacity duration-200">
+                                <canvas id="after-tiled-canvas" width="320" height="320" class="block h-full w-full"></canvas>
+                            </div>
+                            <div id="before-wrapper" class="absolute inset-0 z-0 transition-opacity duration-200">
+                                <canvas id="before-tiled-canvas" width="320" height="320" class="block h-full w-full"></canvas>
+                            </div>
+                            <div class="absolute bottom-2 left-2 rounded-full bg-black/40 px-2 py-1 text-[11px] font-medium text-white">Hover to view before</div>
+                        </div>
                     </div>
-                    <!-- hover overlay instruction -->
-                    <div class="absolute bottom-2 left-2 text-xs bg-black bg-opacity-40 text-white rounded px-2 py-1">Hover to view after</div>
                 </div>
-                <style>
-                    /* reveal processed tiles on preview hover */
-                    .group:hover #after-wrapper { opacity: 1 !important; pointer-events: auto; }
-                </style>
             </article>
         </section>
     </main>
@@ -85,7 +101,6 @@
         const fileInput = document.getElementById('file-input');
         const seamSlider = document.getElementById('seam-slider');
         const seamValue = document.getElementById('seam-value');
-        const optRemove = document.getElementById('opt-remove-seams');
         const btnApply = document.getElementById('btn-apply');
         const btnDownload = document.getElementById('btn-download');
 
@@ -99,8 +114,10 @@
         let img = null;
         let processedCanvas = null;
 
-        seamSlider.addEventListener('input', () => { seamValue.innerText = seamSlider.value; if (img) render(); });
-        optRemove.addEventListener('change', () => { if (img) render(); });
+        seamSlider.addEventListener('input', () => {
+            seamValue.innerText = `${seamSlider.value}px`;
+            if (img) render();
+        });
 
         fileInput.addEventListener('change', (e) => {
             const f = e.target.files && e.target.files[0];
@@ -115,29 +132,40 @@
         });
 
         btnApply.addEventListener('click', () => { if (!img) return; applyProcessing(); });
-        btnDownload.addEventListener('click', () => { if (!processedCanvas) applyProcessing(); if (!processedCanvas) return; processedCanvas.toBlob((b) => { const url = URL.createObjectURL(b); const a = document.createElement('a'); a.href = url; a.download = 'texture-tile.png'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }); });
+        btnDownload.addEventListener('click', () => {
+            if (!processedCanvas) applyProcessing();
+            if (!processedCanvas) return;
+            processedCanvas.toBlob((b) => {
+                const url = URL.createObjectURL(b);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'texture-tile.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        });
 
         function render() {
-            // small preview (shows processed if enabled)
             tileCtx.clearRect(0,0, tileCanvas.width, tileCanvas.height);
             if (!img) {
-                tileCtx.fillStyle = '#f8fafc'; tileCtx.fillRect(0,0,tileCanvas.width,tileCanvas.height);
-                tileCtx.fillStyle = '#94a3b8'; tileCtx.font = '12px sans-serif'; tileCtx.fillText('No image loaded', 10, 20);
+                tileCtx.fillStyle = '#f8fafc';
+                tileCtx.fillRect(0,0,tileCanvas.width,tileCanvas.height);
+                tileCtx.fillStyle = '#94a3b8';
+                tileCtx.font = '12px sans-serif';
+                tileCtx.fillText('No image loaded', 10, 20);
                 beforeTiledCtx.clearRect(0,0,beforeTiledCanvas.width,beforeTiledCanvas.height);
                 afterTiledCtx.clearRect(0,0,afterTiledCanvas.width,afterTiledCanvas.height);
                 return;
             }
 
-            // source (original) canvas
             const srcOriginal = createImageCanvas(img);
-            // compute processed preview dynamically so changes reflect immediately
-            const seam = Math.max(1, Math.min( Math.floor(parseInt(seamSlider.value)||8), Math.floor(Math.min(img.width,img.height)/2) ));
-            const srcProcessed = (optRemove.checked) ? removeSeams(srcOriginal, seam) : srcOriginal;
+            const seam = Math.max(1, Math.min(Math.floor(parseInt(seamSlider.value) || 8), Math.floor(Math.min(img.width, img.height) / 2)));
+            const srcProcessed = removeSeams(srcOriginal, seam);
 
-            // draw small tile preview (use processed if remove enabled)
             tileCtx.drawImage(srcProcessed, 0, 0, srcProcessed.width, srcProcessed.height, 0, 0, tileCanvas.width, tileCanvas.height);
 
-            // draw before (original) tiled
             beforeTiledCtx.clearRect(0,0,beforeTiledCanvas.width,beforeTiledCanvas.height);
             const tw = srcOriginal.width;
             const th = srcOriginal.height;
@@ -150,7 +178,6 @@
                 }
             }
 
-            // draw after (processed) tiled
             afterTiledCtx.clearRect(0,0,afterTiledCanvas.width,afterTiledCanvas.height);
             for (let y=0;y<3;y++){
                 for (let x=0;x<3;x++){
@@ -160,7 +187,6 @@
                 }
             }
 
-            // keep processedCanvas for download if user hits apply/download
             processedCanvas = srcProcessed;
         }
 
@@ -174,17 +200,10 @@
         }
 
         function applyProcessing() {
-            const seam = Math.max(1, Math.min( Math.floor(parseInt(seamSlider.value)||8), Math.floor(Math.min(img.width,img.height)/2) ));
-            const source = createImageCanvas(img);
-            if (optRemove.checked) {
-                processedCanvas = removeSeams(source, seam);
-            } else {
-                processedCanvas = source;
-            }
+            if (!img) return;
             render();
         }
 
-        // seam removal: average opposite edges across seam width for horizontal and vertical seams
         function removeSeams(canvasSrc, seam) {
             const w = canvasSrc.width;
             const h = canvasSrc.height;
@@ -194,7 +213,6 @@
             const imgData = ctx.getImageData(0,0,w,h);
             const data = imgData.data;
 
-            // horizontal (left/right)
             for (let x=0;x<seam;x++){
                 const xOpp = w - seam + x;
                 const t = (x + 1) / (seam + 1);
@@ -213,7 +231,6 @@
                 }
             }
 
-            // vertical (top/bottom)
             for (let y=0;y<seam;y++){
                 const yOpp = h - seam + y;
                 const t = (y + 1) / (seam + 1);
@@ -236,7 +253,6 @@
             return c;
         }
 
-        // initial render (empty)
         render();
     });
     </script>
