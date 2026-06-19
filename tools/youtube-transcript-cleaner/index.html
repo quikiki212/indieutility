@@ -715,21 +715,46 @@
 
                 emptyOverlay.classList.add('hidden');
                 
+                // Decode HTML entities (use DOM to safely decode common sequences like &gt;)
+                function decodeHTMLEntities(str) {
+                    try {
+                        const txt = document.createElement('textarea');
+                        txt.innerHTML = str;
+                        return txt.value;
+                    } catch (e) {
+                        return str;
+                    }
+                }
+
                 // Helper to scrub line features
                 function processParagraphLines(textBlock) {
                     let lines = textBlock.split(/\r?\n/).map(line => {
                         let l = line;
+
+                        // Decode HTML entities first (e.g., &gt; -> >)
+                        l = decodeHTMLEntities(l);
+
+                        // Remove common arrow artifacts like >>, >>>, » etc.
+                        l = l.replace(/[>»]{2,}/g, '');
+                        // Trim stray single > or arrows at line ends/starts
+                        l = l.replace(/^[>\s]+|[>\s]+$/g, '');
+
                         // 1. Clean Timestamps
                         if (optRemoveTimestamps.checked) {
-                            const timestampRegex = /(?:\[?\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{3})?\]?)|(?:\(\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{3})?\)?)|(?:\b\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{3})?\b)/g;
+                            const timestampRegex = /(?:\[?\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{1,3})?\]?)|(?:\(\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{1,3})?\)?)|(?:\b\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{1,3})?\b)/g;
                             l = l.replace(timestampRegex, '');
                             l = l.replace(/\[Music\]|\[Applause\]|\[Laughter\]/gi, '');
                         }
+
+                        // Remove bracketed stage directions or noise (e.g. [sighs], (laughs))
+                        l = l.replace(/\[[^\]]{1,120}\]|\([^\)]{1,120}\)/g, '');
+
                         // 2. Clean Speaker Tags
                         if (optRemoveSpeakers.checked) {
                             const speakerRegex = /(?:^[A-Z][A-Za-z0-9\s_]{1,15}:\s*)|(?:\[[^\]]+\]:\s*)|(?:\([^)]+\):\s*)/gm;
                             l = l.replace(speakerRegex, '');
                         }
+
                         return l.trim();
                     }).filter(l => l.length > 0);
 
