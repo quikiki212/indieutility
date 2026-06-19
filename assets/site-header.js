@@ -60,17 +60,6 @@
     const isAnimationPage = window.location.pathname.includes('/css-animation-generator');
     const isTexturePage = window.location.pathname.includes('/texture-seam-remover');
 
-    if (!isTranscriptPage &&
-    !isGlassPage &&
-    !isJsonPage &&
-    !isSqlPage &&
-    !isRegexPage &&
-    !isUrlEncoderPage &&
-    !isImageConverterPage &&
-    !isPalettePage &&
-    !isAnimationPage &&
-    !isTexturePage) return;
-    
     const tools = [
         {
             name: 'YouTube Transcript Cleaner',
