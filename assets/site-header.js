@@ -69,6 +69,12 @@
             category: 'text'
         },
         {
+            name: 'YouTube Clip Finder',
+            description: 'Find short, high-impact clips from a transcript.',
+            href: '/tools/youtube-clip-finder/',
+            category: 'text'
+        },
+        {
             name: 'SVG Pattern Generator',
             description: 'Create seamless, customizable vector patterns.',
             href: '/tools/svg-pattern-generator/',
