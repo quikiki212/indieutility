@@ -590,12 +590,6 @@
                 return a.name.localeCompare(b.name);
             });
 
-            // Selector References
-            const navDropdownToggle = document.getElementById('nav-dropdown-toggle');
-            const navDropdownMenu = document.getElementById('nav-dropdown-menu');
-            const navDropdownItems = document.getElementById('nav-dropdown-items');
-            const navDropdownWrapper = document.getElementById('nav-dropdown-wrapper');
-
             const heroSearchWrapper = document.getElementById('hero-search-wrapper');
             const heroSearchInput = document.getElementById('hero-search-input');
             const searchDropdownMenu = document.getElementById('search-dropdown-menu');
@@ -604,31 +598,6 @@
             const toolsCardsGrid = document.getElementById('tools-cards-grid');
             const filterBtnGroup = document.getElementById('filter-btn-group');
             const gridEmptyState = document.getElementById('grid-empty-state');
-
-            // --- 1. Populate Dropdown Options ---
-            function buildNavDropdown() {
-                navDropdownItems.innerHTML = '';
-                toolsDb.forEach(tool => {
-                    let element;
-                    if (tool.active) {
-                        element = document.createElement('a');
-                        element.href = tool.path;
-                        element.className = "block p-3 hover:bg-gray-50 transition";
-                        element.innerHTML = `
-                            <span class="block text-sm font-bold text-gray-900">${tool.name}</span>
-                            <span class="block text-[11px] text-gray-500 mt-0.5">${tool.desc}</span>
-                        `;
-                    } else {
-                        element = document.createElement('div');
-                        element.className = "block p-3 opacity-75 cursor-default";
-                        element.innerHTML = `
-                            <span class="block text-sm font-bold text-gray-900">${tool.name}</span>
-                            <span class="block text-[11px] text-gray-500 mt-0.5">${tool.desc}</span>
-                        `;
-                    }
-                    navDropdownItems.appendChild(element);
-                });
-            }
 
             // --- 2. Populate Cards Grid ---
             function buildCardsGrid(category = 'all', query = '') {
@@ -677,7 +646,7 @@
             });
 
             // --- 4. Initialize Page Elements ---
-            buildNavDropdown();
+            
             buildCardsGrid();
 
             // --- 5. Handle Filter Button Clicks ---
@@ -693,13 +662,6 @@
 
                 const category = targetBtn.getAttribute('data-category');
                 buildCardsGrid(category, heroSearchInput.value);
-            });
-
-            // --- 6. Handle Click Outside Dropdown ---
-            document.addEventListener('click', (e) => {
-                if (!navDropdownWrapper.contains(e.target)) {
-                    navDropdownMenu.classList.add('hidden');
-                }
             });
         });
     </script>
