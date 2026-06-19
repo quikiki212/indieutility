@@ -1,8 +1,15 @@
-﻿(() => {
+(() => {
     const header = document.getElementById('site-header');
     if (!header) return;
 
     const isToolPage = window.location.pathname.startsWith('/tools/');
+    const isTranscriptPage = window.location.pathname.includes('/youtube-transcript-cleaner');
+    const isGlassPage = window.location.pathname.includes('/glassmorphism-ui-engine');
+    const isJsonPage = window.location.pathname.includes('/json-beautifier-validator');
+    const isSqlPage = window.location.pathname.includes('/sql-formatter');
+    const isRegexPage = window.location.pathname.includes('/regex-editor');
+    const isUrlEncoderPage = window.location.pathname.includes('/url-encoder-decoder');
+    const isImageConverterPage = window.location.pathname.includes('/image-format-converter');
     const localFaqHref = isToolPage ? '#faq' : '/#faq';
 
     header.innerHTML = `
@@ -50,20 +57,73 @@
         ` : ''}
     `;
 
+    const isPalettePage = window.location.pathname.includes('/color-palette-generator');
+    const isAnimationPage = window.location.pathname.includes('/css-animation-generator');
+    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage && !isRegexPage && !isUrlEncoderPage && !isImageConverterPage && !isPalettePage && !isAnimationPage) return;
+
     const tools = [
-        { name: 'YouTube Transcript Cleaner', description: 'Clean timestamps and overlapping rolling captions.', href: '/tools/youtube-transcript-cleaner/', category: 'text' },
-        { name: 'SVG Pattern Generator', description: 'Create seamless, customizable vector patterns.', href: '/tools/svg-pattern-generator/', category: 'design' },
-        { name: 'Glassmorphism UI Engine', description: 'Design polished glass surfaces and copy the CSS.', href: '/tools/glassmorphism-ui-engine/', category: 'design' },
-        { name: 'JSON Beautifier & Validator', description: 'Format, validate, minify, and inspect JSON safely.', href: '/tools/json-beautifier-validator/', category: 'dev' },
-        { name: 'SQL Formatter', description: 'Beautify, minify, and customize SQL queries.', href: '/tools/sql-formatter/', category: 'dev' },
-        { name: 'Regex Editor & Tester', description: 'Test, debug, and visualize regex patterns with live feedback.', href: '/tools/regex-editor/', category: 'dev' },
-        { name: 'URL Encoder & Decoder', description: 'Encode and decode URLs with multiple encoding options.', href: '/tools/url-encoder-decoder/', category: 'dev' },
-        { name: 'Image Format Converter', description: 'Convert images between PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, and more.', href: '/tools/image-format-converter/', category: 'design' },
-        { name: 'Color Palette Generator', description: 'Generate harmonious palettes, export CSS variables, and copy HEX/RGB/HSL values.', href: '/tools/color-palette-generator/', category: 'design' },
-        { name: 'CSS Animation Generator', description: 'Build fade, slide, bounce, pulse, and custom animation code for modern web UI.', href: '/tools/css-animation-generator/', category: 'design' }
+        {
+            name: 'YouTube Transcript Cleaner',
+            description: 'Clean timestamps and overlapping rolling captions.',
+            href: '/tools/youtube-transcript-cleaner/',
+            category: 'text'
+        },
+        {
+            name: 'SVG Pattern Generator',
+            description: 'Create seamless, customizable vector patterns.',
+            href: '/tools/svg-pattern-generator/',
+            category: 'design'
+        },
+        {
+            name: 'Glassmorphism UI Engine',
+            description: 'Design polished glass surfaces and copy the CSS.',
+            href: '/tools/glassmorphism-ui-engine/',
+            category: 'design'
+        },
+        {
+            name: 'JSON Beautifier & Validator',
+            description: 'Format, validate, minify, and inspect JSON safely.',
+            href: '/tools/json-beautifier-validator/',
+            category: 'dev'
+        },
+        {
+            name: 'SQL Formatter',
+            description: 'Beautify, minify, and customize SQL queries.',
+            href: '/tools/sql-formatter/',
+            category: 'dev'
+        },
+        {
+            name: 'Regex Editor & Tester',
+            description: 'Test, debug, and visualize regex patterns with live feedback.',
+            href: '/tools/regex-editor/',
+            category: 'dev'
+        },
+        {
+            name: 'URL Encoder & Decoder',
+            description: 'Encode and decode URLs with multiple encoding options.',
+            href: '/tools/url-encoder-decoder/',
+            category: 'dev'
+        },
+        {
+            name: 'Image Format Converter',
+            description: 'Convert images between PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, and more.',
+            href: '/tools/image-format-converter/',
+            category: 'design'
+        },
+        {
+            name: 'Color Palette Generator',
+            description: 'Generate harmonious palettes, export CSS variables, and copy HEX/RGB/HSL values.',
+            href: '/tools/color-palette-generator/',
+            category: 'design'
+        }
     ];
 
-    const categoryWeights = { text: 1, dev: 2, design: 3 };
+    const categoryWeights = {
+        text: 1,
+        dev: 2,
+        design: 3
+    };
+
     tools.sort((a, b) => {
         const weightA = categoryWeights[a.category] || 99;
         const weightB = categoryWeights[b.category] || 99;
