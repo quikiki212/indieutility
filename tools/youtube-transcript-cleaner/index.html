@@ -610,42 +610,35 @@
                 }
             }
 
-            // Continuous Sliding Window Rolling Duplicator
+            // Continuous Sliding Window Rolling Duplicator (improved: compare normalized tokens and remove duplicate second occurrence)
             function cleanContinuousRollingDuplicates(text) {
                 if (!text) return "";
-                let words = text.split(/\s+/).filter(w => w.length > 0);
+                const words = text.split(/\s+/).filter(w => w.length > 0);
                 if (words.length === 0) return "";
-                
+
+                // Create a normalized version for safe comparison (preserves original words array)
+                const normalized = words.map(w => w.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^\p{L}\p{N}]/gu, ''));
+
                 let i = 0;
-                while (i < words.length) {
+                const maxWindow = 20; // reasonable upper bound for duplicated chunks
+                while (i < normalized.length) {
                     let foundDup = false;
-                    
-                    // Scans windows from length 2 to 35 words
-                    for (let length = 2; length <= 35; length++) {
-                        if (i + length * 2 > words.length) {
-                            break;
-                        }
-                        
-                        let match = true;
+                    // try larger windows first for better accuracy
+                    const maxLen = Math.min(maxWindow, Math.floor((normalized.length - i) / 2));
+                    for (let length = maxLen; length >= 2; length--) {
+                        let ok = true;
                         for (let k = 0; k < length; k++) {
-                            let w1 = words[i + k].toLowerCase().replace(/[^a-z0-9]/g, '');
-                            let w2 = words[i + length + k].toLowerCase().replace(/[^a-z0-9]/g, '');
-                            if (w1 !== w2) {
-                                match = false;
-                                break;
-                            }
+                            if (normalized[i + k] !== normalized[i + length + k]) { ok = false; break; }
                         }
-                        
-                        if (match) {
-                            words.splice(i, length); // Delete first instance
+                        if (ok) {
+                            // remove the second repeated slice (preserve original first occurrence)
+                            words.splice(i + length, length);
+                            normalized.splice(i + length, length);
                             foundDup = true;
-                            break; // Restart evaluation window checks at index i
+                            break; // re-evaluate at same i
                         }
                     }
-                    
-                    if (!foundDup) {
-                        i++;
-                    }
+                    if (!foundDup) i++;
                 }
                 return words.join(' ');
             }
