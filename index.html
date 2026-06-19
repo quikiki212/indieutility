@@ -538,7 +538,7 @@
                     path: '/tools/youtube-transcript-cleaner/',
                     category: 'text',
                     active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="00 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                            </svg>`
                 },
@@ -551,7 +551,7 @@
                     category: 'dev',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16v5c0 1.657 3.582 3 8 3s8-1.343 8-3-3.582-3-8-3-8 1.343-8 3zm0 0v5c0 1.657 3.582 3 8 3 .696 0 1.371-.033 2.014-.095M4 12v5c0 1.657 3.582 3 8 3 1.21 0 2.357-.101 3.385-.282M19 14v6m-3-3h6" />
                            </svg>`
                 },
                 {
@@ -575,7 +575,7 @@
                     category: 'design',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                            </svg>`
                 },
                 {
@@ -587,7 +587,7 @@
                     category: 'design',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                            </svg>`
                 },
                 {
@@ -694,248 +694,53 @@
                     if (tool.active) {
                         element = document.createElement('a');
                         element.href = tool.path;
-                        element.className = "w-full text-left p-3 flex items-center gap-3.5 hover:bg-gray-50 transition focus:outline-none";
+                        element.className = "block p-3 hover:bg-gray-50 transition";
                         element.innerHTML = `
-                            <div class="bg-indigo-50 text-indigo-600 p-2 rounded-xl shrink-0">
-                                ${tool.icon}
-                            </div>
-                            <div class="min-w-0">
-                                <span class="block text-sm font-bold text-gray-900 truncate">${tool.name}</span>
-                                <span class="block text-[10px] text-gray-400 truncate max-w-[210px] mt-0.5">${tool.desc}</span>
-                            </div>
+                            <span class="block text-sm font-bold text-gray-900">${tool.name}</span>
+                            <span class="block text-[11px] text-gray-500 mt-0.5">${tool.desc}</span>
                         `;
                     } else {
                         element = document.createElement('div');
-                        element.className = "w-full text-left p-3 flex items-center gap-3.5 opacity-60 select-none cursor-not-allowed";
+                        element.className = "block p-3 opacity-75 cursor-default";
                         element.innerHTML = `
-                            <div class="bg-gray-100 text-gray-400 p-2 rounded-xl shrink-0">
-                                ${tool.icon}
-                            </div>
-                            <div class="min-w-0">
-                                <span class="block text-sm font-bold text-gray-500 truncate">
-                                    ${tool.name}
-                                    <span class="inline-block ml-1.5 text-[8px] font-extrabold bg-gray-200 text-gray-600 rounded px-1 uppercase tracking-wider">Soon</span>
-                                </span>
-                                <span class="block text-[10px] text-gray-400 truncate max-w-[210px] mt-0.5">${tool.desc}</span>
-                            </div>
+                            <span class="block text-sm font-bold text-gray-900">${tool.name}</span>
+                            <span class="block text-[11px] text-gray-500 mt-0.5">${tool.desc}</span>
                         `;
                     }
                     navDropdownItems.appendChild(element);
                 });
             }
 
-            // --- 2. Populate Card List ---
-            function buildCardsGrid(categoryFilter = 'all', searchQuery = '') {
-                toolsCardsGrid.innerHTML = '';
-                const normQuery = searchQuery.toLowerCase().trim();
+            // --- 2. Populate Cards Grid ---
+            function buildCardsGrid(category = 'all', query = '') {
+                toolsDb.forEach(tool => {
+                    if (category !== 'all' && tool.category !== category) return;
+                    if (query && !tool.name.toLowerCase().includes(query.toLowerCase())) return;
 
-                const filtered = toolsDb.filter(tool => {
-                    const matchesCategory = (categoryFilter === 'all' || tool.category === categoryFilter);
-                    const matchesSearch = (!normQuery || 
-                                           tool.name.toLowerCase().includes(normQuery) || 
-                                           tool.desc.toLowerCase().includes(normQuery));
-                    return matchesCategory && matchesSearch;
-                });
-
-                if (filtered.length === 0) {
-                    gridEmptyState.classList.remove('hidden');
-                } else {
-                    gridEmptyState.classList.add('hidden');
-                    filtered.forEach((tool, idx) => {
-                        const card = document.createElement('article');
-                        
-                        if (tool.active) {
-                            card.className = "bg-white rounded-3xl border border-gray-200 p-6 flex flex-col justify-between hover:shadow-md transition duration-200 card-hover reveal";
-                            card.style.setProperty('--reveal-delay', `${idx * 60}ms`);
-                            card.innerHTML = `
-                                <div>
-                                    <div class="flex items-center justify-between mb-5">
-                                        <div class="bg-indigo-50 text-indigo-600 p-3 rounded-2xl w-12 h-12 flex items-center justify-center">
-                                            ${tool.icon}
-                                        </div>
-
-                                        <span class="text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full bg-gray-100 text-gray-600">
-                                            ${categoryLabels[tool.category]}
-                                        </span>
-                                    </div>
-
-                                    <h3 class="text-xl font-bold text-gray-900 mb-3">${tool.name}</h3>
-
-                                    <p class="text-sm text-gray-600 leading-relaxed mb-4">${tool.desc}</p>
-
-                                    <div class="bg-gray-50 border border-gray-100 rounded-2xl p-3 mb-5">
-                                        <div class="text-xs font-bold uppercase tracking-wide text-gray-400 mb-1">
-                                            Typical Use
-                                        </div>
-
-                                        <p class="text-sm text-gray-700">
-                                            ${tool.useCase || 'Everyday productivity and workflow tasks.'}
-                                        </p>
-                                    </div>
-
-                                    <div class="flex flex-wrap gap-2 mb-6">
-                                        <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">Free</span>
-                                        <span class="text-xs px-2 py-1 rounded-full bg-indigo-100 text-indigo-700">Browser Tool</span>
-                                        <span class="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">No Signup</span>
-                                    </div>
-                                </div>
-
-                                <div class="relative mt-auto preview-hover-wrapper">
-                                    <a href="${tool.path}"
-                                       class="w-full inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3.5 px-4 rounded-xl transition focus:outline-none text-center">
-                                        Open Utility →
-                                    </a>
-
-                                    <div class="pointer-events-none hidden overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl preview-popover">
-                                        <div class="flex items-center gap-1.5 border-b border-gray-100 bg-gray-50 px-3 py-2">
-                                            <span class="h-2.5 w-2.5 rounded-full bg-red-300"></span>
-                                            <span class="h-2.5 w-2.5 rounded-full bg-yellow-300"></span>
-                                            <span class="h-2.5 w-2.5 rounded-full bg-green-300"></span>
-                                            <span class="ml-2 truncate text-xs font-semibold text-gray-500">${tool.name}</span>
-                                        </div>
-
-                                        <div class="preview-frame-shell">
-                                            <iframe
-                                                title="${tool.name} preview"
-                                                data-src="${tool.path}"
-                                                class="tool-preview-frame pointer-events-none border-0">
-                                            </iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                        } else {
-                            card.className = "bg-gray-100 rounded-3xl border border-gray-200 p-6 flex flex-col justify-between select-none cursor-not-allowed opacity-60 card-hover reveal";
-                            card.style.setProperty('--reveal-delay', `${idx * 60}ms`);
-                            card.innerHTML = `
-                                <div>
-                                    <div class="bg-gray-200 text-gray-400 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
-                                        ${tool.icon}
-                                    </div>
-                                    <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-500 text-[10px] font-semibold uppercase tracking-wide px-3 py-1 mb-3">${categoryLabels[tool.category]}</span>
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <h3 class="text-lg font-bold text-gray-500">${tool.name}</h3>
-                                        <span class="px-2 py-0.5 text-[8px] font-extrabold bg-gray-200 text-gray-650 rounded-full tracking-wider uppercase shrink-0">Coming Soon</span>
-                                    </div>
-                                    <p class="text-sm text-gray-400 leading-relaxed mb-6">${tool.desc}</p>
-                                </div>
-                                <button disabled type="button" class="w-full inline-flex items-center justify-center bg-gray-250 text-gray-400 text-xs font-bold py-3.5 px-4 rounded-xl cursor-not-allowed">
-                                    Coming Soon &nbsp;🔒
-                                </button>
-                            `;
-                        }
-                        toolsCardsGrid.appendChild(card);
-
-                        card.querySelectorAll('iframe[data-src]').forEach(frame => {
-                            const wrapper = frame.closest('.preview-hover-wrapper');
-                            if (!wrapper) return;
-
-                            wrapper.addEventListener('mouseenter', () => {
-                                if (!frame.src) frame.src = frame.dataset.src;
-                            }, { once: true });
-
-                            wrapper.addEventListener('focusin', () => {
-                                if (!frame.src) frame.src = frame.dataset.src;
-                            }, { once: true });
-                        });
-                    });
-                }
-            }
-
-                // --- Animations: reveal on scroll + hero entrance ---
-                function initRevealObserver() {
-                    const existing = document.querySelectorAll('.reveal');
-                    if (!existing || existing.length === 0) return;
-                    const io = new IntersectionObserver((entries, observer) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('reveal-show');
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    }, { threshold: 0.12 });
-                    existing.forEach(el => io.observe(el));
-                }
-
-                function runHeroEntrance() {
-                    const heroSection = document.querySelector('main > section');
-                    if (!heroSection) return;
-                    const badge = heroSection.querySelector('span.inline-block');
-                    const heading = heroSection.querySelector('h1');
-                    const para = heroSection.querySelector('p');
-                    const search = document.getElementById('hero-search-wrapper');
-                    const items = [badge, heading, para, search].filter(Boolean);
-                    items.forEach((el, i) => {
-                        el.classList.add('hero-entrance');
-                        setTimeout(() => el.classList.add('show'), 80 + i * 80);
-                    });
-                }
-
-            // --- 3. Instant Search Engine ---
-            function runHeroSearch(query) {
-                searchItemsContainer.innerHTML = '';
-                const normQuery = query.toLowerCase().trim();
-
-                if (!normQuery) {
-                    searchDropdownMenu.classList.add('hidden');
-                    return;
-                }
-
-                const matches = toolsDb.filter(t => t.name.toLowerCase().includes(normQuery) || t.desc.toLowerCase().includes(normQuery));
-
-                if (matches.length === 0) {
-                    searchItemsContainer.innerHTML = `
-                        <div class="p-4 text-xs font-medium text-gray-400 text-center">
-                            No match found. Clear and try another keyword.
-                        </div>
+                    const card = document.createElement('div');
+                    card.className = "rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition";
+                    card.innerHTML = `
+                        <a href="${tool.path}" class="block">
+                            ${tool.icon}
+                            <h3 class="mt-2 font-bold text-gray-900">${tool.name}</h3>
+                            <p class="mt-1 text-sm text-gray-500">${tool.desc}</p>
+                        </a>
                     `;
-                } else {
-                    matches.forEach(tool => {
-                        let element;
-                        if (tool.active) {
-                            element = document.createElement('a');
-                            element.href = tool.path;
-                            element.className = "w-full text-left p-3 flex items-center gap-3 hover:bg-gray-50 transition rounded-xl focus:outline-none";
-                            element.innerHTML = `
-                                <div class="bg-indigo-50 text-indigo-600 p-2.5 rounded-xl shrink-0">
-                                    ${tool.icon}
-                                </div>
-                                <div class="min-w-0">
-                                    <span class="block text-sm font-bold text-gray-900 truncate">${tool.name}</span>
-                                    <span class="block text-xs text-gray-450 truncate">${tool.desc}</span>
-                                </div>
-                            `;
-                        } else {
-                            element = document.createElement('div');
-                            element.className = "w-full text-left p-3 flex items-center gap-3 opacity-60 rounded-xl select-none cursor-not-allowed";
-                            element.innerHTML = `
-                                <div class="bg-gray-100 text-gray-400 p-2.5 rounded-xl shrink-0">
-                                    ${tool.icon}
-                                </div>
-                                <div class="min-w-0">
-                                    <span class="block text-sm font-bold text-gray-500 truncate">
-                                        ${tool.name}
-                                        <span class="inline-block ml-1.5 text-[8px] font-extrabold bg-gray-200 text-gray-600 rounded px-1 uppercase tracking-wider">Soon</span>
-                                    </span>
-                                    <span class="block text-xs text-gray-400 truncate">${tool.desc}</span>
-                                </div>
-                            `;
-                        }
-                        searchItemsContainer.appendChild(element);
-                    });
-                }
-                searchDropdownMenu.classList.remove('hidden');
+                    toolsCardsGrid.appendChild(card);
+                });
             }
 
-            // --- 4. Interactive Event Triggers ---
-
-            // Toggle Navigation Dropdown
-            navDropdownToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                navDropdownMenu.classList.toggle('hidden');
+            // --- 3. Handle Search Input ---
+            heroSearchInput.addEventListener('input', () => {
+                const query = heroSearchInput.value.trim().toLowerCase();
+                buildCardsGrid(filterBtnGroup.querySelector('.bg-indigo-600')?.getAttribute('data-category'), query);
             });
 
-            // Interactive filtering buttons
+            // --- 4. Initialize Page Elements ---
+            buildNavDropdown();
+            buildCardsGrid();
+
+            // --- 5. Handle Filter Button Clicks ---
             filterBtnGroup.addEventListener('click', (e) => {
                 const targetBtn = e.target.closest('.filter-btn');
                 if (!targetBtn) return;
@@ -948,38 +753,14 @@
 
                 const category = targetBtn.getAttribute('data-category');
                 buildCardsGrid(category, heroSearchInput.value);
-                initRevealObserver();
             });
 
-            // Input monitoring inside hero search
-            heroSearchInput.addEventListener('click', (e) => {
-                e.stopPropagation();
-                runHeroSearch(heroSearchInput.value);
-            });
-
-            heroSearchInput.addEventListener('input', () => {
-                runHeroSearch(heroSearchInput.value);
-                const activeCategoryBtn = filterBtnGroup.querySelector('.bg-indigo-600');
-                const category = activeCategoryBtn ? activeCategoryBtn.getAttribute('data-category') : 'all';
-                buildCardsGrid(category, heroSearchInput.value);
-                initRevealObserver();
-            });
-
-            // Universal dismissal when clicking off elements
+            // --- 6. Handle Click Outside Dropdown ---
             document.addEventListener('click', (e) => {
                 if (!navDropdownWrapper.contains(e.target)) {
                     navDropdownMenu.classList.add('hidden');
                 }
-                if (!heroSearchWrapper.contains(e.target)) {
-                    searchDropdownMenu.classList.add('hidden');
-                }
             });
-
-            // Init page elements
-            buildNavDropdown();
-            buildCardsGrid();
-            initRevealObserver();
-            runHeroEntrance();
         });
     </script>
 </body>
