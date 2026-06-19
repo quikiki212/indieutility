@@ -245,19 +245,28 @@
             const pre = document.createElement('div');
             pre.id = 'site-preloader';
             pre.innerHTML = `<div class="spinner" aria-hidden="true"></div>`;
-            document.documentElement.appendChild(pre);
+            // prefer body, but fall back to documentElement
+            const container = document.body || document.documentElement;
+            container.appendChild(pre);
 
             const hide = () => {
-                pre.classList.add('preloader-hide');
-                setTimeout(() => { try { pre.remove(); } catch(e){} }, 540);
+                try {
+                    pre.classList.add('preloader-hide');
+                    setTimeout(() => { try { pre.remove(); } catch(e){} }, 540);
+                } catch (e) { try { pre.remove(); } catch(_){} }
             };
 
-            if (document.readyState === 'complete') {
-                // small delay so entry animation uses preloader briefly
+            // Hide on DOMContentLoaded or full load, whichever comes first
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
                 setTimeout(hide, 120);
             } else {
+                const onReady = () => { setTimeout(hide, 120); window.removeEventListener('DOMContentLoaded', onReady); };
+                window.addEventListener('DOMContentLoaded', onReady, { once: true });
                 window.addEventListener('load', () => setTimeout(hide, 120), { once: true });
             }
+
+            // Safety fallback: ensure preloader never blocks longer than 2s
+            setTimeout(() => { if (document.getElementById('site-preloader')) hide(); }, 2000);
         } catch (err) {
             // don't block the page
             console.error('preloader failed', err);
