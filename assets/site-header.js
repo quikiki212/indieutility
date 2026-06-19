@@ -247,6 +247,18 @@
             pre.innerHTML = `<div class="spinner" aria-hidden="true"></div>`;
             // prefer body, but fall back to documentElement
             const container = document.body || document.documentElement;
+            // match the page background to avoid fading to white
+            try {
+                const computedBg = (container && window.getComputedStyle(container).backgroundColor) || '';
+                if (computedBg && computedBg !== 'rgba(0, 0, 0, 0)' && computedBg !== 'transparent') {
+                    pre.style.background = computedBg;
+                } else {
+                    // fall back to transparent so underlying content shows through instead of white
+                    pre.style.background = 'transparent';
+                }
+            } catch (e) {
+                pre.style.background = 'transparent';
+            }
             container.appendChild(pre);
 
             const hide = () => {
