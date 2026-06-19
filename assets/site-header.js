@@ -10,7 +10,6 @@
     const isRegexPage = window.location.pathname.includes('/regex-editor');
     const isUrlEncoderPage = window.location.pathname.includes('/url-encoder-decoder');
     const isImageConverterPage = window.location.pathname.includes('/image-format-converter');
-    const localFaqHref = isToolPage ? '#faq' : '/#faq';
 
     header.innerHTML = `
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -34,7 +33,6 @@
                         <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50"></div>
                     </div>
                 </div>
-                <a href="${localFaqHref}" class="hidden sm:inline text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">FAQs</a>
                 <a href="https://ko-fi.com/quikiki212" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg border border-indigo-200 bg-white px-2.5 py-2 text-xs sm:text-sm font-semibold text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                     <span aria-hidden="true" class="mr-1">&hearts;</span> Ko-fi
                 </a>
