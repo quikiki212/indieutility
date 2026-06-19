@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <title>Color Palette Generator | IndieUtility</title>
+    <meta name="description" content="Generate harmonious color palettes and export CSS variable sets, HEX, RGB, and HSL values. A client-side palette maker for web design and branding.">
+    <link rel="canonical" href="https://indieutility.com/tools/color-palette-generator/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://indieutility.com/tools/color-palette-generator/">
+    <meta property="og:title" content="Color Palette Generator | IndieUtility">
+    <meta property="og:description" content="Generate harmonious color palettes and export CSS variable sets. A client-side palette maker for design and branding.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js?v=tools-3" defer></script>
+    <meta name="google-adsense-account" content="ca-pub-2704008668461544">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2704008668461544" crossorigin="anonymous"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        .color-swatch { min-height: 120px; }
+        .code-font { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+        .copy-btn:hover { background: #4338ca; }
+        .toast { opacity: 0; transform: translateY(8px); pointer-events: none; transition: all 180ms ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50"></header>
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <section class="mb-8">
+            <div class="max-w-3xl">
+                <p class="text-sm uppercase tracking-widest text-indigo-600 font-bold">Color Tools</p>
+                <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold text-gray-900">Color Palette Generator</h1>
+                <p class="mt-4 text-base text-gray-600">Create balanced palettes with complementary, monochrome, triadic, and custom shades. Copy HEX, RGB, or HSL values and export a ready-to-use CSS variable block.</p>
+            </div>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-[1.5fr_1fr] mb-8">
+            <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
+                <div class="flex flex-wrap gap-4 items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Palette Controls</h2>
+                        <p class="mt-1 text-sm text-gray-500">Select a base color, palette style, and number of swatches.</p>
+                    </div>
+                    <button id="btn-generate" class="inline-flex items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Generate Palette</button>
+                </div>
+
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <label class="space-y-2 text-sm font-semibold text-gray-700">
+                        Base Color
+                        <input type="color" id="base-color" value="#4f46e5" class="w-full h-12 rounded-2xl border border-gray-200 p-1" aria-label="Base color picker">
+                    </label>
+                    <label class="space-y-2 text-sm font-semibold text-gray-700">
+                        Palette Style
+                        <select id="palette-style" class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+                            <option value="analogous">Analogous</option>
+                            <option value="complementary">Complementary</option>
+                            <option value="triadic">Triadic</option>
+                            <option value="splitComplementary">Split Complementary</option>
+                            <option value="monochrome">Monochrome</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </label>
+                    <label class="space-y-2 text-sm font-semibold text-gray-700">
+                        Swatches
+                        <input type="number" id="swatch-count" min="3" max="8" value="5" class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+                    </label>
+                    <label class="space-y-2 text-sm font-semibold text-gray-700">
+                        Output Format
+                        <select id="output-format" class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+                            <option value="hex">HEX</option>
+                            <option value="rgb">RGB</option>
+                            <option value="hsl">HSL</option>
+                        </select>
+                    </label>
+                </div>
+
+                <section class="mt-6 rounded-3xl bg-slate-50 border border-slate-200 p-4">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.25em] font-semibold text-slate-500">Generated Palette</p>
+                            <p id="palette-summary" class="mt-1 text-sm text-slate-600">Select options and generate a fresh palette.</p>
+                        </div>
+                        <button id="btn-copy-css" class="rounded-full bg-white border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-indigo-50 transition focus:outline-none">Copy CSS</button>
+                    </div>
+                    <div id="palette-swatches" class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5"></div>
+                </section>
+            </article>
+
+            <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
+                <h2 class="text-xl font-bold text-gray-900">Export</h2>
+                <p class="mt-2 text-sm text-gray-500">Copy your palette values or export them as CSS variables.</p>
+
+                <div class="mt-4 rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600">#</span>
+                        <div>
+                            <p class="text-sm font-semibold text-gray-900">CSS Variables</p>
+                            <p class="text-xs text-gray-500">Copy ready-to-paste variables.</p>
+                        </div>
+                    </div>
+                    <pre id="css-output" class="code-font whitespace-pre-wrap rounded-2xl border border-gray-200 bg-white p-4 text-sm text-slate-700 min-h-[220px]">/* CSS variables will appear here */</pre>
+                </div>
+
+                <button id="btn-copy-values" class="mt-5 inline-flex items-center justify-center w-full rounded-full bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-700 transition focus:outline-none">Copy Values</button>
+            </article>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-3">
+            <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h3 class="font-bold text-gray-900">How it works</h3>
+                <p class="mt-3 text-sm leading-relaxed text-gray-600">The generator shifts the base hue and builds matching shades using blending rules for each palette style. Use the preview swatches to copy values instantly.</p>
+            </article>
+            <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h3 class="font-bold text-gray-900">Best use cases</h3>
+                <ul class="mt-3 space-y-2 text-sm text-gray-600">
+                    <li>• UI theming and website accent palettes</li>
+                    <li>• Branding color systems for buttons and backgrounds</li>
+                    <li>• Accessible contrast checks with consistent color families</li>
+                </ul>
+            </article>
+            <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h3 class="font-bold text-gray-900">Tips</h3>
+                <ul class="mt-3 space-y-2 text-sm text-gray-600">
+                    <li>• Choose <strong>complementary</strong> for bold contrast.</li>
+                    <li>• Use <strong>monochrome</strong> for subtle, elegant palettes.</li>
+                    <li>• Adjust swatches to fine-tune saturation and intensity.</li>
+                </ul>
+            </article>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-sm">&copy; 2026 IndieUtility. Privacy-first browser tools.</p>
+            <a href="/" class="text-sm font-semibold text-indigo-400 hover:text-white">Back to homepage</a>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast fixed bottom-6 right-6 rounded-full bg-slate-900 px-5 py-3 text-sm text-white shadow-lg">Copied to clipboard</div>
+
+    <script>
+        const paletteSwatches = document.getElementById('palette-swatches');
+        const paletteSummary = document.getElementById('palette-summary');
+        const cssOutput = document.getElementById('css-output');
+        const toast = document.getElementById('toast');
+        const baseColorInput = document.getElementById('base-color');
+        const paletteStyleInput = document.getElementById('palette-style');
+        const swatchCountInput = document.getElementById('swatch-count');
+        const outputFormatInput = document.getElementById('output-format');
+        const btnGenerate = document.getElementById('btn-generate');
+        const btnCopyCss = document.getElementById('btn-copy-css');
+        const btnCopyValues = document.getElementById('btn-copy-values');
+
+        function hexToRgb(hex) {
+            const value = hex.replace('#','');
+            return {
+                r: parseInt(value.slice(0,2), 16),
+                g: parseInt(value.slice(2,4), 16),
+                b: parseInt(value.slice(4,6), 16)
+            };
+        }
+
+        function rgbToHex({r,g,b}) {
+            return `#${[r,g,b].map(v => v.toString(16).padStart(2,'0')).join('')}`;
+        }
+
+        function rgbToHsl({r,g,b}) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r,g,b), min = Math.min(r,g,b);
+            let h = 0, s = 0, l = (max + min) / 2;
+            const delta = max - min;
+            if (delta !== 0) {
+                s = delta / (1 - Math.abs(2 * l - 1));
+                switch (max) {
+                    case r: h = ((g - b) / delta) % 6; break;
+                    case g: h = ((b - r) / delta) + 2; break;
+                    case b: h = ((r - g) / delta) + 4; break;
+                }
+                h *= 60;
+                if (h < 0) h += 360;
+            }
+            return { h, s: s * 100, l: l * 100 };
+        }
+
+        function hslToRgb({h,s,l}) {
+            s /= 100; l /= 100;
+            const c = (1 - Math.abs(2 * l - 1)) * s;
+            const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            const m = l - c/2;
+            let r=0,g=0,b=0;
+            if (h < 60) [r,g,b] = [c,x,0];
+            else if (h < 120) [r,g,b] = [x,c,0];
+            else if (h < 180) [r,g,b] = [0,c,x];
+            else if (h < 240) [r,g,b] = [0,x,c];
+            else if (h < 300) [r,g,b] = [x,0,c];
+            else [r,g,b] = [c,0,x];
+            return { r: Math.round((r+m)*255), g: Math.round((g+m)*255), b: Math.round((b+m)*255) };
+        }
+
+        function formatValue(color, format) {
+            if (format === 'hex') return rgbToHex(color);
+            if (format === 'rgb') return `rgb(${color.r}, ${color.g}, ${color.b})`;
+            const {h,s,l} = rgbToHsl(color);
+            return `hsl(${Math.round(h)}, ${Math.round(s)}%, ${Math.round(l)}%)`;
+        }
+
+        function generatePalette(baseHex, style, count) {
+            const rgb = hexToRgb(baseHex);
+            const baseHsl = rgbToHsl(rgb);
+            const palette = [];
+            const step = 360 / count;
+
+            for (let i = 0; i < count; i++) {
+                let hue = baseHsl.h;
+                let sat = baseHsl.s;
+                let light = baseHsl.l;
+                switch (style) {
+                    case 'analogous': hue = (baseHsl.h + step * (i - Math.floor(count / 2))) % 360; break;
+                    case 'complementary': hue = (baseHsl.h + (i % 2 === 0 ? 0 : 180)) % 360; light = 50 + (i - 1) * 8; break;
+                    case 'triadic': hue = (baseHsl.h + 120 * i) % 360; break;
+                    case 'splitComplementary': hue = (baseHsl.h + (i % 2 === 0 ? 150 : 210)) % 360; break;
+                    case 'monochrome': light = Math.max(10, Math.min(90, baseHsl.l + (i - Math.floor(count / 2)) * 10)); break;
+                    case 'custom': hue = (baseHsl.h + step * i) % 360; break;
+                }
+                palette.push(hslToRgb({ h: hue, s: sat, l: light }));
+            }
+            return palette;
+        }
+
+        function buildPalette() {
+            const base = baseColorInput.value;
+            const style = paletteStyleInput.value;
+            const count = Number(swatchCountInput.value) || 5;
+            const format = outputFormatInput.value;
+            const colors = generatePalette(base, style, count);
+
+            paletteSwatches.innerHTML = colors.map((color, index) => {
+                const formatted = formatValue(color, format);
+                return `
+                    <button type="button" class="color-swatch rounded-3xl border border-gray-200 overflow-hidden text-left focus:outline-none focus:ring-2 focus:ring-indigo-500" data-value="${formatted}">
+                        <div class="h-24" style="background:${formatted};"></div>
+                        <div class="p-4 bg-white">
+                            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Swatch ${index + 1}</p>
+                            <p class="mt-2 text-sm font-medium text-slate-900">${formatted}</p>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+
+            const variableBlock = colors.map((color, index) => {
+                const formatted = formatValue(color, 'hex');
+                return `  --palette-${index + 1}: ${formatted};`;
+            }).join('\n');
+
+            cssOutput.textContent = `:root {
+${variableBlock}
+}`;
+            paletteSummary.textContent = `${count}-color ${style.replace(/([A-Z])/g, ' $1').toLowerCase()} palette generated.`;
+            attachSwatchCopy();
+        }
+
+        function attachSwatchCopy() {
+            document.querySelectorAll('#palette-swatches button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const value = button.dataset.value;
+                    navigator.clipboard.writeText(value).then(() => showToast(`${value} copied`));
+                });
+            });
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast.timeout);
+            toast.timeout = setTimeout(() => toast.classList.remove('show'), 1800);
+        }
+
+        btnGenerate.addEventListener('click', buildPalette);
+        btnCopyCss.addEventListener('click', () => {
+            navigator.clipboard.writeText(cssOutput.textContent).then(() => showToast('CSS variables copied'));
+        });
+        btnCopyValues.addEventListener('click', () => {
+            const values = Array.from(document.querySelectorAll('#palette-swatches button p:last-child')).map(el => el.textContent).join('\n');
+            navigator.clipboard.writeText(values).then(() => showToast('Palette values copied'));
+        });
+
+        buildPalette();
+    </script>
+</body>
+</html>

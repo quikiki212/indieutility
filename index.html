@@ -127,7 +127,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        <input type="text" id="hero-search-input" class="w-full text-sm text-gray-850 bg-transparent focus:outline-none" placeholder="Search tools (e.g., Transcript, JSON, Glassmorphism)..." />
+                        <input type="text" id="hero-search-input" class="w-full text-sm text-gray-850 bg-transparent focus:outline-none" placeholder="Search tools (e.g., Transcript, JSON, Glassmorphism, Palette)..." />
                     </div>
                 </div>
 
@@ -324,8 +324,38 @@
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                            </svg>`
+                },
+                {
+                    id: 'palette-generator',
+                    name: 'Color Palette Generator',
+                    desc: 'Generate harmonious color palettes, export CSS variables, and copy HEX/RGB values for web UI and branding.',
+                    path: '/tools/color-palette-generator/',
+                    category: 'design',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 4a3 3 0 110 6 3 3 0 010-6zm0 10a6.978 6.978 0 01-4.76-1.92A7.01 7.01 0 0112 17a7.01 7.01 0 014.76-1.92A6.978 6.978 0 0112 17z" />
+                           </svg>`
                 }
             ];
+
+            const categoryLabels = {
+                text: 'Text & Copy',
+                dev: 'Developer Tools',
+                design: 'Web Design'
+            };
+
+            const categoryOrder = {
+                text: 1,
+                dev: 2,
+                design: 3
+            };
+
+            toolsDb.sort((a, b) => {
+                const orderA = categoryOrder[a.category] || 99;
+                const orderB = categoryOrder[b.category] || 99;
+                if (orderA !== orderB) return orderA - orderB;
+                return a.name.localeCompare(b.name);
+            });
 
             // Selector References
             const navDropdownToggle = document.getElementById('nav-dropdown-toggle');
@@ -407,6 +437,7 @@
                                     <div class="bg-indigo-50 text-indigo-600 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
                                         ${tool.icon}
                                     </div>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-500 text-[10px] font-semibold uppercase tracking-wide px-3 py-1 mb-3">${categoryLabels[tool.category]}</span>
                                     <h3 class="text-lg font-bold text-gray-900 mb-2">${tool.name}</h3>
                                     <p class="text-sm text-gray-500 leading-relaxed mb-6">${tool.desc}</p>
                                 </div>
@@ -421,6 +452,7 @@
                                     <div class="bg-gray-200 text-gray-400 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
                                         ${tool.icon}
                                     </div>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-500 text-[10px] font-semibold uppercase tracking-wide px-3 py-1 mb-3">${categoryLabels[tool.category]}</span>
                                     <div class="flex items-center gap-2 mb-2">
                                         <h3 class="text-lg font-bold text-gray-500">${tool.name}</h3>
                                         <span class="px-2 py-0.5 text-[8px] font-extrabold bg-gray-200 text-gray-650 rounded-full tracking-wider uppercase shrink-0">Coming Soon</span>
