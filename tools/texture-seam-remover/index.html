@@ -18,6 +18,7 @@
         .diff-preview:hover #after-wrapper { opacity: 0 !important; }
         #before-wrapper { opacity: 0; }
         #after-wrapper { opacity: 1; }
+        canvas { image-rendering: auto; display: block; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
@@ -44,7 +45,13 @@
 
                 <div class="space-y-4">
                     <label class="block text-sm font-semibold text-gray-700">Import Texture</label>
-                    <input type="file" id="file-input" accept="image/*" class="block text-sm text-gray-600" />
+                    <div class="flex flex-wrap items-center gap-3">
+                        <label for="file-input" class="inline-flex cursor-pointer items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Choose File
+                        </label>
+                        <span id="file-name" class="text-sm text-gray-500">No file selected</span>
+                        <input type="file" id="file-input" accept="image/*" class="sr-only" />
+                    </div>
 
                     <label class="space-y-2 text-sm font-semibold text-gray-700">
                         Seam Width
@@ -99,6 +106,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const fileInput = document.getElementById('file-input');
+        const fileName = document.getElementById('file-name');
         const seamSlider = document.getElementById('seam-slider');
         const seamValue = document.getElementById('seam-value');
         const btnApply = document.getElementById('btn-apply');
@@ -121,6 +129,7 @@
 
         fileInput.addEventListener('change', (e) => {
             const f = e.target.files && e.target.files[0];
+            fileName.textContent = f ? f.name : 'No file selected';
             if (!f) return;
             const reader = new FileReader();
             reader.onload = (ev) => {
@@ -164,26 +173,35 @@
             const seam = Math.max(1, Math.min(Math.floor(parseInt(seamSlider.value) || 8), Math.floor(Math.min(img.width, img.height) / 2)));
             const srcProcessed = removeSeams(srcOriginal, seam);
 
-            tileCtx.drawImage(srcProcessed, 0, 0, srcProcessed.width, srcProcessed.height, 0, 0, tileCanvas.width, tileCanvas.height);
+            const tileScale = Math.min(tileCanvas.width / srcProcessed.width, tileCanvas.height / srcProcessed.height);
+            const tileDrawWidth = srcProcessed.width * tileScale;
+            const tileDrawHeight = srcProcessed.height * tileScale;
+            const tileOffsetX = (tileCanvas.width - tileDrawWidth) / 2;
+            const tileOffsetY = (tileCanvas.height - tileDrawHeight) / 2;
+            tileCtx.drawImage(srcProcessed, 0, 0, srcProcessed.width, srcProcessed.height, tileOffsetX, tileOffsetY, tileDrawWidth, tileDrawHeight);
 
             beforeTiledCtx.clearRect(0,0,beforeTiledCanvas.width,beforeTiledCanvas.height);
             const tw = srcOriginal.width;
             const th = srcOriginal.height;
-            const scale = beforeTiledCanvas.width / (tw * 3);
+            const gridScale = Math.min(beforeTiledCanvas.width / (tw * 3), beforeTiledCanvas.height / (th * 3));
+            const tileWidth = tw * gridScale;
+            const tileHeight = th * gridScale;
+            const gridOffsetX = (beforeTiledCanvas.width - tileWidth * 3) / 2;
+            const gridOffsetY = (beforeTiledCanvas.height - tileHeight * 3) / 2;
             for (let y=0;y<3;y++){
                 for (let x=0;x<3;x++){
-                    const destX = x * tw * scale;
-                    const destY = y * th * scale;
-                    beforeTiledCtx.drawImage(srcOriginal, 0, 0, tw, th, destX, destY, tw * scale, th * scale);
+                    const destX = gridOffsetX + x * tileWidth;
+                    const destY = gridOffsetY + y * tileHeight;
+                    beforeTiledCtx.drawImage(srcOriginal, 0, 0, tw, th, destX, destY, tileWidth, tileHeight);
                 }
             }
 
             afterTiledCtx.clearRect(0,0,afterTiledCanvas.width,afterTiledCanvas.height);
             for (let y=0;y<3;y++){
                 for (let x=0;x<3;x++){
-                    const destX = x * tw * scale;
-                    const destY = y * th * scale;
-                    afterTiledCtx.drawImage(srcProcessed, 0, 0, tw, th, destX, destY, tw * scale, th * scale);
+                    const destX = gridOffsetX + x * tileWidth;
+                    const destY = gridOffsetY + y * tileHeight;
+                    afterTiledCtx.drawImage(srcProcessed, 0, 0, tw, th, destX, destY, tileWidth, tileHeight);
                 }
             }
 
