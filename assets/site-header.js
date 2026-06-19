@@ -228,9 +228,11 @@
         try {
             if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             const css = `
-                #site-preloader { position: fixed; inset: 0; display:flex; align-items:center; justify-content:center; background: #ffffff; z-index: 99999; transition: opacity .36s ease; }
+                /* Transparent overlay so underlying content remains visible */
+                #site-preloader { position: fixed; inset: 0; display:flex; align-items:center; justify-content:center; background: transparent; z-index: 99999; transition: opacity .36s ease; pointer-events: none; }
+                /* When visible we keep pointer-events none so page remains interactive; spinner itself is visible */
                 #site-preloader.preloader-hide { opacity: 0; pointer-events: none; }
-                #site-preloader .spinner { width: 44px; height: 44px; border-radius: 50%; border: 4px solid rgba(15,23,42,0.06); border-top-color: #4F46E5; animation: iu-spin 1s linear infinite; box-shadow: 0 6px 18px rgba(79,70,229,0.08); }
+                #site-preloader .spinner { width: 44px; height: 44px; border-radius: 50%; border: 4px solid rgba(15,23,42,0.08); border-top-color: #4F46E5; animation: iu-spin 1s linear infinite; box-shadow: 0 8px 28px rgba(79,70,229,0.08); }
                 @keyframes iu-spin { to { transform: rotate(360deg); } }
             `;
             if (!document.getElementById('site-preloader-css')) {
