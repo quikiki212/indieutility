@@ -22,7 +22,7 @@
 
     <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <script src="/assets/site-header.js?v=icon-2" defer></script>
+    <script src="/assets/site-header.js?v=tools-3" defer></script>
 
     <!-- Schema.org JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
@@ -244,17 +244,6 @@
                            </svg>`
                 },
                 {
-                    id: 'markdown-preview',
-                    name: 'Markdown Live Editor',
-                    desc: 'A split-screen markdown editor to parse prose, customize text patterns, and instantly export HTML code packages.',
-                    path: '#',
-                    category: 'text',
-                    active: false,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-                           </svg>`
-                },
-                {
                     id: 'json-formatter',
                     name: 'JSON Beautifier & Validator',
                     desc: 'Prettify nested API payloads, validate key-value arrays, locate formatting errors, and minify raw JSON lists.',
@@ -263,6 +252,17 @@
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                           </svg>`
+                },
+                {
+                    id: 'sql-formatter',
+                    name: 'SQL Formatter',
+                    desc: 'Beautify complex SQL queries, control keyword casing and indentation, or minify output for production.',
+                    path: '/tools/sql-formatter/',
+                    category: 'dev',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7c0 1.657 3.582 3 8 3s8-1.343 8-3-3.582-3-8-3-8 1.343-8 3zm0 0v5c0 1.657 3.582 3 8 3 .696 0 1.371-.033 2.014-.095M4 12v5c0 1.657 3.582 3 8 3 1.21 0 2.357-.101 3.385-.282M19 14v6m-3-3h6" />
                            </svg>`
                 },
                 {
@@ -285,17 +285,6 @@
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                           </svg>`
-                },
-                {
-                    id: 'slug-creator',
-                    name: 'SEO Slug Permalinker',
-                    desc: 'Remove illegal unicode symbols, strip punctuation parameters, and transform raw text fields into clean URL strings.',
-                    path: '#',
-                    category: 'dev',
-                    active: false,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                            </svg>`
                 }
             ];

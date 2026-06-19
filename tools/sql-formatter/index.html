@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <title>Free SQL Formatter & Minifier | IndieUtility</title>
+    <meta name="description" content="Format and minify SQL with configurable dialect, keyword case, indentation, syntax highlighting, copy, and download tools. Runs privately in your browser.">
+    <link rel="canonical" href="https://indieutility.com/tools/sql-formatter/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://indieutility.com/tools/sql-formatter/">
+    <meta property="og:title" content="SQL Formatter | IndieUtility">
+    <meta property="og:description" content="Beautify SQL privately with customizable formatting controls.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js?v=tools-3" defer></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        .editor-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
+        .editor-shell { min-height: 430px; }
+        .editor-area, .output-code { min-height: 370px; }
+        .code-font { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+        textarea.code-font { resize: none; tab-size: 4; }
+        .output-code { max-height: 62vh; overflow: auto; white-space: pre; tab-size: 4; }
+        .token-keyword { color: #a78bfa; font-weight: 700; }
+        .token-string { color: #86efac; }
+        .token-number { color: #fdba74; }
+        .token-comment { color: #94a3b8; font-style: italic; }
+        .toggle-track { width: 42px; height: 24px; border-radius: 999px; background: #d1d5db; padding: 3px; transition: background 160ms ease; }
+        .toggle-thumb { width: 18px; height: 18px; border-radius: 999px; background: white; box-shadow: 0 1px 3px rgba(15,23,42,.25); transition: transform 160ms ease; }
+        #trailing-semicolon:checked + .toggle-track { background: #4f46e5; }
+        #trailing-semicolon:checked + .toggle-track .toggle-thumb { transform: translateX(18px); }
+        .toast { opacity: 0; transform: translateY(8px); pointer-events: none; transition: all 180ms ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        @media (max-width: 960px) { .editor-grid { grid-template-columns: 1fr; } .editor-shell, .editor-area, .output-code { min-height: 340px; } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50"></header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <section class="mb-7">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">SQL Formatter</h1>
+            <p class="mt-2 text-base sm:text-lg text-gray-600">Format, beautify, and minify SQL instantly. Your queries never leave your browser.</p>
+        </section>
+
+        <section class="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 mb-4" aria-label="SQL formatting controls">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 items-end">
+                <button type="button" id="format-sql" class="rounded-xl bg-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">Format SQL</button>
+                <button type="button" id="minify-sql" class="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-700 hover:border-indigo-200 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">Minify</button>
+                <label class="text-xs font-bold text-gray-500">Dialect
+                    <select id="dialect" class="mt-1.5 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option>Standard SQL</option><option>PostgreSQL</option><option>MySQL</option><option>SQLite</option><option>SQL Server</option>
+                    </select>
+                </label>
+                <label class="text-xs font-bold text-gray-500">Keyword case
+                    <select id="keyword-case" class="mt-1.5 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="upper">UPPERCASE</option><option value="lower">lowercase</option><option value="preserve">Preserve</option>
+                    </select>
+                </label>
+                <label class="text-xs font-bold text-gray-500">Indentation
+                    <select id="indentation" class="mt-1.5 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="2">2 spaces</option><option value="4" selected>4 spaces</option><option value="tab">Tabs</option>
+                    </select>
+                </label>
+                <label class="flex h-11 items-center justify-between gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 cursor-pointer text-xs font-bold text-gray-600">
+                    <span>Add trailing semicolon</span>
+                    <input id="trailing-semicolon" type="checkbox" class="sr-only" checked>
+                    <span class="toggle-track flex-shrink-0" aria-hidden="true"><span class="toggle-thumb block"></span></span>
+                </label>
+            </div>
+        </section>
+
+        <section class="editor-grid" aria-label="SQL editors">
+            <article class="editor-shell min-w-0 rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-200 px-4 py-3">
+                    <h2 class="font-bold text-gray-900">Input SQL</h2>
+                    <div class="flex gap-2">
+                        <button type="button" id="load-sample" class="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700 hover:text-indigo-600 hover:border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">Load sample</button>
+                        <button type="button" id="clear-input" class="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700 hover:text-red-600 hover:border-red-200 focus:outline-none focus:ring-2 focus:ring-red-400">Clear</button>
+                    </div>
+                </div>
+                <label for="sql-input" class="sr-only">SQL input</label>
+                <textarea id="sql-input" class="editor-area code-font flex-grow w-full border-0 bg-gray-900 p-5 text-sm leading-6 text-gray-100 focus:outline-none" spellcheck="false" placeholder="Paste SQL here..."></textarea>
+            </article>
+            <article class="editor-shell min-w-0 rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-200 px-4 py-3">
+                    <h2 class="font-bold text-gray-900">Formatted Output</h2>
+                    <div class="flex gap-2">
+                        <button type="button" id="copy-output" class="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700 hover:text-indigo-600 hover:border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">Copy</button>
+                        <button type="button" id="download-output" class="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700 hover:text-indigo-600 hover:border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">Download</button>
+                    </div>
+                </div>
+                <pre id="sql-output" class="output-code code-font flex-grow m-0 bg-gray-900 p-5 text-sm leading-6 text-gray-100" tabindex="0" aria-label="Formatted SQL output"><code></code></pre>
+            </article>
+        </section>
+
+        <section class="mt-4 rounded-xl border border-gray-200 bg-white shadow-sm px-4 py-3" aria-live="polite">
+            <dl class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                <div><dt class="text-xs font-semibold text-gray-400">Lines</dt><dd id="stat-lines" class="font-bold text-gray-800">0 → 0</dd></div>
+                <div><dt class="text-xs font-semibold text-gray-400">Statements</dt><dd id="stat-statements" class="font-bold text-gray-800">0</dd></div>
+                <div><dt class="text-xs font-semibold text-gray-400">Characters</dt><dd id="stat-characters" class="font-bold text-gray-800">0 → 0</dd></div>
+                <div><dt class="text-xs font-semibold text-gray-400">Status</dt><dd id="format-status" class="font-bold text-green-700">Formatted</dd></div>
+            </dl>
+        </section>
+
+        <section class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <article class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h2 class="text-xl font-extrabold text-gray-900">How it works</h2>
+                <ol class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-5">
+                    <li><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">1</span><h3 class="mt-3 font-bold text-gray-900">Paste</h3><p class="mt-1 text-sm text-gray-500">Add a query or load the included sample.</p></li>
+                    <li><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">2</span><h3 class="mt-3 font-bold text-gray-900">Customize</h3><p class="mt-1 text-sm text-gray-500">Choose casing, indentation, and dialect.</p></li>
+                    <li><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">3</span><h3 class="mt-3 font-bold text-gray-900">Export</h3><p class="mt-1 text-sm text-gray-500">Copy or download the formatted SQL.</p></li>
+                </ol>
+            </article>
+            <article id="faq" class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+                <h2 class="text-xl font-extrabold text-gray-900">Frequently asked questions</h2>
+                <details class="mt-4 border-b border-gray-100 py-3"><summary class="cursor-pointer font-semibold text-gray-800">Is my SQL uploaded?</summary><p class="mt-2 text-sm leading-relaxed text-gray-500">No. Formatting happens entirely in your browser.</p></details>
+                <details class="border-b border-gray-100 py-3"><summary class="cursor-pointer font-semibold text-gray-800">Does the formatter execute queries?</summary><p class="mt-2 text-sm leading-relaxed text-gray-500">Never. It only restructures text and does not connect to a database.</p></details>
+                <details class="py-3"><summary class="cursor-pointer font-semibold text-gray-800">Which SQL dialects are supported?</summary><p class="mt-2 text-sm leading-relaxed text-gray-500">The formatter handles common Standard SQL, PostgreSQL, MySQL, SQLite, and SQL Server syntax without changing query semantics.</p></details>
+            </article>
+        </section>
+    </main>
+
+    <footer class="mt-10 bg-gray-900 text-gray-300 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <a href="/" class="font-bold text-white">Indie<span class="text-indigo-400">Utility</span></a>
+            <p class="text-xs text-gray-500">&copy; 2026 IndieUtility. Privacy-first browser tools.</p>
+        </div>
+    </footer>
+    <div id="toast" class="toast fixed bottom-6 right-6 z-50 rounded-xl bg-gray-800 px-4 py-3 text-sm font-bold text-white shadow-xl" role="status">Copied SQL</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sample = "select u.id,u.name,u.email,o.id as order_id,o.created_at,o.status,sum(oi.quantity*oi.unit_price) as total from users u inner join orders o on o.user_id=u.id left join order_items oi on oi.order_id=o.id left join products p on p.id=oi.product_id where o.created_at>='2024-01-01' and o.status<>'cancelled' and (u.email like '%@example.com%' or u.email like '%@test.com%') group by u.id,u.name,u.email,o.id,o.created_at,o.status having sum(oi.quantity*oi.unit_price)>100 order by o.created_at desc,u.name asc";
+            const keywords = new Set('SELECT FROM WHERE GROUP BY ORDER BY HAVING LIMIT OFFSET FETCH FIRST NEXT ROWS ONLY INSERT INTO VALUES UPDATE SET DELETE CREATE TABLE ALTER DROP WITH AS DISTINCT ALL UNION EXCEPT INTERSECT JOIN INNER LEFT RIGHT FULL OUTER CROSS ON AND OR NOT NULL IS IN EXISTS BETWEEN LIKE ILIKE CASE WHEN THEN ELSE END ASC DESC RETURNING OVER PARTITION WINDOW USING PRIMARY KEY FOREIGN REFERENCES DEFAULT CHECK UNIQUE INDEX VIEW PROCEDURE FUNCTION TRIGGER DATABASE SCHEMA GRANT REVOKE COMMIT ROLLBACK'.split(' '));
+            const phrases = ['LEFT OUTER JOIN','RIGHT OUTER JOIN','FULL OUTER JOIN','LEFT JOIN','RIGHT JOIN','FULL JOIN','INNER JOIN','CROSS JOIN','GROUP BY','ORDER BY','PARTITION BY','UNION ALL','INSERT INTO','DELETE FROM'];
+            const major = new Set(['SELECT','FROM','WHERE','GROUP BY','ORDER BY','HAVING','LIMIT','OFFSET','FETCH','INSERT INTO','UPDATE','DELETE FROM','VALUES','SET','RETURNING','WITH','UNION','UNION ALL','EXCEPT','INTERSECT','LEFT OUTER JOIN','RIGHT OUTER JOIN','FULL OUTER JOIN','LEFT JOIN','RIGHT JOIN','FULL JOIN','INNER JOIN','CROSS JOIN','JOIN']);
+            const input = document.getElementById('sql-input');
+            const output = document.querySelector('#sql-output code');
+            const toast = document.getElementById('toast');
+            let outputText = '';
+
+            function tokenize(sql) {
+                return sql.match(/(--[^\n]*|\/\*[\s\S]*?\*\/|'(?:''|[^'])*'|"(?:""|[^"])*"|`(?:``|[^`])*`|\[[^\]]*\]|<=|>=|<>|!=|:=|::|[(),.;*+\/%=-]|<|>|\b\d+(?:\.\d+)?\b|[A-Za-z_][\w$]*|\S)/g) || [];
+            }
+            function combinePhrases(tokens) {
+                const result = [];
+                for (let index = 0; index < tokens.length; index += 1) {
+                    let match = null;
+                    for (const phrase of phrases) {
+                        const parts = phrase.split(' ');
+                        const candidate = tokens.slice(index, index + parts.length).map((token) => token.toUpperCase()).join(' ');
+                        if (candidate === phrase) { match = { phrase, length: parts.length, original: tokens.slice(index, index + parts.length).join(' ') }; break; }
+                    }
+                    if (match) { result.push({ value: match.original, upper: match.phrase }); index += match.length - 1; }
+                    else result.push({ value: tokens[index], upper: tokens[index].toUpperCase() });
+                }
+                return result;
+            }
+            function applyCase(value, upper) {
+                const mode = document.getElementById('keyword-case').value;
+                const isKeyword = upper.split(' ').every((part) => keywords.has(part));
+                if (!isKeyword || mode === 'preserve') return value;
+                return mode === 'lower' ? upper.toLowerCase() : upper;
+            }
+            function indentUnit() {
+                const value = document.getElementById('indentation').value;
+                return value === 'tab' ? '\t' : ' '.repeat(Number(value));
+            }
+            function formatSql(sql) {
+                const tokens = combinePhrases(tokenize(sql));
+                const lines = []; let line = ''; let level = 0; let clause = '';
+                const unit = indentUnit();
+                const flush = () => { if (line.trim()) lines.push(`${unit.repeat(Math.max(0, level))}${line.trim()}`); line = ''; };
+                const append = (value, compact = false) => { if (!line || compact || /[.(]$/.test(line)) line += value; else line += ` ${value}`; };
+                for (const token of tokens) {
+                    const raw = token.value; const upper = token.upper; const value = applyCase(raw, upper);
+                    if (/^--|^\/\*/.test(raw)) { flush(); line = value; flush(); continue; }
+                    if (major.has(upper)) { flush(); line = value; clause = upper; continue; }
+                    if ((upper === 'AND' || upper === 'OR') && ['WHERE','HAVING','ON'].includes(clause)) { flush(); line = value; continue; }
+                    if (upper === 'ON') { append(value); clause = 'ON'; continue; }
+                    if (raw === '(') { append(raw); level += 1; continue; }
+                    if (raw === ')') { level = Math.max(0, level - 1); line = line.trimEnd(); append(raw, true); continue; }
+                    if (raw === ',') { line = line.trimEnd() + ','; if (['SELECT','GROUP BY','ORDER BY','SET','VALUES'].includes(clause)) flush(); continue; }
+                    if (raw === '.') { line = line.trimEnd() + '.'; continue; }
+                    if (raw === ';') { line = line.trimEnd() + ';'; flush(); continue; }
+                    if (/^(::)$/.test(raw)) { line = line.trimEnd() + raw; continue; }
+                    append(value);
+                }
+                flush();
+                let result = lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+                if (document.getElementById('trailing-semicolon').checked && result && !result.endsWith(';')) result += ';';
+                if (!document.getElementById('trailing-semicolon').checked) result = result.replace(/;+\s*$/, '');
+                return result;
+            }
+            function minifySql(sql) {
+                const values = combinePhrases(tokenize(sql)).map((token) => applyCase(token.value, token.upper));
+                let result = values.join(' ').replace(/\s+([,;)])/g, '$1').replace(/([.(])\s+/g, '$1').replace(/\s*\.\s*/g, '.').replace(/\s+/g, ' ').trim();
+                if (document.getElementById('trailing-semicolon').checked && result && !result.endsWith(';')) result += ';';
+                if (!document.getElementById('trailing-semicolon').checked) result = result.replace(/;+\s*$/, '');
+                return result;
+            }
+            function highlight(sql) {
+                const escaped = sql.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                const pattern = new RegExp(`(--[^\\n]*|\\/\\*[\\s\\S]*?\\*\\/|'(?:''|[^'])*'|"(?:""|[^"])*"|\\b\\d+(?:\\.\\d+)?\\b|\\b(?:${Array.from(keywords).sort((a,b) => b.length-a.length).join('|')})\\b)`, 'gi');
+                return escaped.replace(pattern, (match) => {
+                    if (/^--|^\/\*/.test(match)) return `<span class="token-comment">${match}</span>`;
+                    if (/^['"]/.test(match)) return `<span class="token-string">${match}</span>`;
+                    if (/^\d/.test(match)) return `<span class="token-number">${match}</span>`;
+                    return `<span class="token-keyword">${match}</span>`;
+                });
+            }
+            function render(mode = 'format') {
+                const source = input.value.trim();
+                if (!source) { outputText = ''; output.textContent = 'Formatted SQL will appear here.'; updateStats('Waiting for input'); return; }
+                outputText = mode === 'minify' ? minifySql(source) : formatSql(source);
+                output.innerHTML = highlight(outputText);
+                updateStats(mode === 'minify' ? 'Minified' : 'Formatted');
+            }
+            function updateStats(status) {
+                const sourceLines = input.value ? input.value.split('\n').length : 0;
+                const outputLines = outputText ? outputText.split('\n').length : 0;
+                const statements = outputText ? Math.max(1, (outputText.match(/;/g) || []).length) : 0;
+                document.getElementById('stat-lines').textContent = `${sourceLines} → ${outputLines}`;
+                document.getElementById('stat-statements').textContent = statements;
+                document.getElementById('stat-characters').textContent = `${input.value.length} → ${outputText.length}`;
+                document.getElementById('format-status').textContent = `${status} · ${document.getElementById('dialect').value}`;
+                document.getElementById('format-status').className = status === 'Waiting for input' ? 'font-bold text-gray-500' : 'font-bold text-green-700';
+            }
+            function showToast(text) { toast.textContent = text; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1800); }
+
+            document.getElementById('format-sql').addEventListener('click', () => render('format'));
+            document.getElementById('minify-sql').addEventListener('click', () => render('minify'));
+            ['dialect','keyword-case','indentation','trailing-semicolon'].forEach((id) => document.getElementById(id).addEventListener('change', () => render('format')));
+            input.addEventListener('input', () => updateStats('Ready to format'));
+            document.getElementById('load-sample').addEventListener('click', () => { input.value = sample; render('format'); input.focus(); });
+            document.getElementById('clear-input').addEventListener('click', () => { input.value = ''; render('format'); input.focus(); });
+            document.getElementById('copy-output').addEventListener('click', async () => { if (!outputText) return; try { await navigator.clipboard.writeText(outputText); showToast('Copied formatted SQL'); } catch (error) { showToast('Copy is unavailable in this browser'); } });
+            document.getElementById('download-output').addEventListener('click', () => { if (!outputText) return; const url = URL.createObjectURL(new Blob([outputText], { type: 'text/sql' })); const link = document.createElement('a'); link.href = url; link.download = 'formatted.sql'; link.click(); URL.revokeObjectURL(url); });
+
+            input.value = sample; render('format');
+        });
+    </script>
+</body>
+</html>

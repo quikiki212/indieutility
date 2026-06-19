@@ -6,6 +6,7 @@
     const isTranscriptPage = window.location.pathname.includes('/youtube-transcript-cleaner');
     const isGlassPage = window.location.pathname.includes('/glassmorphism-ui-engine');
     const isJsonPage = window.location.pathname.includes('/json-beautifier-validator');
+    const isSqlPage = window.location.pathname.includes('/sql-formatter');
     const localFaqHref = isToolPage ? '#faq' : '/#faq';
 
     header.innerHTML = `
@@ -53,7 +54,7 @@
         ` : ''}
     `;
 
-    if (!isTranscriptPage && !isGlassPage && !isJsonPage) return;
+    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage) return;
 
     const tools = [
         {
@@ -75,6 +76,11 @@
             name: 'JSON Beautifier & Validator',
             description: 'Format, validate, minify, and inspect JSON safely.',
             href: '/tools/json-beautifier-validator/'
+        },
+        {
+            name: 'SQL Formatter',
+            description: 'Beautify, minify, and customize SQL queries.',
+            href: '/tools/sql-formatter/'
         }
     ];
 
