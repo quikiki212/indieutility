@@ -46,12 +46,7 @@
         <section class="rounded-2xl border border-gray-200 bg-white shadow-sm p-4 mb-4" aria-label="Encoding options">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <label class="flex h-11 items-center justify-between gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 cursor-pointer text-sm font-semibold text-gray-600">
-                    <span title="Encode space as +">Encode spaces as +</span>
-                    <input id="encode-space-plus" type="checkbox" class="sr-only encode-option">
-                    <span class="toggle-track flex-shrink-0" aria-hidden="true"><span class="toggle-thumb block"></span></span>
-                </label>
-                <label class="flex h-11 items-center justify-between gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 cursor-pointer text-sm font-semibold text-gray-600">
-                    <span title="Use + instead of %20 for spaces">Plus for spaces</span>
+                    <span title="Use + instead of %20 for spaces">Use + for spaces</span>
                     <input id="plus-for-spaces" type="checkbox" class="sr-only encode-option" checked>
                     <span class="toggle-track flex-shrink-0" aria-hidden="true"><span class="toggle-thumb block"></span></span>
                 </label>
@@ -134,7 +129,6 @@
             const sample = 'https://example.com/search?q=hello world&sort=date&filter=active';
             const inputText = document.getElementById('input-text');
             const outputText = document.getElementById('output-text');
-            const encodeSpacePlus = document.getElementById('encode-space-plus');
             const plusForSpaces = document.getElementById('plus-for-spaces');
             const encodeSlashes = document.getElementById('encode-slashes');
             const rfc3986 = document.getElementById('rfc3986');
@@ -167,9 +161,11 @@
                     const char = str[i];
                     const code = char.charCodeAt(0);
                     
-                    // Check if character needs encoding
+                    // Unreserved characters that are never encoded
                     const unreserved = /[A-Za-z0-9\-_.~]/.test(char);
-                    const reserved = useRfc ? /[!*'()\-._~:/?#\[\]@!$&'()*+,;=]/.test(char) : /[!*'()_.-]/.test(char);
+                    
+                    // Reserved characters (should be encoded in RFC 3986 mode)
+                    const reservedChars = "!*'();:@&=+$,/?#[]";
                     
                     if (char === ' ') {
                         if (plusForSpaces.checked) {
@@ -177,11 +173,16 @@
                         } else {
                             encoded += '%20';
                         }
-                    } else if (char === '/' && encodeSlashes.checked) {
-                        encoded += '%2F';
-                    } else if (unreserved || (!useRfc && reserved && !encodeSlashes.checked)) {
+                    } else if (unreserved) {
                         encoded += char;
-                    } else {
+                    } else if (useRfc && reservedChars.includes(char) && !(char === '/' && !encodeSlashes.checked)) {
+                        // In RFC 3986 mode, encode reserved chars (unless it's / and encoding slashes is off)
+                        encoded += '%' + code.toString(16).toUpperCase().padStart(2, '0');
+                    } else if (!useRfc && (char === '/' && !encodeSlashes.checked)) {
+                        // Standard mode: only encode slash if option is checked
+                        encoded += char;
+                    } else if (char !== '/' || encodeSlashes.checked) {
+                        // Encode everything else
                         encoded += '%' + code.toString(16).toUpperCase().padStart(2, '0');
                     }
                 }
@@ -222,7 +223,6 @@
             }
 
             inputText.addEventListener('input', processUrl);
-            encodeSpacePlus.addEventListener('change', processUrl);
             plusForSpaces.addEventListener('change', processUrl);
             encodeSlashes.addEventListener('change', processUrl);
             rfc3986.addEventListener('change', processUrl);
