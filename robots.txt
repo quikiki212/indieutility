@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://indieutility.com/sitemap.xml
