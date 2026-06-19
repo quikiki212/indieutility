@@ -8,7 +8,7 @@
     
     <!-- Primary SEO Metadata -->
     <title>Free Online Tools for Developers, Creators & Small Businesses | IndieUtility</title>
-    <meta name="description" content="Free online tools for developers, creators, designers and small businesses. Clean transcripts, validate JSON, format SQL, test regex, generate CSS, create color palettes and process files directly in your browser.">
+    <meta name="description" content="A personal collection of free online tools for developers, creators, designers and small businesses. Clean transcripts, validate JSON, format SQL, test regex, generate CSS, create color palettes and process files directly in your browser.">
     <meta name="keywords" content="free online tools, developer tools, creator tools, privacy first tools, json validator, sql formatter, regex tester, transcript cleaner, css generator, color palette generator, svg pattern generator, image converter">
     <meta name="author" content="IndieUtility">
     <link rel="canonical" href="https://indieutility.com/">
@@ -18,11 +18,11 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://indieutility.com/">
     <meta property="og:title" content="Free Online Tools for Developers, Creators & Small Businesses | IndieUtility">
-    <meta property="og:description" content="Use free privacy-first browser tools to clean transcripts, validate JSON, format SQL, test regex, generate CSS, create color palettes and more.">
+    <meta property="og:description" content="Use a growing set of free privacy-first browser tools I built for code, content, design and everyday workflow problems.">
     <meta property="og:image" content="https://indieutility.com/og-landing.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Free Online Tools for Developers, Creators & Small Businesses | IndieUtility">
-    <meta name="twitter:description" content="Privacy-first browser tools for code, content, design and everyday workflows.">
+    <meta name="twitter:description" content="Privacy-first browser tools I built for code, content, design and everyday workflows.">
     <meta name="twitter:image" content="https://indieutility.com/og-landing.png">
 
     <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
@@ -49,7 +49,7 @@
           "name": "IndieUtility",
           "url": "https://indieutility.com/",
           "publisher": { "@id": "https://indieutility.com/#organization" },
-          "description": "Free online tools for developers, creators, designers and small businesses that run directly in the browser.",
+          "description": "A personal collection of free online tools for developers, creators, designers and small businesses that run directly in the browser.",
           "potentialAction": {
             "@type": "SearchAction",
             "target": "https://indieutility.com/?search={search_term_string}",
@@ -79,8 +79,8 @@
           "mainEntity": [
             { "@type": "Question", "name": "How can a web tool run 100% client-side?", "acceptedAnswer": { "@type": "Answer", "text": "Modern browser APIs can handle parsing, formatting, conversion, validation and generation locally using JavaScript, without sending files or text to an application server." } },
             { "@type": "Question", "name": "Are my code snippets or outputs saved?", "acceptedAnswer": { "@type": "Answer", "text": "No. IndieUtility tools are designed to run in your browser without application databases or cloud storage for your input data." } },
-            { "@type": "Question", "name": "Are there conversion limits or paid tiers?", "acceptedAnswer": { "@type": "Answer", "text": "Available tools are free to use without account creation, subscriptions or premium feature gates." } },
-            { "@type": "Question", "name": "What kinds of tools are available?", "acceptedAnswer": { "@type": "Answer", "text": "IndieUtility includes developer tools, text tools, browser-based design generators, data formatters, validators and file-processing utilities." } }
+            { "@type": "Question", "name": "Are there conversion limits or paid tiers?", "acceptedAnswer": { "@type": "Answer", "text": "The tools I publish here are free to use without account creation, subscriptions or premium feature gates." } },
+            { "@type": "Question", "name": "What kinds of tools are available?", "acceptedAnswer": { "@type": "Answer", "text": "IndieUtility includes the developer tools, text tools, browser-based design generators, data formatters, validators and file-processing utilities I have built so far." } }
           ]
         }
       ]
@@ -116,6 +116,35 @@
         /* Hero subtle entrance */
         .hero-entrance { opacity: 0; transform: translateY(6px); transition: opacity 520ms ease, transform 520ms ease; }
         .hero-entrance.show { opacity: 1; transform: translateY(0); }
+
+        .preview-hover-wrapper:hover .preview-popover,
+        .preview-hover-wrapper:focus-within .preview-popover {
+            display: block;
+        }
+        .preview-popover {
+            position: fixed;
+            top: 96px;
+            right: 24px;
+            width: 340px;
+            z-index: 999999;
+        }
+        .preview-frame-shell {
+            width: 340px;
+            height: 196px;
+            overflow: hidden;
+            background: #f3f4f6;
+        }
+        .tool-preview-frame {
+            width: 1280px;
+            height: 720px;
+            transform: scale(0.266);
+            transform-origin: top left;
+        }
+        @media (max-width: 1024px) {
+            .preview-popover {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-850 min-h-screen flex flex-col font-sans antialiased">
@@ -147,7 +176,7 @@
                     <!-- Dropdown Panel (Populated dynamically) -->
                     <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-3 w-80 rounded-xl bg-white border border-gray-200 shadow-xl ring-1 ring-black ring-opacity-5 z-50">
                         <div class="p-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
-                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Quick Switch Tool</span>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Quick switch tool</span>
                         </div>
                         <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50">
                             <!-- Injected dynamically from JavaScript -->
@@ -164,36 +193,122 @@
     <!-- Main Workspace -->
     <main class="flex-grow">
         
-        <!-- Hero Search Section -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 text-center">
-            <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full mb-4">100% Secure & Client-Side</span>
-            <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
-                Free Online Tools for<br class="hidden sm:inline" />
-                <span class="text-indigo-600">Developers, Creators & Small Businesses</span>
-            </h1>
-            <p class="text-lg text-gray-650 max-w-2xl mx-auto leading-relaxed mb-8">
-                Use privacy-first browser tools to clean transcripts, validate JSON, format SQL, test regex patterns, generate CSS, create color palettes, convert images and solve everyday workflow problems without accounts or software downloads.
+<!-- Hero Search Section -->
+<section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16 overflow-hidden">
+
+    <div
+    class="absolute left-1/2 top-32 rounded-full blur-3xl"
+    style="
+        width:800px;
+        height:500px;
+        background:#818cf8;
+        opacity:0.22;
+        transform:translateX(-50%);
+    ">
+</div>
+
+<div
+    class="absolute left-1/2 top-40 rounded-full blur-3xl"
+    style="
+        width:400px;
+        height:400px;
+        background:#a78bfa;
+        opacity:0.18;
+        transform:translateX(-50%);
+    ">
+</div>
+
+    <div class="relative z-10">
+
+        <!-- Small maker note -->
+        <div class="mx-auto mb-16 max-w-2xl rounded-2xl border border-yellow-200 bg-gradient-to-r from-yellow-50 to-amber-50 px-8 py-6 text-center shadow-md">
+            <p class="text-sm text-gray-700 leading-relaxed">
+                👋 Hi, I’m Harry, the developer behind IndieUtility.
+                I built these tools for my own workflow first, then put them online in case they help someone else. The site is supported by donations and a few ads to help cover costs.
+
+                <a href="https://ko-fi.com/quikiki212"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="font-bold text-indigo-600 hover:underline">
+                    Buy me a coffee →
+                </a>
             </p>
+        </div>
 
-            <!-- Hero Search Selector -->
-            <div class="max-w-xl mx-auto relative" id="hero-search-wrapper">
-                <div class="bg-white p-2 rounded-2xl shadow-md border border-gray-200 flex items-center justify-between">
-                    <div class="flex items-center pl-3 flex-grow">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        <input type="text" id="hero-search-input" class="w-full text-sm text-gray-850 bg-transparent focus:outline-none" placeholder="Search tools (e.g., Transcript, JSON, Glassmorphism, Palette, Animation)..." />
-                    </div>
-                </div>
+        <!-- Main hero -->
+        <div class="mx-auto max-w-4xl text-center">
 
-                <!-- Instant Search Dropdown Panel -->
-                <div id="search-dropdown-menu" class="hidden absolute left-0 right-0 mt-2 rounded-2xl bg-white border border-gray-200 shadow-2xl z-40 overflow-hidden divide-y divide-gray-100 max-h-96 overflow-y-auto">
-                    <div id="search-items-container" class="p-2 space-y-1">
-                        <!-- Search results injected dynamically -->
-                    </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                Useful little web tools,
+                <span class="block text-indigo-600">made by an indie developer</span>
+            </h1>
+
+            <p class="mt-6 text-lg text-gray-650 max-w-2xl mx-auto leading-relaxed">
+                I made these tools for real little jobs I kept running into. No grand platform — just useful pages that do the task and stay out of your way.
+            </p>
+        </div>
+
+                <!-- Search -->
+        <div class="max-w-xl mx-auto relative mt-8" id="hero-search-wrapper">
+            <div class="bg-white p-2 rounded-2xl shadow-md border border-gray-200 flex items-center justify-between">
+                <div class="flex items-center pl-3 flex-grow">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-5 w-5 text-gray-400 mr-2.5"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+
+                    <input type="text"
+                           id="hero-search-input"
+                           class="w-full text-sm text-gray-850 bg-transparent focus:outline-none"
+                           placeholder="Search tools: JSON, transcript, CSS, image, regex..." />
                 </div>
             </div>
-        </section>
+
+            <!-- Instant Search Dropdown Panel -->
+            <div id="search-dropdown-menu"
+                 class="hidden absolute left-0 right-0 mt-2 rounded-2xl bg-white border border-gray-200 shadow-2xl z-40 overflow-hidden divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                <div id="search-items-container" class="p-2 space-y-1">
+                    <!-- Search results injected dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Stats Section -->
+<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
+            <div class="text-2xl font-bold text-indigo-600">11+</div>
+            <div class="text-sm text-gray-500">Free Tools</div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
+            <div class="text-2xl font-bold text-green-600">100%</div>
+            <div class="text-sm text-gray-500">Browser Based</div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
+            <div class="text-2xl font-bold text-blue-600">0</div>
+            <div class="text-sm text-gray-500">Signups Required</div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
+            <div class="text-2xl font-bold text-purple-600">∞</div>
+            <div class="text-sm text-gray-500">Free Usage</div>
+        </div>
+
+    </div>
+</section>
+   
 
         <!-- Dynamic Grid of Utilities Directory -->
         <section id="utilities" class="bg-white border-t border-b border-gray-200 py-16">
@@ -203,7 +318,7 @@
                 <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-6">
                     <div>
                         <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Browse Utility Directory</h2>
-                        <p class="text-sm text-gray-500 mt-1">Select a filter or search our full index below.</p>
+                        <p class="text-sm text-gray-500 mt-1">Pick a filter or search through the tools I have built so far.</p>
                     </div>
                     
                     <!-- Filter Buttons -->
@@ -234,7 +349,7 @@
                 <div class="max-w-3xl mb-10">
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Free Browser-Based Tool Categories</h2>
                     <p class="mt-3 text-sm text-gray-600 leading-relaxed">
-                        Browse IndieUtility by workflow. These free online tools are designed for repeatable tasks such as formatting code, cleaning text, generating interface assets, converting files and preparing content for publishing.
+                        Browse IndieUtility by workflow. I built these free online tools for repeatable tasks such as formatting code, cleaning text, generating interface assets, converting files and preparing content for publishing.
                     </p>
                 </div>
                 <div class="grid gap-6 md:grid-cols-3">
@@ -276,28 +391,28 @@
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">What Is IndieUtility?</h2>
                 <div class="mt-6 space-y-5 text-gray-600 leading-relaxed">
                     <p>
-                        IndieUtility is a growing collection of free online tools for developers, content creators, designers, marketers and small businesses. The site focuses on practical browser utilities that solve common workflow problems: cleaning messy transcripts, validating JSON, formatting SQL, testing regular expressions, creating SVG backgrounds, generating color palettes, converting images and building CSS effects.
+                        IndieUtility is my growing collection of free online tools for developers, content creators, designers, marketers and small businesses. I focus on practical browser utilities that solve common workflow problems: cleaning messy transcripts, validating JSON, formatting SQL, testing regular expressions, creating SVG backgrounds, generating color palettes, converting images and building CSS effects.
                     </p>
                     <p>
-                        Most tools are designed to run locally in the browser. That means your files, text, code snippets and generated outputs are processed on your own device instead of being uploaded to an application database. This local-first approach is useful for quick development work, client content, internal notes, drafts, configuration files and other material you may not want to send to a third-party server.
+                        Most tools are designed to run locally in your browser. That means your files, text, code snippets and generated outputs are processed on your own device instead of being uploaded to an application database. I use this local-first approach because it is better for quick development work, client content, internal notes, drafts, configuration files and other material you may not want to send to a third-party server.
                     </p>
                     <p>
-                        The goal is to provide fast utilities with clear output, no mandatory account creation, no software installation and no complicated dashboards. Each tool is built as a focused page with its own workflow, controls, examples and copyable or downloadable results.
+                        My goal is simple: make small tools that open quickly, do one job clearly, and get out of the way. No mandatory account creation, no software installation and no complicated dashboards. Each tool is built as a focused page with its own workflow, controls, examples and copyable or downloadable results.
                     </p>
                 </div>
 
                 <div class="mt-10 grid gap-6 md:grid-cols-3">
                     <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
                         <h3 class="font-bold text-gray-900">Privacy-first by default</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">Browser-side processing keeps ordinary tool input local whenever possible, reducing unnecessary uploads and storage.</p>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">I try to keep ordinary tool input local whenever possible, reducing unnecessary uploads and storage.</p>
                     </div>
                     <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
                         <h3 class="font-bold text-gray-900">Built for repeat tasks</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">The tools target repetitive jobs people do in editors, spreadsheets, terminals, CMS dashboards and content workflows.</p>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">I build around repetitive jobs people already do in editors, spreadsheets, terminals, CMS dashboards and content workflows.</p>
                     </div>
                     <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
                         <h3 class="font-bold text-gray-900">Free and accessible</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">IndieUtility tools are usable without subscriptions, sign-up gates or complex onboarding flows.</p>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">I keep the tools usable without subscriptions, sign-up gates or complex onboarding flows.</p>
                     </div>
                 </div>
             </div>
@@ -307,7 +422,7 @@
         <section id="latest-tools" class="bg-gray-50 border-b border-gray-200 py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Recently Added and Updated Tools</h2>
-                <p class="mt-3 text-sm text-gray-600 max-w-3xl leading-relaxed">IndieUtility is updated with new browser tools for code, design, content and productivity workflows. Check back as more utilities are added to the directory.</p>
+                <p class="mt-3 text-sm text-gray-600 max-w-3xl leading-relaxed">I update IndieUtility with new browser tools for code, design, content and productivity workflows when I build something useful enough to publish.</p>
                 <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     <a href="/tools/css-animation-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Web Design</span><h3 class="mt-2 font-bold text-gray-900">CSS Animation Generator</h3><p class="mt-1 text-sm text-gray-500">Generate keyframes and reusable animation snippets.</p></a>
                     <a href="/tools/color-palette-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Design</span><h3 class="mt-2 font-bold text-gray-900">Color Palette Generator</h3><p class="mt-1 text-sm text-gray-500">Create palettes, HEX values and CSS variables.</p></a>
@@ -325,7 +440,7 @@
                     <div>
                         <h3 class="font-bold text-gray-900 mb-2">How can a web tool run 100% client-side?</h3>
                         <p class="text-sm text-gray-600 leading-relaxed">
-                            Modern web APIs allow your browser to handle complex calculations, array sorting, regular expressions, and parsing. By utilizing vanilla JavaScript directly in your browser, we eliminate server roundtrips.
+                            Modern web APIs allow your browser to handle complex calculations, array sorting, regular expressions, and parsing. By utilizing vanilla JavaScript directly in your browser, I eliminate server roundtrips.
                         </p>
                     </div>
 
@@ -339,14 +454,14 @@
                     <div>
                         <h3 class="font-bold text-gray-900 mb-2">Are there conversion limits or paid tiers?</h3>
                         <p class="text-sm text-gray-600 leading-relaxed">
-                            No. All available modules inside the utility are free and run indefinitely without pricing limits, premium features, registration blockades, or subscription setups.
+                            No. The tools I publish here are free to use without pricing limits, premium feature locks, registration walls, or subscription setups.
                         </p>
                     </div>
 
                     <div>
                         <h3 class="font-bold text-gray-900 mb-2">Can I request tool integrations?</h3>
                         <p class="text-sm text-gray-600 leading-relaxed">
-                            We continue to add lightweight modules to our database. Suggest new tools, report bugs, or submit static scripts to our developers to expand our local-first tool ecosystem.
+                            I keep adding lightweight tools when I find useful problems to solve. You can suggest new ideas, report bugs, or send feedback if something feels clunky.
                         </p>
                     </div>
                 </div>
@@ -360,7 +475,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="flex items-center space-x-3">
                 <span class="text-lg font-bold text-white tracking-tight">Indie<span class="text-indigo-500">Utility</span></span>
-                <span class="text-sm border-l border-gray-700 pl-3 ml-3 text-gray-500">Static Creator Suite</span>
+                <span class="text-sm border-l border-gray-700 pl-3 ml-3 text-gray-500">Solo-built tool collection</span>
             </div>
             <div class="flex gap-6 text-sm">
                 <a href="#" class="hover:text-white transition">Back to Top</a>
@@ -384,7 +499,7 @@
                 </div>
                 <div>
                     <h3 class="text-white font-bold mb-3">Creator Tools</h3>
-                    <ul class="space-y-2"><li><a href="/tools/youtube-transcript-cleaner/" class="hover:text-white">YouTube Transcript Cleaner</a></li><li><a href="/tools/image-format-converter/" class="hover:text-white">Image Format Converter</a></li><li><a href="/about.html" class="hover:text-white">About IndieUtility</a></li><li><a href="/privacy-policy.html" class="hover:text-white">Privacy Policy</a></li></ul>
+                    <ul class="space-y-2"><li><a href="/tools/youtube-transcript-cleaner/" class="hover:text-white">YouTube Transcript Cleaner</a></li><li><a href="/tools/image-format-converter/" class="hover:text-white">Image Format Converter</a></li><li><a href="/about.html" class="hover:text-white">About this project</a></li><li><a href="/privacy-policy.html" class="hover:text-white">Privacy Policy</a></li></ul>
                 </div>
             </div>
         </div>
@@ -418,7 +533,8 @@
                 {
                     id: 'yt-transcript',
                     name: 'YouTube Transcript Cleaner',
-                    desc: 'Fetch raw transcripts via video link, strip timestamps, and automatically deduplicate overlapping rolling sentences.',
+                    desc: 'Clean up messy auto-generated transcripts by removing timestamps, repeated lines and awkward copied formatting.',
+                    useCase: 'Cleaning auto-generated transcripts before editing, publishing or summarising.',
                     path: '/tools/youtube-transcript-cleaner/',
                     category: 'text',
                     active: true,
@@ -429,7 +545,8 @@
                 {
                     id: 'json-formatter',
                     name: 'JSON Beautifier & Validator',
-                    desc: 'Prettify nested API payloads, validate key-value arrays, locate formatting errors, and minify raw JSON lists.',
+                    desc: 'Paste messy JSON, make it readable, catch syntax errors and minify it again when you need compact output.',
+                    useCase: 'Debugging API responses, webhooks, config files and exported data.',
                     path: '/tools/json-beautifier-validator/',
                     category: 'dev',
                     active: true,
@@ -440,7 +557,8 @@
                 {
                     id: 'sql-formatter',
                     name: 'SQL Formatter',
-                    desc: 'Beautify complex SQL queries, control keyword casing and indentation, or minify output for production.',
+                    desc: 'Turn hard-to-read SQL into cleaner queries with consistent casing, indentation and spacing.',
+                    useCase: 'Making long database queries readable before debugging or sharing.',
                     path: '/tools/sql-formatter/',
                     category: 'dev',
                     active: true,
@@ -451,7 +569,8 @@
                 {
                     id: 'svg-patterns',
                     name: 'SVG Pattern Generator',
-                    desc: 'Create seamless repeating vector design patterns, modify element parameters, and grab static inline XML output.',
+                    desc: 'Generate small SVG patterns for backgrounds, textures and quick visual experiments.',
+                    useCase: 'Creating lightweight website backgrounds, textures and decorative SVG assets.',
                     path: '/tools/svg-pattern-generator/',
                     category: 'design',
                     active: true,
@@ -462,7 +581,8 @@
                 {
                     id: 'glass-morphism',
                     name: 'Glassmorphism UI Engine',
-                    desc: 'Build gorgeous translucent components, apply localized backdrop-blur styling, and capture cross-browser CSS.',
+                    desc: 'Create frosted-glass UI styles and copy the CSS without hand-tuning every shadow and blur.',
+                    useCase: 'Generating frosted-glass UI CSS for cards, panels and landing pages.',
                     path: '/tools/glassmorphism-ui-engine/',
                     category: 'design',
                     active: true,
@@ -473,7 +593,8 @@
                 {
                     id: 'regex-editor',
                     name: 'Regex Editor & Tester',
-                    desc: 'Test and debug regular expressions with live matching, capture group visualization, and instant feedback.',
+                    desc: 'Test regex patterns against sample text and see matches, captures and mistakes as you type.',
+                    useCase: 'Testing pattern matching, text extraction and validation rules.',
                     path: '/tools/regex-editor/',
                     category: 'dev',
                     active: true,
@@ -484,7 +605,8 @@
                 {
                     id: 'url-encoder',
                     name: 'URL Encoder & Decoder',
-                    desc: 'Encode and decode URLs instantly. Support for percent encoding, special characters, and RFC 3986 compliance.',
+                    desc: 'Encode or decode URLs, query strings and special characters without opening a heavier developer tool.',
+                    useCase: 'Preparing URLs, query strings and API parameters safely.',
                     path: '/tools/url-encoder-decoder/',
                     category: 'dev',
                     active: true,
@@ -495,19 +617,9 @@
                 {
                     id: 'image-converter',
                     name: 'Image Format Converter',
-                    desc: 'Convert images between PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, and ICO. Resize, adjust quality, and batch convert.',
+                    desc: 'Convert and resize images for websites, uploads, favicons and quick file-format fixes.',
+                    useCase: 'Converting and resizing images before upload, publishing or sharing.',
                     path: '/tools/image-format-converter/',
-                    category: 'design',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                           </svg>`
-                },
-                {
-                    id: 'video-converter',
-                    name: 'Video Converter and Compressor',
-                    desc: 'Convert and compress video files with ease.',
-                    path: '/tools/video-converter-compressor/',
                     category: 'design',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -517,7 +629,8 @@
                 {
                     id: 'palette-generator',
                     name: 'Color Palette Generator',
-                    desc: 'Generate harmonious color palettes, export CSS variables, and copy HEX/RGB values for web UI and branding.',
+                    desc: 'Find colour palettes, copy HEX/RGB values and export quick CSS variables for UI work.',
+                    useCase: 'Finding matching colors for websites, branding and UI design.',
                     path: '/tools/color-palette-generator/',
                     category: 'design',
                     active: true,
@@ -528,7 +641,8 @@
                 {
                     id: 'animation-generator',
                     name: 'CSS Animation Generator',
-                    desc: 'Build fade, slide, bounce, pulse, and custom animation code for modern web UI.',
+                    desc: 'Generate simple CSS animations for buttons, cards, panels and landing pages.',
+                    useCase: 'Creating reusable CSS animations for buttons, cards and page elements.',
                     path: '/tools/css-animation-generator/',
                     category: 'design',
                     active: true,
@@ -635,16 +749,60 @@
                             card.style.setProperty('--reveal-delay', `${idx * 60}ms`);
                             card.innerHTML = `
                                 <div>
-                                    <div class="bg-indigo-50 text-indigo-600 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
-                                        ${tool.icon}
+                                    <div class="flex items-center justify-between mb-5">
+                                        <div class="bg-indigo-50 text-indigo-600 p-3 rounded-2xl w-12 h-12 flex items-center justify-center">
+                                            ${tool.icon}
+                                        </div>
+
+                                        <span class="text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full bg-gray-100 text-gray-600">
+                                            ${categoryLabels[tool.category]}
+                                        </span>
                                     </div>
-                                    <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-500 text-[10px] font-semibold uppercase tracking-wide px-3 py-1 mb-3">${categoryLabels[tool.category]}</span>
-                                    <h3 class="text-lg font-bold text-gray-900 mb-2">${tool.name}</h3>
-                                    <p class="text-sm text-gray-500 leading-relaxed mb-6">${tool.desc}</p>
+
+                                    <h3 class="text-xl font-bold text-gray-900 mb-3">${tool.name}</h3>
+
+                                    <p class="text-sm text-gray-600 leading-relaxed mb-4">${tool.desc}</p>
+
+                                    <div class="bg-gray-50 border border-gray-100 rounded-2xl p-3 mb-5">
+                                        <div class="text-xs font-bold uppercase tracking-wide text-gray-400 mb-1">
+                                            Typical Use
+                                        </div>
+
+                                        <p class="text-sm text-gray-700">
+                                            ${tool.useCase || 'Everyday productivity and workflow tasks.'}
+                                        </p>
+                                    </div>
+
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">Free</span>
+                                        <span class="text-xs px-2 py-1 rounded-full bg-indigo-100 text-indigo-700">Browser Tool</span>
+                                        <span class="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700">No Signup</span>
+                                    </div>
                                 </div>
-                                <a href="${tool.path}" class="w-full inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3.5 px-4 rounded-xl transition focus:outline-none text-center">
-                                    Open Utility &nbsp;🚀
-                                </a>
+
+                                <div class="relative mt-auto preview-hover-wrapper">
+                                    <a href="${tool.path}"
+                                       class="w-full inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3.5 px-4 rounded-xl transition focus:outline-none text-center">
+                                        Open Utility →
+                                    </a>
+
+                                    <div class="pointer-events-none hidden overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl preview-popover">
+                                        <div class="flex items-center gap-1.5 border-b border-gray-100 bg-gray-50 px-3 py-2">
+                                            <span class="h-2.5 w-2.5 rounded-full bg-red-300"></span>
+                                            <span class="h-2.5 w-2.5 rounded-full bg-yellow-300"></span>
+                                            <span class="h-2.5 w-2.5 rounded-full bg-green-300"></span>
+                                            <span class="ml-2 truncate text-xs font-semibold text-gray-500">${tool.name}</span>
+                                        </div>
+
+                                        <div class="preview-frame-shell">
+                                            <iframe
+                                                title="${tool.name} preview"
+                                                data-src="${tool.path}"
+                                                class="tool-preview-frame pointer-events-none border-0">
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </div>
                             `;
                         } else {
                             card.className = "bg-gray-100 rounded-3xl border border-gray-200 p-6 flex flex-col justify-between select-none cursor-not-allowed opacity-60 card-hover reveal";
@@ -667,6 +825,19 @@
                             `;
                         }
                         toolsCardsGrid.appendChild(card);
+
+                        card.querySelectorAll('iframe[data-src]').forEach(frame => {
+                            const wrapper = frame.closest('.preview-hover-wrapper');
+                            if (!wrapper) return;
+
+                            wrapper.addEventListener('mouseenter', () => {
+                                if (!frame.src) frame.src = frame.dataset.src;
+                            }, { once: true });
+
+                            wrapper.addEventListener('focusin', () => {
+                                if (!frame.src) frame.src = frame.dataset.src;
+                            }, { once: true });
+                        });
                     });
                 }
             }
