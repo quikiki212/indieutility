@@ -5,703 +5,386 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/icon.png">
     <link rel="apple-touch-icon" href="/icon.png">
-    
-    <!-- Primary SEO Metadata -->
-    <title>Free Online Tools for Developers, Creators & Small Businesses | IndieUtility</title>
-    <meta name="description" content="A personal collection of free online tools for developers, creators, designers and small businesses. Clean transcripts, validate JSON, format SQL, test regex, generate CSS, create color palettes and process files directly in your browser.">
-    <meta name="keywords" content="free online tools, developer tools, creator tools, privacy first tools, json validator, sql formatter, regex tester, transcript cleaner, css generator, color palette generator, svg pattern generator, image converter">
-    <meta name="author" content="IndieUtility">
-    <link rel="canonical" href="https://indieutility.com/">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://indieutility.com/">
-    <meta property="og:title" content="Free Online Tools for Developers, Creators & Small Businesses | IndieUtility">
-    <meta property="og:description" content="Use a growing set of free privacy-first browser tools I built for code, content, design and everyday workflow problems.">
-    <meta property="og:image" content="https://indieutility.com/og-landing.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Free Online Tools for Developers, Creators & Small Businesses | IndieUtility">
-    <meta name="twitter:description" content="Privacy-first browser tools I built for code, content, design and everyday workflows.">
-    <meta name="twitter:image" content="https://indieutility.com/og-landing.png">
-
-    <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
+    <title>Texture Seam Remover | IndieUtility</title>
+    <meta name="description" content="Fix visible texture seams, preview tiled results, and download a cleaner seamless texture for web or game assets.">
+    <link rel="canonical" href="https://indieutility.com/tools/texture-seam-remover/">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <script src="/assets/site-header.js?v=tools-3" defer></script>
-    <meta name="google-adsense-account" content="ca-pub-2704008668461544">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2704008668461544" crossorigin="anonymous"></script>
-
-    <!-- Schema.org JSON-LD Structured Data for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          "@id": "https://indieutility.com/#organization",
-          "name": "IndieUtility",
-          "url": "https://indieutility.com/",
-          "logo": "https://indieutility.com/icon.png"
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://indieutility.com/#website",
-          "name": "IndieUtility",
-          "url": "https://indieutility.com/",
-          "publisher": { "@id": "https://indieutility.com/#organization" },
-          "description": "A personal collection of free online tools for developers, creators, designers and small businesses that run directly in the browser.",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://indieutility.com/?search={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
-        },
-        {
-          "@type": "ItemList",
-          "@id": "https://indieutility.com/#tools",
-          "name": "IndieUtility Free Online Tool Directory",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "YouTube Transcript Cleaner", "url": "https://indieutility.com/tools/youtube-transcript-cleaner/" },
-            { "@type": "ListItem", "position": 2, "name": "JSON Beautifier & Validator", "url": "https://indieutility.com/tools/json-beautifier-validator/" },
-            { "@type": "ListItem", "position": 3, "name": "SQL Formatter", "url": "https://indieutility.com/tools/sql-formatter/" },
-            { "@type": "ListItem", "position": 4, "name": "SVG Pattern Generator", "url": "https://indieutility.com/tools/svg-pattern-generator/" },
-            { "@type": "ListItem", "position": 5, "name": "Glassmorphism UI Engine", "url": "https://indieutility.com/tools/glassmorphism-ui-engine/" },
-            { "@type": "ListItem", "position": 6, "name": "Regex Editor & Tester", "url": "https://indieutility.com/tools/regex-editor/" },
-            { "@type": "ListItem", "position": 7, "name": "URL Encoder & Decoder", "url": "https://indieutility.com/tools/url-encoder-decoder/" },
-            { "@type": "ListItem", "position": 8, "name": "Image Format Converter", "url": "https://indieutility.com/tools/image-format-converter/" },
-            { "@type": "ListItem", "position": 9, "name": "Color Palette Generator", "url": "https://indieutility.com/tools/color-palette-generator/" },
-            { "@type": "ListItem", "position": 10, "name": "CSS Animation Generator", "url": "https://indieutility.com/tools/css-animation-generator/" }
-          ]
-        },
-      ]
-    }
-    </script>
-
     <style>
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-        main {
-            display: block !important;
-        }
-    </style>
-    <style>
-        /* Subtle homepage motion */
-        .reveal { opacity: 0; transform: translateY(10px) scale(.995); transition: opacity 420ms cubic-bezier(.2,.9,.2,1), transform 420ms cubic-bezier(.2,.9,.2,1); transition-delay: var(--reveal-delay, 0ms); }
-        .reveal.reveal-show { opacity: 1; transform: translateY(0) scale(1); }
-        .card-hover { transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms; will-change: transform; }
-        .card-hover:hover { transform: translateY(-6px) scale(1.01); }
-        /* Hero subtle entrance */
-        .hero-entrance { opacity: 0; transform: translateY(6px); transition: opacity 520ms ease, transform 520ms ease; }
-        .hero-entrance.show { opacity: 1; transform: translateY(0); }
-
-        .preview-hover-wrapper:hover .preview-popover,
-        .preview-hover-wrapper:focus-within .preview-popover {
-            display: block;
-        }
-        .preview-popover {
-            position: fixed;
-            top: 96px;
-            right: 24px;
-            width: 340px;
-            z-index: 999999;
-        }
-        .preview-frame-shell {
-            width: 340px;
-            height: 196px;
-            overflow: hidden;
-            background: #f3f4f6;
-        }
-        .tool-preview-frame {
-            width: 1280px;
-            height: 720px;
-            transform: scale(0.266);
-            transform-origin: top left;
-        }
-
-        /* Glass-like tool cards: top-to-bottom white -> blue gradient with subtle blur */
-        .tool-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(59,130,246,0.06));
-            border: 1px solid rgba(255,255,255,0.55);
-            box-shadow: 0 8px 30px rgba(14,20,30,0.06);
-            backdrop-filter: blur(10px) saturate(120%);
-            -webkit-backdrop-filter: blur(10px) saturate(120%);
-            color: #0f172a;
-        }
-        .tool-card a { display: block; }
-        .tool-card .mt-1.text-sm { color: rgba(15,23,42,0.72); }
-
-        @media (max-width: 1024px) {
-            .preview-popover {
-                display: none !important;
-            }
-        }
+        * { box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        canvas { display: block; image-rendering: auto; }
+        .toast { opacity: 0; transform: translateY(8px); pointer-events: none; transition: all 180ms ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .preview-panel { background: linear-gradient(135deg, rgba(59,130,246,.12), rgba(99,102,241,.08)); }
+        .canvas-shell { background: linear-gradient(180deg, #0f172a, #1e293b); box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 45px -30px rgba(15,23,42,.5); }
+        .zoom-canvas-wrap canvas { transition: transform 220ms ease; transform-origin: center; }
+        .zoom-canvas-wrap:hover canvas { transform: scale(1.8); }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-850 min-h-screen flex flex-col font-sans antialiased">
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50"></header>
 
-    <!-- Top Navigation Bar -->
-    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            
-            <!-- Logo -->
-            <a href="/" class="flex items-center space-x-3 focus:outline-none">
-                <img src="/icon.png" alt="" width="40" height="40" class="h-10 w-10 rounded-xl shadow-sm" aria-hidden="true">
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <section class="mb-8">
+            <div class="max-w-3xl">
+                <p class="text-sm uppercase tracking-widest text-indigo-600 font-bold">Design Tools</p>
+                <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold text-gray-900">Texture Seam Remover</h1>
+                <p class="mt-4 text-base text-gray-600">Import a texture, soften visible tile seams, inspect the result in a tiled preview, and download the processed texture.</p>
+            </div>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6 mb-8">
+            <div class="grid gap-4 md:grid-cols-5">
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">1</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Upload</h3>
+                    <p class="mt-2 text-sm text-gray-600">Choose the source texture from your device.</p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">2</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Preview</h3>
+                    <p class="mt-2 text-sm text-gray-600">Check the single tile and repeated tile views.</p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">3</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Adjust width</h3>
+                    <p class="mt-2 text-sm text-gray-600">Increase the seam width until edge transitions soften.</p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">4</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Adjust softness</h3>
+                    <p class="mt-2 text-sm text-gray-600">Use softness to feather the patched area.</p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">5</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Download</h3>
+                    <p class="mt-2 text-sm text-gray-600">Save the processed texture when the repeat looks clean.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-2 mb-8">
+            <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
+                <h2 class="text-xl font-bold text-gray-900">Single Tile</h2>
+                <p class="mt-2 text-sm text-gray-500">Processed texture preview.</p>
+                <div class="preview-panel mt-6 rounded-3xl border border-gray-200 p-6 flex items-center justify-center">
+                    <div class="canvas-shell w-full max-w-[420px] overflow-hidden rounded-3xl border border-gray-200 shadow-sm flex items-center justify-center aspect-square">
+                        <canvas id="tile-canvas" width="512" height="512" class="h-full w-full"></canvas>
+                    </div>
+                </div>
+            </article>
+
+            <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
+                <h2 class="text-xl font-bold text-gray-900">3×3 Tiling</h2>
+                <p class="mt-2 text-sm text-gray-500">Repeated texture preview.</p>
+                <div class="preview-panel mt-6 rounded-3xl border border-gray-200 p-6 flex items-center justify-center">
+                    <div class="canvas-shell zoom-canvas-wrap w-full max-w-[420px] overflow-hidden rounded-3xl border border-gray-200 shadow-sm flex items-center justify-center aspect-square">
+                        <canvas id="tiled-canvas" width="512" height="512" class="h-full w-full"></canvas>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6 mb-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-gray-900">Texture Settings</h2>
+                <p class="mt-1 text-sm text-gray-500">Upload a texture and tune the seam processing. Preview updates automatically.</p>
+            </div>
+            <div class="grid gap-6 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
                 <div>
-                    <span class="text-xl font-bold text-gray-900 tracking-tight">Indie<span class="text-indigo-600">Utility</span></span>
-                </div>
-            </a>
-
-            <!-- Dropdown Menu and Links -->
-            <div class="flex items-center space-x-6">
-                
-                <!-- Utilities Navigation Dropdown Toggle -->
-                <div class="relative inline-block text-left" id="nav-dropdown-wrapper">
-                    <button type="button" id="nav-dropdown-toggle" class="inline-flex items-center justify-center font-semibold text-sm text-gray-750 hover:text-indigo-600 transition focus:outline-none py-2 px-1">
-                        Select Utility
-                        <svg class="w-4 h-4 ml-1.5 mt-0.5 text-gray-500" fill="none" stroke="currentColor" viewBox="00 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                    <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-3 rounded-xl bg-white border border-gray-200 shadow-xl ring-1 ring-black ring-opacity-5 z-50">
-                        <div class="p-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
-                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Choose a utility</span>
-                        </div>
-                        <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50"></div>
-                    </div>
-                </div>
-                <a href="https://ko-fi.com/quikiki212" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg border border-indigo-200 bg-white px-2.5 py-2 text-xs sm:text-sm font-semibold text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    <span aria-hidden="true" class="mr-1">&hearts;</span> Ko-fi
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="hero" class="bg-gradient-to-b from-white via-gray-50 to-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-            <div class="text-center">
-                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">A collection of utilities for you and me</h1>
-                <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Hand-crafted utilities for developers, creators, and small teams. Fast, local-first, and easy to use.</p>
-            </div>
-
-            <!-- Search -->
-            <div class="mt-8 max-w-xl mx-auto relative" id="hero-search-wrapper">
-                <div class="bg-white p-3 sm:p-4 rounded-3xl shadow-lg border border-gray-200 flex items-center">
-                    <div class="flex items-center pl-2 flex-grow">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             class="h-5 w-5 text-gray-400 mr-3"
-                             fill="none"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-
-                        <input type="text"
-                               id="hero-search-input"
-                               class="w-full text-sm text-gray-800 bg-transparent focus:outline-none"
-                               placeholder="Search tools — try: json, css, regex, image..." aria-label="Search tools" />
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Import Texture</label>
+                    <div class="flex flex-wrap items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-3">
+                        <label for="file-input" class="inline-flex cursor-pointer items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Choose File</label>
+                        <span id="file-name" class="text-sm text-gray-500">No file selected</span>
+                        <input type="file" id="file-input" accept="image/*" class="sr-only" />
                     </div>
                 </div>
 
-                <!-- Instant Search Dropdown Panel -->
-                <div id="search-dropdown-menu"
-                     class="hidden absolute left-0 right-0 mt-2 rounded-2xl bg-white border border-gray-200 shadow-2xl z-40 overflow-hidden divide-y divide-gray-100 max-h-96 overflow-y-auto">
-                    <div id="search-items-container" class="p-2 space-y-1">
-                        <!-- Search results injected dynamically -->
+                <label class="space-y-2 text-sm font-semibold text-gray-700">
+                    Seam Width
+                    <div class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-3">
+                        <input type="range" id="seam-slider" min="1" max="40" value="20" class="flex-grow accent-indigo-600" />
+                        <span id="seam-value" class="rounded-full bg-white border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">20px</span>
                     </div>
-                </div>
-            </div>
+                </label>
 
-            <!-- Stats Row -->
-            <div class="mt-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-
-                    <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center shadow-sm">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600">11+</div>
-                        <div class="mt-1 text-sm text-gray-500">Free Tools</div>
+                <label class="space-y-2 text-sm font-semibold text-gray-700">
+                    Softness
+                    <div class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-3">
+                        <input type="range" id="softness-slider" min="0" max="10" value="6" class="flex-grow accent-indigo-600" />
+                        <span id="softness-value" class="rounded-full bg-white border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">6px</span>
                     </div>
+                </label>
 
-                    <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center shadow-sm">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-green-600">100%</div>
-                        <div class="mt-1 text-sm text-gray-500">Browser Based</div>
-                    </div>
-
-                    <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center shadow-sm">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-blue-600">0</div>
-                        <div class="mt-1 text-sm text-gray-500">Signups Required</div>
-                    </div>
-
-                    <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center shadow-sm">
-                        <div class="text-2xl sm:text-3xl font-extrabold text-purple-600">∞</div>
-                        <div class="mt-1 text-sm text-gray-500">Free Usage</div>
-                    </div>
-
-                </div>
+                <button id="btn-download" class="inline-flex h-[50px] items-center justify-center rounded-full bg-gray-800 px-5 py-2 text-sm font-semibold text-white hover:bg-gray-900 transition">Download Tile</button>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Dynamic Grid of Utilities Directory -->
-    <section id="utilities" class="bg-white border-t border-b border-gray-200 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <!-- Category Filters Header -->
-            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-6">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Browse Utilities</h2>
-                    <p class="text-sm text-gray-500 mt-1">Pick a filter or search through the tools I have built so far.</p>
-                </div>
-                
-                <!-- Filter Buttons -->
-                <div class="flex flex-wrap gap-2" id="filter-btn-group">
-                    <button type="button" data-category="all" class="filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm">All Utilities</button>
-                    <button type="button" data-category="text" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Text & Copy</button>
-                    <button type="button" data-category="dev" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Developer Tools</button>
-                    <button type="button" data-category="design" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Web Design</button>
-                </div>
-            </div>
-
-            <!-- Dynamic Cards Grid -->
-            <div id="tools-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Cards populated via JavaScript -->
-            </div>
-
-            <!-- Empty State Filter Panel -->
-            <div id="grid-empty-state" class="hidden text-center py-16">
-                <p class="text-sm text-gray-500 font-medium">No results match your search keywords or active filters.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Static SEO Tool Index: visible fallback links for crawlers and no-JS users -->
-    <section id="tool-index" class="bg-gray-50 border-b border-gray-200 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mb-10">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Free Browser-Based Tool Categories</h2>
-                <p class="mt-3 text-sm text-gray-600 leading-relaxed">
-                    Browse IndieUtility by workflow. I built these free online tools for repeatable tasks such as formatting code, cleaning text, generating interface assets, converting files and preparing content for publishing.
-                </p>
-            </div>
-            <div class="grid gap-6 md:grid-cols-3">
-                <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                    <h3 class="text-lg font-bold text-gray-900">Developer Tools</h3>
-                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">Format, validate and debug code or structured data directly in your browser.</p>
-                    <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
-                        <li><a href="/tools/json-beautifier-validator/" class="hover:underline">JSON Beautifier & Validator</a></li>
-                        <li><a href="/tools/sql-formatter/" class="hover:underline">SQL Formatter</a></li>
-                        <li><a href="/tools/regex-editor/" class="hover:underline">Regex Editor & Tester</a></li>
-                        <li><a href="/tools/url-encoder-decoder/" class="hover:underline">URL Encoder & Decoder</a></li>
-                    </ul>
-                </article>
-                <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                    <h3 class="text-lg font-bold text-gray-900">Design & CSS Generators</h3>
-                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">Generate visual assets, CSS snippets and reusable design tokens for web projects.</p>
-                    <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
-                        <li><a href="/tools/svg-pattern-generator/" class="hover:underline">SVG Pattern Generator</a></li>
-                        <li><a href="/tools/glassmorphism-ui-engine/" class="hover:underline">Glassmorphism UI Engine</a></li>
-                        <li><a href="/tools/color-palette-generator/" class="hover:underline">Color Palette Generator</a></li>
-                    </ul>
-                </article>
-                <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                    <h3 class="text-lg font-bold text-gray-900">Creator & File Tools</h3>
-                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">Clean content, prepare files and speed up common publishing workflows.</p>
-                    <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
-                        <li><a href="/tools/youtube-transcript-cleaner/" class="hover:underline">YouTube Transcript Cleaner</a></li>
-                        <li><a href="/tools/image-format-converter/" class="hover:underline">Image Format Converter</a></li>
-                    </ul>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEO Content Section -->
-    <section id="about-indieutility" class="bg-white border-b border-gray-200 py-16">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">What Is IndieUtility?</h2>
-            <div class="mt-6 space-y-5 text-gray-600 leading-relaxed">
-                <p>
-                    IndieUtility is my growing collection of free online tools for developers, content creators, designers, marketers and small businesses. I focus on practical browser utilities that solve common workflow problems: cleaning messy transcripts, validating JSON, formatting SQL, testing regular expressions, creating SVG backgrounds, generating color palettes, converting images and building CSS effects.
-                </p>
-                <p>
-                    Most tools are designed to run locally in your browser. That means your files, text, code snippets and generated outputs are processed on your own device instead of being uploaded to an application database. I use this local-first approach because it is better for quick development work, client content, internal notes, drafts, configuration files and other material you may not want to send to a third-party server.
-                </p>
-                <p>
-                    My goal is simple: make small tools that open quickly, do one job clearly, and get out of the way. No mandatory account creation, no software installation and no complicated dashboards. Each tool is built as a focused page with its own workflow, controls, examples and copyable or downloadable results.
-                </p>
-            </div>
-
-            <div class="mt-10 grid gap-6 md:grid-cols-3">
-                <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
-                    <h3 class="font-bold text-gray-900">Privacy-first by default</h3>
-                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">I try to keep ordinary tool input local whenever possible, reducing unnecessary uploads and storage.</p>
-                </div>
-                <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
-                    <h3 class="font-bold text-gray-900">Built for repeat tasks</h3>
-                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">I build around repetitive jobs people already do in editors, spreadsheets, terminals, CMS dashboards and content workflows.</p>
-                </div>
-                <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
-                    <h3 class="font-bold text-gray-900">Free and accessible</h3>
-                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">I keep the tools usable without subscriptions, sign-up gates or complex onboarding flows.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Latest Tools / Freshness Signals -->
-    <section id="latest-tools" class="bg-gray-50 border-b border-gray-200 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Recently Added and Updated Tools</h2>
-            <p class="mt-3 text-sm text-gray-600 max-w-3xl leading-relaxed">I update IndieUtility with new browser tools for code, design, content and productivity workflows when I build something useful enough to publish.</p>
-            <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <a href="/tools/css-animation-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Web Design</span><h3 class="mt-2 font-bold text-gray-900">CSS Animation Generator</h3><p class="mt-1 text-sm text-gray-500">Generate keyframes and reusable animation snippets.</p></a>
-                <a href="/tools/color-palette-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Design</span><h3 class="mt-2 font-bold text-gray-900">Color Palette Generator</h3><p class="mt-1 text-sm text-gray-500">Create palettes, HEX values and CSS variables.</p></a>
-                <a href="/tools/regex-editor/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Developer</span><h3 class="mt-2 font-bold text-gray-900">Regex Editor & Tester</h3><p class="mt-1 text-sm text-gray-500">Test expressions and inspect live matches.</p></a>
-                <a href="/tools/image-format-converter/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Files</span><h3 class="mt-2 font-bold text-gray-900">Image Format Converter</h3><p class="mt-1 text-sm text-gray-500">Convert and resize images in the browser.</p></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 text-center lg:text-left">
-                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 min-w-0">
-                    <span class="text-lg font-bold text-white tracking-tight">Indie<span class="text-indigo-500">Utility</span></span>
-                    <span class="hidden sm:inline-block h-5 border-l border-gray-700"></span>
-                    <span class="text-sm text-gray-500">Tool collection</span>
-                </div>
-                <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-                    <a href="#" class="hover:text-white transition">Back to Top</a>
-                    <a href="/about.html" class="hover:text-white transition">About</a>
-                    <a href="/contact.html" class="hover:text-white transition">Contact</a>
-                    <a href="/privacy-policy.html" class="hover:text-white transition">Privacy</a>
-                </nav>
-                <p class="text-xs text-gray-500 max-w-sm mx-auto lg:mx-0 lg:text-right">
-                    &copy; 2026 IndieUtility. Free online utilities.
-                </p>
-            </div>
-
-            <div class="w-full border-t border-gray-800 pt-8 mt-8 grid gap-6 sm:grid-cols-3 text-sm">
-                <div>
-                    <h3 class="text-white font-bold mb-3">Developer Tools</h3>
-                    <ul class="space-y-2"><li><a href="/tools/json-beautifier-validator/" class="hover:text-white">JSON Beautifier & Validator</a></li><li><a href="/tools/sql-formatter/" class="hover:text-white">SQL Formatter</a></li><li><a href="/tools/regex-editor/" class="hover:text-white">Regex Editor & Tester</a></li><li><a href="/tools/url-encoder-decoder/" class="hover:text-white">URL Encoder & Decoder</a></li></ul>
-                </div>
-                <div>
-                    <h3 class="text-white font-bold mb-3">Design Tools</h3>
-                    <ul class="space-y-2"><li><a href="/tools/svg-pattern-generator/" class="hover:text-white">SVG Pattern Generator</a></li><li><a href="/tools/glassmorphism-ui-engine/" class="hover:text-white">Glassmorphism UI Engine</a></li><li><a href="/tools/color-palette-generator/" class="hover:text-white">Color Palette Generator</a></li></ul>
-                </div>
-                <div>
-                    <h3 class="text-white font-bold mb-3">Creator Tools</h3>
-                    <ul class="space-y-2"><li><a href="/tools/youtube-transcript-cleaner/" class="hover:text-white">YouTube Transcript Cleaner</a></li><li><a href="/tools/image-format-converter/" class="hover:text-white">Image Format Converter</a></li><li><a href="/about.html" class="hover:text-white">About this project</a></li><li><a href="/privacy-policy.html" class="hover:text-white">Privacy Policy</a></li></ul>
-                </div>
-            </div>
+    <footer class="bg-gray-900 text-gray-300 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-sm">&copy; 2026 IndieUtility. Privacy-first browser tools.</p>
+            <a href="/" class="text-sm font-semibold text-indigo-400 hover:text-white">Back to homepage</a>
         </div>
     </footer>
 
-    <noscript>
-        <div class="max-w-5xl mx-auto p-6 text-sm text-gray-700">
-            <h2 class="text-xl font-bold text-gray-900">Browse IndieUtility Tools</h2>
-            <p class="mt-2">JavaScript is disabled, but you can still access these tool pages directly.</p>
-            <ul class="mt-4 grid gap-2 sm:grid-cols-2">
-                <li><a href="/tools/youtube-transcript-cleaner/">YouTube Transcript Cleaner</a></li>
-                <li><a href="/tools/json-beautifier-validator/">JSON Beautifier & Validator</a></li>
-                <li><a href="/tools/sql-formatter/">SQL Formatter</a></li>
-                <li><a href="/tools/regex-editor/">Regex Editor & Tester</a></li>
-                <li><a href="/tools/svg-pattern-generator/">SVG Pattern Generator</a></li>
-                <li><a href="/tools/glassmorphism-ui-engine/">Glassmorphism UI Engine</a></li>
-                <li><a href="/tools/color-palette-generator/">Color Palette Generator</a></li>
-                <li><a href="/tools/css-animation-generator/">CSS Animation Generator</a></li>
-                <li><a href="/tools/url-encoder-decoder/">URL Encoder & Decoder</a></li>
-                <li><a href="/tools/image-format-converter/">Image Format Converter</a></li>
-            </ul>
-        </div>
-    </noscript>
+    <div id="toast" class="toast fixed bottom-6 right-6 rounded-full bg-slate-900 px-5 py-3 text-sm text-white shadow-lg">Texture ready</div>
 
-    <!-- Vanilla Javascript Logic -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
+        const fileInput = document.getElementById('file-input');
+        const fileName = document.getElementById('file-name');
+        const seamSlider = document.getElementById('seam-slider');
+        const seamValue = document.getElementById('seam-value');
+        const softnessSlider = document.getElementById('softness-slider');
+        const softnessValue = document.getElementById('softness-value');
+        const btnDownload = document.getElementById('btn-download');
+        const toast = document.getElementById('toast');
 
-            // DYNAMIC TOOLS ARRAY DATABASE: Populates dropdowns, search menus, and cards
-            const toolsDb = [
-                {
-                    id: 'yt-transcript',
-                    name: 'YouTube Transcript Cleaner',
-                    desc: 'Clean up messy auto-generated transcripts by removing timestamps, repeated lines and awkward copied formatting.',
-                    useCase: 'Cleaning auto-generated transcripts before editing, publishing or summarising.',
-                    path: '/tools/youtube-transcript-cleaner/',
-                    category: 'text',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                           </svg>`
-                },
-                {
-                    id: 'json-formatter',
-                    name: 'JSON Beautifier & Validator',
-                    desc: 'Paste messy JSON, make it readable, catch syntax errors and minify it again when you need compact output.',
-                    useCase: 'Debugging API responses, webhooks, config files and exported data.',
-                    path: '/tools/json-beautifier-validator/',
-                    category: 'dev',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16v5c0 1.657 3.582 3 8 3s8-1.343 8-3-3.582-3-8-3-8 1.343-8 3zm0 0v5c0 1.657 3.582 3 8 3 .696 0 1.371-.033 2.014-.095M4 12v5c0 1.657 3.582 3 8 3 1.21 0 2.357-.101 3.385-.282M19 14v6m-3-3h6" />
-                           </svg>`
-                },
-                {
-                    id: 'sql-formatter',
-                    name: 'SQL Formatter',
-                    desc: 'Turn hard-to-read SQL into cleaner queries with consistent casing, indentation and spacing.',
-                    useCase: 'Making long database queries readable before debugging or sharing.',
-                    path: '/tools/sql-formatter/',
-                    category: 'dev',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7c0 1.657 3.582 3 8 3s8-1.343 8-3-3.582-3-8-3-8 1.343-8 3zm0 0v5c0 1.657 3.582 3 8 3 .696 0 1.371-.033 2.014-.095M4 12v5c0 1.657 3.582 3 8 3 1.21 0 2.357-.101 3.385-.282M19 14v6m-3-3h6" />
-                           </svg>`
-                },
-                {
-                    id: 'svg-patterns',
-                    name: 'SVG Pattern Generator',
-                    desc: 'Generate small SVG patterns for backgrounds, textures and quick visual experiments.',
-                    useCase: 'Creating lightweight website backgrounds, textures and decorative SVG assets.',
-                    path: '/tools/svg-pattern-generator/',
-                    category: 'design',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                           </svg>`
-                },
-                {
-                    id: 'glass-morphism',
-                    name: 'Glassmorphism UI Engine',
-                    desc: 'Create frosted-glass UI styles and copy the CSS without hand-tuning every shadow and blur.',
-                    useCase: 'Generating frosted-glass UI CSS for cards, panels and landing pages.',
-                    path: '/tools/glassmorphism-ui-engine/',
-                    category: 'design',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                           </svg>`
-                },
-                {
-                    id: 'regex-editor',
-                    name: 'Regex Editor & Tester',
-                    desc: 'Test regex patterns against sample text and see matches, captures and mistakes as you type.',
-                    useCase: 'Testing pattern matching, text extraction and validation rules.',
-                    path: '/tools/regex-editor/',
-                    category: 'dev',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                           </svg>`
-                },
-                {
-                    id: 'url-encoder',
-                    name: 'URL Encoder & Decoder',
-                    desc: 'Encode or decode URLs, query strings and special characters without opening a heavier developer tool.',
-                    useCase: 'Preparing URLs, query strings and API parameters safely.',
-                    path: '/tools/url-encoder-decoder/',
-                    category: 'dev',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                           </svg>`
-                },
-                {
-                    id: 'image-converter',
-                    name: 'Image Format Converter',
-                    desc: 'Convert and resize images for websites, uploads, favicons and quick file-format fixes.',
-                    useCase: 'Converting and resizing images before upload, publishing or sharing.',
-                    path: '/tools/image-format-converter/',
-                    category: 'design',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                           </svg>`
-                },
-                {
-                    id: 'palette-generator',
-                    name: 'Color Palette Generator',
-                    desc: 'Find colour palettes, copy HEX/RGB values and export quick CSS variables for UI work.',
-                    useCase: 'Finding matching colors for websites, branding and UI design.',
-                    path: '/tools/color-palette-generator/',
-                    category: 'design',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 4a3 3 0 110 6 3 3 0 010-6zm0 10a6.978 6.978 0 01-4.76-1.92A7.01 7.01 0 0112 17a7.01 7.01 0 014.76-1.92A6.978 6.978 0 0112 17z" />
-                           </svg>`
-                },
-                {
-                    id: 'animation-generator',
-                    name: 'CSS Animation Generator',
-                    desc: 'Generate simple CSS animations for buttons, cards, panels and landing pages.',
-                    useCase: 'Creating reusable CSS animations for buttons, cards and page elements.',
-                    path: '/tools/css-animation-generator/',
-                    category: 'design',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16M12 4v16M6.343 6.343l11.314 11.314M6.343 17.657l11.314-11.314" />
-                           </svg>`
-                },
-                {
-                    id: 'texture-seam-remover',
-                    name: 'Texture Seam Remover',
-                    desc: 'Import a texture, preview as a 3x3 tile, and blend/remove seams for easier tiling.',
-                    useCase: 'Fix texture seams for backgrounds and game assets.',
-                    path: '/tools/texture-seam-remover/',
-                    category: 'design',
-                    active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z" />
-                           </svg>`
-                },
-            ];
+        const tileCanvas = document.getElementById('tile-canvas');
+        const tileCtx = tileCanvas.getContext('2d');
+        const tiledCanvas = document.getElementById('tiled-canvas');
+        const tiledCtx = tiledCanvas.getContext('2d');
 
-            const categoryLabels = {
-                text: 'Text & Copy',
-                dev: 'Developer Tools',
-                design: 'Web Design'
+        let img = null;
+        let processedCanvas = null;
+
+        seamSlider.addEventListener('input', () => {
+            seamValue.innerText = `${seamSlider.value}px`;
+            if (img) render();
+        });
+
+        softnessSlider.addEventListener('input', () => {
+            softnessValue.innerText = `${softnessSlider.value}px`;
+            if (img) render();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const f = e.target.files && e.target.files[0];
+            fileName.textContent = f ? f.name : 'No file selected';
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const image = new Image();
+                image.onload = () => { img = image; render(); };
+                image.src = ev.target.result;
             };
+            reader.readAsDataURL(f);
+        });
 
-            const categoryOrder = {
-                text: 1,
-                dev: 2,
-                design: 3
-            };
-
-            toolsDb.sort((a, b) => {
-                const orderA = categoryOrder[a.category] || 99;
-                const orderB = categoryOrder[b.category] || 99;
-                if (orderA !== orderB) return orderA - orderB;
-                return a.name.localeCompare(b.name);
-            });
-
-            // Selector References
-            const navDropdownToggle = document.getElementById('nav-dropdown-toggle');
-            const navDropdownMenu = document.getElementById('nav-dropdown-menu');
-            const navDropdownItems = document.getElementById('nav-dropdown-items');
-            const navDropdownWrapper = document.getElementById('nav-dropdown-wrapper');
-
-            const heroSearchWrapper = document.getElementById('hero-search-wrapper');
-            const heroSearchInput = document.getElementById('hero-search-input');
-            const searchDropdownMenu = document.getElementById('search-dropdown-menu');
-            const searchItemsContainer = document.getElementById('search-items-container');
-
-            const toolsCardsGrid = document.getElementById('tools-cards-grid');
-            const filterBtnGroup = document.getElementById('filter-btn-group');
-            const gridEmptyState = document.getElementById('grid-empty-state');
-
-            // --- 1. Populate Dropdown Options ---
-            function buildNavDropdown() {
-                navDropdownItems.innerHTML = '';
-                toolsDb.forEach(tool => {
-                    let element;
-                    if (tool.active) {
-                        element = document.createElement('a');
-                        element.href = tool.path;
-                        element.className = "block p-3 hover:bg-gray-50 transition";
-                        element.innerHTML = `
-                            <span class="block text-sm font-bold text-gray-900">${tool.name}</span>
-                            <span class="block text-[11px] text-gray-500 mt-0.5">${tool.desc}</span>
-                        `;
-                    } else {
-                        element = document.createElement('div');
-                        element.className = "block p-3 opacity-75 cursor-default";
-                        element.innerHTML = `
-                            <span class="block text-sm font-bold text-gray-900">${tool.name}</span>
-                            <span class="block text-[11px] text-gray-500 mt-0.5">${tool.desc}</span>
-                        `;
-                    }
-                    navDropdownItems.appendChild(element);
-                });
+        btnDownload.addEventListener('click', () => {
+            if (!processedCanvas && img) render();
+            if (!processedCanvas) {
+                showToast('Upload a texture first');
+                return;
             }
-
-            // --- 2. Populate Cards Grid ---
-            function buildCardsGrid(category = 'all', query = '') {
-                // clear previous results
-                toolsCardsGrid.innerHTML = '';
-
-                const filtered = toolsDb.filter(tool => {
-                    if (category !== 'all' && tool.category !== category) return false;
-                    if (query && !tool.name.toLowerCase().includes(query.toLowerCase())) return false;
-                    return true;
-                });
-
-                if (filtered.length === 0) {
-                    gridEmptyState.classList.remove('hidden');
-                    return;
-                } else {
-                    gridEmptyState.classList.add('hidden');
-                }
-
-                filtered.forEach((tool, idx) => {
-                    const card = document.createElement('article');
-                    card.className = "rounded-2xl p-5 hover:shadow-md transition card-hover reveal tool-card";
-                    card.innerHTML = `
-                        <a href="${tool.path}" class="block focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg" aria-label="${tool.name}">
-                            <div class="flex items-start space-x-3">
-                                ${tool.icon}
-                                <div>
-                                    <h3 class="mt-0 font-bold text-gray-900 text-base">${tool.name}</h3>
-                                    <p class="mt-1 text-sm text-gray-500">${tool.desc}</p>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                    toolsCardsGrid.appendChild(card);
-
-                    // subtle staggered reveal
-                    card.style.setProperty('--reveal-delay', `${idx * 40}ms`);
-                    requestAnimationFrame(() => card.classList.add('reveal-show'));
-                });
-            }
-
-            // --- 3. Handle Search Input ---
-            heroSearchInput.addEventListener('input', () => {
-                const query = heroSearchInput.value.trim().toLowerCase();
-                buildCardsGrid(filterBtnGroup.querySelector('.bg-indigo-600')?.getAttribute('data-category'), query);
-            });
-
-            // --- 4. Initialize Page Elements ---
-            buildNavDropdown();
-            buildCardsGrid();
-
-            // --- 5. Handle Filter Button Clicks ---
-            filterBtnGroup.addEventListener('click', (e) => {
-                const targetBtn = e.target.closest('.filter-btn');
-                if (!targetBtn) return;
-
-                // Adjust focus classes
-                filterBtnGroup.querySelectorAll('.filter-btn').forEach(b => {
-                    b.className = "filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none";
-                });
-                targetBtn.className = "filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm";
-
-                const category = targetBtn.getAttribute('data-category');
-                buildCardsGrid(category, heroSearchInput.value);
-            });
-
-            // --- 6. Handle Click Outside Dropdown ---
-            document.addEventListener('click', (e) => {
-                if (!navDropdownWrapper.contains(e.target)) {
-                    navDropdownMenu.classList.add('hidden');
-                }
+            processedCanvas.toBlob((b) => {
+                const url = URL.createObjectURL(b);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'texture-tile.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('Downloaded texture');
             });
         });
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast.timer);
+            toast.timer = setTimeout(() => toast.classList.remove('show'), 1800);
+        }
+
+        function render() {
+            drawEmpty(tileCtx, tileCanvas, 'Single tile preview');
+            drawEmpty(tiledCtx, tiledCanvas, '3×3 preview');
+
+            if (!img) return;
+
+            const source = createImageCanvas(img);
+            const seam = Math.max(1, Math.min(parseInt(seamSlider.value, 10) || 20, 40, Math.floor(Math.min(source.width, source.height) / 3)));
+            const softness = Math.max(0, Math.min(parseInt(softnessSlider.value, 10) || 0, 10));
+            const processed = removeSeams(source, seam, softness);
+
+            drawContainedCanvas(tileCtx, tileCanvas, processed);
+            drawTiledNoGaps(tiledCtx, tiledCanvas, processed);
+            processedCanvas = processed;
+        }
+
+        function drawEmpty(ctx, canvas, text) {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '16px ui-sans-serif, system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+            ctx.restore();
+        }
+
+        function createImageCanvas(image) {
+            const c = document.createElement('canvas');
+            c.width = image.naturalWidth || image.width;
+            c.height = image.naturalHeight || image.height;
+            const ctx = c.getContext('2d', { willReadFrequently: true });
+            ctx.drawImage(image, 0, 0, c.width, c.height);
+            return c;
+        }
+
+        function drawContainedCanvas(ctx, canvas, src) {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            const scale = Math.min(canvas.width / src.width, canvas.height / src.height);
+            const dw = Math.round(src.width * scale);
+            const dh = Math.round(src.height * scale);
+            const dx = Math.round((canvas.width - dw) / 2);
+            const dy = Math.round((canvas.height - dh) / 2);
+            ctx.drawImage(src, 0, 0, src.width, src.height, dx, dy, dw, dh);
+            ctx.restore();
+        }
+
+        function drawTiledNoGaps(ctx, canvas, src) {
+            const grid = document.createElement('canvas');
+            grid.width = src.width * 3;
+            grid.height = src.height * 3;
+            const g = grid.getContext('2d');
+            g.imageSmoothingEnabled = false;
+
+            for (let y = 0; y < 3; y++) {
+                for (let x = 0; x < 3; x++) {
+                    g.drawImage(src, x * src.width, y * src.height);
+                }
+            }
+
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            const scale = Math.min(canvas.width / grid.width, canvas.height / grid.height);
+            const dw = Math.round(grid.width * scale);
+            const dh = Math.round(grid.height * scale);
+            const dx = Math.round((canvas.width - dw) / 2);
+            const dy = Math.round((canvas.height - dh) / 2);
+            ctx.drawImage(grid, 0, 0, grid.width, grid.height, dx, dy, dw, dh);
+            ctx.restore();
+        }
+
+        function removeSeams(source, seam, softness) {
+            const w = source.width;
+            const h = source.height;
+            const halfX = Math.floor(w / 2);
+            const halfY = Math.floor(h / 2);
+
+            const shifted = document.createElement('canvas');
+            shifted.width = w;
+            shifted.height = h;
+            const sctx = shifted.getContext('2d');
+            sctx.drawImage(source, -halfX, -halfY);
+            sctx.drawImage(source, w - halfX, -halfY);
+            sctx.drawImage(source, -halfX, h - halfY);
+            sctx.drawImage(source, w - halfX, h - halfY);
+
+            const patched = patchCenterCross(shifted, seam, softness);
+
+            const out = document.createElement('canvas');
+            out.width = w;
+            out.height = h;
+            const octx = out.getContext('2d');
+            octx.drawImage(patched, halfX, halfY);
+            octx.drawImage(patched, halfX - w, halfY);
+            octx.drawImage(patched, halfX, halfY - h);
+            octx.drawImage(patched, halfX - w, halfY - h);
+            return out;
+        }
+
+        function patchCenterCross(canvasSrc, seam, softness) {
+            const w = canvasSrc.width;
+            const h = canvasSrc.height;
+            const c = document.createElement('canvas');
+            c.width = w;
+            c.height = h;
+            const ctx = c.getContext('2d', { willReadFrequently: true });
+            ctx.drawImage(canvasSrc, 0, 0);
+
+            if (softness > 0) {
+                ctx.save();
+                ctx.filter = `blur(${softness}px)`;
+                ctx.globalAlpha = 0.35;
+                ctx.drawImage(canvasSrc, 0, 0);
+                ctx.restore();
+            }
+
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const originalCtx = canvasSrc.getContext('2d', { willReadFrequently: true });
+            const original = originalCtx.getImageData(0, 0, w, h).data;
+            const data = imgData.data;
+            const centerX = Math.floor(w / 2);
+            const centerY = Math.floor(h / 2);
+            const radius = Math.max(1, seam);
+            const sampleOffset = Math.max(radius + softness + 1, radius + 2);
+
+            function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+            function smoothstep(edge0, edge1, x) {
+                const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+                return t * t * (3 - 2 * t);
+            }
+            function idx(x, y) { return (y * w + x) * 4; }
+
+            for (let y = 0; y < h; y++) {
+                for (let dx = -radius; dx <= radius; dx++) {
+                    const x = clamp(centerX + dx, 0, w - 1);
+                    const leftX = clamp(centerX - sampleOffset + dx, 0, w - 1);
+                    const rightX = clamp(centerX + sampleOffset + dx, 0, w - 1);
+                    const weight = 1 - smoothstep(0, radius, Math.abs(dx));
+                    const target = idx(x, y);
+                    const a = idx(leftX, y);
+                    const b = idx(rightX, y);
+                    for (let k = 0; k < 4; k++) {
+                        const patch = (original[a + k] + original[b + k]) / 2;
+                        data[target + k] = Math.round(data[target + k] * (1 - weight) + patch * weight);
+                    }
+                }
+            }
+
+            for (let x = 0; x < w; x++) {
+                for (let dy = -radius; dy <= radius; dy++) {
+                    const y = clamp(centerY + dy, 0, h - 1);
+                    const topY = clamp(centerY - sampleOffset + dy, 0, h - 1);
+                    const bottomY = clamp(centerY + sampleOffset + dy, 0, h - 1);
+                    const weight = 1 - smoothstep(0, radius, Math.abs(dy));
+                    const target = idx(x, y);
+                    const a = idx(x, topY);
+                    const b = idx(x, bottomY);
+                    for (let k = 0; k < 4; k++) {
+                        const patch = (original[a + k] + original[b + k]) / 2;
+                        data[target + k] = Math.round(data[target + k] * (1 - weight) + patch * weight);
+                    }
+                }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+            return c;
+        }
+
+        render();
+    });
     </script>
 </body>
 </html>

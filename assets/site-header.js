@@ -10,6 +10,7 @@
     const isRegexPage = window.location.pathname.includes('/regex-editor');
     const isUrlEncoderPage = window.location.pathname.includes('/url-encoder-decoder');
     const isImageConverterPage = window.location.pathname.includes('/image-format-converter');
+    const isTexturePage = window.location.pathname.includes('/texture-seam-remover');
 
     header.innerHTML = `
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -57,8 +58,19 @@
 
     const isPalettePage = window.location.pathname.includes('/color-palette-generator');
     const isAnimationPage = window.location.pathname.includes('/css-animation-generator');
-    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage && !isRegexPage && !isUrlEncoderPage && !isImageConverterPage && !isPalettePage && !isAnimationPage) return;
+    const isTexturePage = window.location.pathname.includes('/texture-seam-remover');
 
+    if (!isTranscriptPage &&
+    !isGlassPage &&
+    !isJsonPage &&
+    !isSqlPage &&
+    !isRegexPage &&
+    !isUrlEncoderPage &&
+    !isImageConverterPage &&
+    !isPalettePage &&
+    !isAnimationPage &&
+    !isTexturePage) return;
+    
     const tools = [
         {
             name: 'YouTube Transcript Cleaner',
