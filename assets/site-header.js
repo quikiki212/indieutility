@@ -4,6 +4,7 @@
 
     const isToolPage = window.location.pathname.startsWith('/tools/');
     const isTranscriptPage = window.location.pathname.includes('/youtube-transcript-cleaner');
+    const isGlassPage = window.location.pathname.includes('/glassmorphism-ui-engine');
     const localFaqHref = isToolPage ? '#faq' : '/#faq';
 
     header.innerHTML = `
@@ -33,6 +34,9 @@
                     </div>
                 </div>
                 <a href="${localFaqHref}" class="hidden sm:inline text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">FAQs</a>
+                <a href="https://ko-fi.com/quikiki212" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg border border-indigo-200 bg-white px-2.5 py-2 text-xs sm:text-sm font-semibold text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <span aria-hidden="true" class="mr-1">&hearts;</span> Ko-fi
+                </a>
                 ${isToolPage ? `
                     <a href="/" class="inline-flex items-center rounded-lg bg-indigo-600 px-3 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span aria-hidden="true" class="mr-1.5">&larr;</span>
@@ -52,7 +56,7 @@
         ` : ''}
     `;
 
-    if (!isTranscriptPage) return;
+    if (!isTranscriptPage && !isGlassPage) return;
 
     const tools = [
         {
@@ -64,6 +68,11 @@
             name: 'SVG Pattern Generator',
             description: 'Create seamless, customizable vector patterns.',
             href: '/tools/svg-pattern-generator/'
+        },
+        {
+            name: 'Glassmorphism UI Engine',
+            description: 'Design polished glass surfaces and copy the CSS.',
+            href: '/tools/glassmorphism-ui-engine/'
         }
     ];
 
