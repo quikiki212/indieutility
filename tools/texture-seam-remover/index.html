@@ -38,9 +38,21 @@
                 <div class="mb-3">
                     <canvas id="tile-canvas" width="256" height="256" class="w-full border rounded"></canvas>
                 </div>
-                <div>
-                    <canvas id="tiled-canvas" width="768" height="768" class="w-full border rounded"></canvas>
+                <div class="relative group">
+                    <!-- before/after stacked canvases; hover to reveal AFTER (processed) -->
+                    <div class="absolute inset-0 border rounded overflow-hidden" style="background:#fff">
+                        <canvas id="before-tiled-canvas" width="768" height="768" class="w-full h-full block"></canvas>
+                    </div>
+                    <div class="absolute inset-0 border rounded overflow-hidden transition-opacity duration-200" style="opacity:0; pointer-events:none" id="after-wrapper">
+                        <canvas id="after-tiled-canvas" width="768" height="768" class="w-full h-full block"></canvas>
+                    </div>
+                    <!-- hover overlay instruction -->
+                    <div class="absolute bottom-2 left-2 text-xs bg-black bg-opacity-40 text-white rounded px-2 py-1">Hover to view after</div>
                 </div>
+                <style>
+                    /* reveal processed tiles on preview hover */
+                    .group:hover #after-wrapper { opacity: 1 !important; }
+                </style>
             </div>
         </div>
     </main>
@@ -60,8 +72,10 @@
 
         const tileCanvas = document.getElementById('tile-canvas');
         const tileCtx = tileCanvas.getContext('2d');
-        const tiledCanvas = document.getElementById('tiled-canvas');
-        const tiledCtx = tiledCanvas.getContext('2d');
+        const beforeTiledCanvas = document.getElementById('before-tiled-canvas');
+        const beforeTiledCtx = beforeTiledCanvas.getContext('2d');
+        const afterTiledCanvas = document.getElementById('after-tiled-canvas');
+        const afterTiledCtx = afterTiledCanvas.getContext('2d');
 
         let img = null;
         let processedCanvas = null;
@@ -85,28 +99,50 @@
         btnDownload.addEventListener('click', () => { if (!processedCanvas) applyProcessing(); if (!processedCanvas) return; processedCanvas.toBlob((b) => { const url = URL.createObjectURL(b); const a = document.createElement('a'); a.href = url; a.download = 'texture-tile.png'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }); });
 
         function render() {
-            // draw the original or processed tile scaled to tileCanvas
+            // small preview (shows processed if enabled)
             tileCtx.clearRect(0,0, tileCanvas.width, tileCanvas.height);
-            if (!img) { tileCtx.fillStyle = '#f8fafc'; tileCtx.fillRect(0,0,tileCanvas.width,tileCanvas.height); tileCtx.fillStyle = '#94a3b8'; tileCtx.fillText('No image loaded', 10, 20); tiledCtx.clearRect(0,0,tiledCanvas.width,tiledCanvas.height); return; }
+            if (!img) {
+                tileCtx.fillStyle = '#f8fafc'; tileCtx.fillRect(0,0,tileCanvas.width,tileCanvas.height);
+                tileCtx.fillStyle = '#94a3b8'; tileCtx.font = '12px sans-serif'; tileCtx.fillText('No image loaded', 10, 20);
+                beforeTiledCtx.clearRect(0,0,beforeTiledCanvas.width,beforeTiledCanvas.height);
+                afterTiledCtx.clearRect(0,0,afterTiledCanvas.width,afterTiledCanvas.height);
+                return;
+            }
 
-            // use processedCanvas if exists and optRemove is checked
-            let srcCanvas = processedCanvas || createImageCanvas(img);
-            // scale to fit tileCanvas
-            tileCtx.clearRect(0,0,tileCanvas.width,tileCanvas.height);
-            tileCtx.drawImage(srcCanvas, 0, 0, srcCanvas.width, srcCanvas.height, 0, 0, tileCanvas.width, tileCanvas.height);
+            // source (original) canvas
+            const srcOriginal = createImageCanvas(img);
+            // compute processed preview dynamically so changes reflect immediately
+            const seam = Math.max(1, Math.min( Math.floor(parseInt(seamSlider.value)||8), Math.floor(Math.min(img.width,img.height)/2) ));
+            const srcProcessed = (optRemove.checked) ? removeSeams(srcOriginal, seam) : srcOriginal;
 
-            // draw 3x3 tiled preview
-            tiledCtx.clearRect(0,0,tiledCanvas.width,tiledCanvas.height);
-            const tw = srcCanvas.width;
-            const th = srcCanvas.height;
-            const scale = tiledCanvas.width / (tw * 3);
+            // draw small tile preview (use processed if remove enabled)
+            tileCtx.drawImage(srcProcessed, 0, 0, srcProcessed.width, srcProcessed.height, 0, 0, tileCanvas.width, tileCanvas.height);
+
+            // draw before (original) tiled
+            beforeTiledCtx.clearRect(0,0,beforeTiledCanvas.width,beforeTiledCanvas.height);
+            const tw = srcOriginal.width;
+            const th = srcOriginal.height;
+            const scale = beforeTiledCanvas.width / (tw * 3);
             for (let y=0;y<3;y++){
                 for (let x=0;x<3;x++){
                     const destX = x * tw * scale;
                     const destY = y * th * scale;
-                    tiledCtx.drawImage(srcCanvas, 0, 0, tw, th, destX, destY, tw * scale, th * scale);
+                    beforeTiledCtx.drawImage(srcOriginal, 0, 0, tw, th, destX, destY, tw * scale, th * scale);
                 }
             }
+
+            // draw after (processed) tiled
+            afterTiledCtx.clearRect(0,0,afterTiledCanvas.width,afterTiledCanvas.height);
+            for (let y=0;y<3;y++){
+                for (let x=0;x<3;x++){
+                    const destX = x * tw * scale;
+                    const destY = y * th * scale;
+                    afterTiledCtx.drawImage(srcProcessed, 0, 0, tw, th, destX, destY, tw * scale, th * scale);
+                }
+            }
+
+            // keep processedCanvas for download if user hits apply/download
+            processedCanvas = srcProcessed;
         }
 
         function createImageCanvas(image) {
