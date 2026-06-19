@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texture Seam Remover | IndieUtility</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js?v=tools-3" defer></script>
+</head>
+<body class="bg-gray-50 text-gray-850 min-h-screen flex flex-col font-sans antialiased">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                <h1 class="text-2xl font-extrabold text-gray-900">Texture Seam Remover</h1>
+                <p class="mt-2 text-sm text-gray-600">Import a texture and tile it into a 3x3 preview. Adjust seam width to blend opposite edges and remove visible seams.</p>
+
+                <div class="mt-4 space-y-4">
+                    <label class="block text-sm font-semibold text-gray-700">Import Texture</label>
+                    <input type="file" id="file-input" accept="image/*" class="block" />
+
+                    <div class="flex items-center gap-4">
+                        <label class="text-sm text-gray-600">Seam Width: <span id="seam-value" class="font-bold">8</span>px</label>
+                        <input type="range" id="seam-slider" min="1" max="128" value="8" class="flex-grow" />
+                        <label class="flex items-center text-sm"><input type="checkbox" id="opt-remove-seams" checked class="mr-2">Remove Seams</label>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button id="btn-apply" class="bg-indigo-600 text-white rounded-xl px-4 py-2 font-semibold">Apply</button>
+                        <button id="btn-download" class="bg-gray-800 text-white rounded-xl px-4 py-2 font-semibold">Download Tile</button>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-sm text-gray-500">Tip: Use a small seam width (4-16px) for photographic textures; larger widths may blur details.</div>
+            </div>
+
+            <div class="lg:col-span-5 bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                <h2 class="text-sm font-semibold text-gray-800 mb-2">Preview</h2>
+                <div class="mb-3">
+                    <canvas id="tile-canvas" width="256" height="256" class="w-full border rounded"></canvas>
+                </div>
+                <div>
+                    <canvas id="tiled-canvas" width="768" height="768" class="w-full border rounded"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 mt-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-center">&copy; 2026 IndieUtility. Texture tool.</div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const fileInput = document.getElementById('file-input');
+        const seamSlider = document.getElementById('seam-slider');
+        const seamValue = document.getElementById('seam-value');
+        const optRemove = document.getElementById('opt-remove-seams');
+        const btnApply = document.getElementById('btn-apply');
+        const btnDownload = document.getElementById('btn-download');
+
+        const tileCanvas = document.getElementById('tile-canvas');
+        const tileCtx = tileCanvas.getContext('2d');
+        const tiledCanvas = document.getElementById('tiled-canvas');
+        const tiledCtx = tiledCanvas.getContext('2d');
+
+        let img = null;
+        let processedCanvas = null;
+
+        seamSlider.addEventListener('input', () => { seamValue.innerText = seamSlider.value; if (img) render(); });
+        optRemove.addEventListener('change', () => { if (img) render(); });
+
+        fileInput.addEventListener('change', (e) => {
+            const f = e.target.files && e.target.files[0];
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const image = new Image();
+                image.onload = () => { img = image; processedCanvas = null; render(); };
+                image.src = ev.target.result;
+            };
+            reader.readAsDataURL(f);
+        });
+
+        btnApply.addEventListener('click', () => { if (!img) return; applyProcessing(); });
+        btnDownload.addEventListener('click', () => { if (!processedCanvas) applyProcessing(); if (!processedCanvas) return; processedCanvas.toBlob((b) => { const url = URL.createObjectURL(b); const a = document.createElement('a'); a.href = url; a.download = 'texture-tile.png'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }); });
+
+        function render() {
+            // draw the original or processed tile scaled to tileCanvas
+            tileCtx.clearRect(0,0, tileCanvas.width, tileCanvas.height);
+            if (!img) { tileCtx.fillStyle = '#f8fafc'; tileCtx.fillRect(0,0,tileCanvas.width,tileCanvas.height); tileCtx.fillStyle = '#94a3b8'; tileCtx.fillText('No image loaded', 10, 20); tiledCtx.clearRect(0,0,tiledCanvas.width,tiledCanvas.height); return; }
+
+            // use processedCanvas if exists and optRemove is checked
+            let srcCanvas = processedCanvas || createImageCanvas(img);
+            // scale to fit tileCanvas
+            tileCtx.clearRect(0,0,tileCanvas.width,tileCanvas.height);
+            tileCtx.drawImage(srcCanvas, 0, 0, srcCanvas.width, srcCanvas.height, 0, 0, tileCanvas.width, tileCanvas.height);
+
+            // draw 3x3 tiled preview
+            tiledCtx.clearRect(0,0,tiledCanvas.width,tiledCanvas.height);
+            const tw = srcCanvas.width;
+            const th = srcCanvas.height;
+            const scale = tiledCanvas.width / (tw * 3);
+            for (let y=0;y<3;y++){
+                for (let x=0;x<3;x++){
+                    tiledCtx.drawImage(srcCanvas, x*tw, y*th, tw, th, x*tw*scale, y*th*scale, tw*scale, th*scale);
+                }
+            }
+        }
+
+        function createImageCanvas(image) {
+            const c = document.createElement('canvas');
+            c.width = image.width;
+            c.height = image.height;
+            const ctx = c.getContext('2d');
+            ctx.drawImage(image,0,0);
+            return c;
+        }
+
+        function applyProcessing() {
+            const seam = Math.max(1, Math.min( Math.floor(parseInt(seamSlider.value)||8), Math.floor(Math.min(img.width,img.height)/2) ));
+            const source = createImageCanvas(img);
+            if (optRemove.checked) {
+                processedCanvas = removeSeams(source, seam);
+            } else {
+                processedCanvas = source;
+            }
+            render();
+        }
+
+        // seam removal: average opposite edges across seam width for horizontal and vertical seams
+        function removeSeams(canvasSrc, seam) {
+            const w = canvasSrc.width;
+            const h = canvasSrc.height;
+            const c = document.createElement('canvas'); c.width = w; c.height = h;
+            const ctx = c.getContext('2d');
+            ctx.drawImage(canvasSrc,0,0);
+            const imgData = ctx.getImageData(0,0,w,h);
+            const data = imgData.data;
+
+            // horizontal (left/right)
+            for (let x=0;x<seam;x++){
+                const xOpp = w - seam + x;
+                const t = (x + 1) / (seam + 1);
+                for (let y=0;y<h;y++){
+                    const idxL = (y*w + x) * 4;
+                    const idxR = (y*w + xOpp) * 4;
+                    for (let k=0;k<3;k++){
+                        const vl = data[idxL + k];
+                        const vr = data[idxR + k];
+                        const avg = Math.round(vl * (1 - t) + vr * t);
+                        data[idxL + k] = avg;
+                        data[idxR + k] = avg;
+                    }
+                    data[idxL+3] = Math.max(data[idxL+3], data[idxR+3]);
+                    data[idxR+3] = data[idxL+3];
+                }
+            }
+
+            // vertical (top/bottom)
+            for (let y=0;y<seam;y++){
+                const yOpp = h - seam + y;
+                const t = (y + 1) / (seam + 1);
+                for (let x=0;x<w;x++){
+                    const idxT = (y*w + x) * 4;
+                    const idxB = (yOpp*w + x) * 4;
+                    for (let k=0;k<3;k++){
+                        const vt = data[idxT + k];
+                        const vb = data[idxB + k];
+                        const avg = Math.round(vt * (1 - t) + vb * t);
+                        data[idxT + k] = avg;
+                        data[idxB + k] = avg;
+                    }
+                    data[idxT+3] = Math.max(data[idxT+3], data[idxB+3]);
+                    data[idxB+3] = data[idxT+3];
+                }
+            }
+
+            ctx.putImageData(imgData,0,0);
+            return c;
+        }
+
+        // initial render (empty)
+        render();
+    });
+    </script>
+</body>
+</html>
