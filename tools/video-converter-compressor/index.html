@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Video Converter & Compressor | MP4, WebM, GIF | IndieUtility</title>
+    <meta name="description" content="Convert, compress, trim and resize videos directly in your browser. Export MP4, WebM, GIF, MP3 and WAV without uploading files.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://indieutility.com/tools/video-converter-compressor/">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://indieutility.com/tools/video-converter-compressor/">
+    <meta property="og:title" content="Video Converter & Compressor | IndieUtility">
+    <meta property="og:description" content="Convert videos to MP4, WebM, GIF, MP3 or WAV locally in your browser.">
+    <meta property="og:image" content="https://indieutility.com/og-landing.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js?v=tools-3" defer></script>
+    <meta name="google-adsense-account" content="ca-pub-2704008668461544">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2704008668461544" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Video Converter & Compressor",
+      "url": "https://indieutility.com/tools/video-converter-compressor/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript and WebAssembly.",
+      "description": "A privacy-first browser tool for converting, compressing, trimming, resizing and exporting videos to MP4, WebM, GIF, MP3 and WAV.",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+    }
+    </script>
+    <style>
+        *{box-sizing:border-box}body{overflow-x:hidden}.preview-container{min-height:320px;max-height:460px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f3f4f6 0%,#e5e7eb 100%)}.preview-video{max-width:100%;max-height:460px;object-fit:contain}.file-input-wrapper{position:relative;display:inline-block;overflow:hidden}.file-input-wrapper input[type=file]{position:absolute;left:-9999px}.upload-box{border:2px dashed #d1d5db;border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:all 160ms ease}.upload-box:hover{border-color:#818cf8;background-color:#f0f4ff}.upload-box.dragover{border-color:#4f46e5;background-color:#eef2ff}.format-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:.75rem}.format-btn{padding:.75rem;border:2px solid #e5e7eb;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;transition:all 160ms ease;background:white}.format-btn:hover{border-color:#818cf8;color:#6366f1}.format-btn.active{border-color:#4f46e5;background-color:#4f46e5;color:white}.toast{opacity:0;transform:translateY(8px);pointer-events:none;transition:all 180ms ease}.toast.show{opacity:1;transform:translateY(0)}.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}.stat-card{border-left:3px solid #818cf8;padding-left:1rem}.progress-bar{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden}.progress-fill{height:100%;width:0%;background:#4f46e5;transition:width 180ms ease}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}@media(max-width:768px){.format-grid{grid-template-columns:repeat(auto-fit,minmax(80px,1fr))}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+<header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50"></header>
+<main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+<section class="mb-7">
+<p class="text-sm uppercase tracking-[0.25em] text-indigo-600 font-bold">Video Tools</p>
+<h1 class="mt-3 text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">Video Converter & Compressor</h1>
+<p class="mt-2 text-base sm:text-lg text-gray-600">Convert videos to MP4, WebM, GIF, MP3, or WAV. Trim, resize, compress, and export locally in your browser without uploading files.</p>
+</section>
+
+<section class="rounded-2xl border border-yellow-200 bg-yellow-50 shadow-sm p-5 mb-6">
+<h2 class="font-bold text-yellow-900">Local processing note</h2>
+<p class="mt-1 text-sm text-yellow-800 leading-relaxed">This tool uses FFmpeg WebAssembly in your browser. Large files may take time and can use significant memory. For best results, start with short clips or videos under a few hundred MB.</p>
+</section>
+
+<section class="rounded-2xl border border-gray-200 bg-white shadow-sm p-6 mb-6">
+<div class="file-input-wrapper w-full">
+<div id="upload-box" class="upload-box" role="button" tabindex="0">
+<input id="file-input" type="file" accept="video/*,.mkv,.avi,.mov,.mp4,.webm,.m4v,.ogv">
+<svg class="h-12 w-12 mx-auto mb-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+<p class="text-lg font-semibold text-gray-900">Click to upload or drag and drop</p>
+<p class="text-sm text-gray-500 mt-1">MP4, MOV, WebM, AVI, MKV, M4V and more</p>
+</div>
+</div>
+</section>
+
+<section id="editor-section" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+<article class="lg:col-span-2 rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+<div class="border-b border-gray-100 px-4 py-3 flex items-center justify-between gap-3">
+<h2 class="font-bold text-gray-900">Video Preview</h2>
+<span id="preview-duration" class="mono text-xs text-gray-500">-</span>
+</div>
+<div id="preview-container" class="preview-container"></div>
+</article>
+<article class="rounded-2xl border border-gray-200 bg-white shadow-sm p-6">
+<h2 class="font-bold text-gray-900 mb-4">File Info</h2>
+<dl class="space-y-3 text-sm">
+<div><dt class="text-xs font-semibold text-gray-500">Filename</dt><dd id="info-filename" class="mono text-xs text-gray-700 mt-1 break-all">-</dd></div>
+<div><dt class="text-xs font-semibold text-gray-500">Duration</dt><dd id="info-duration" class="mono text-xs text-gray-700 mt-1">-</dd></div>
+<div><dt class="text-xs font-semibold text-gray-500">Resolution</dt><dd id="info-resolution" class="mono text-xs text-gray-700 mt-1">-</dd></div>
+<div><dt class="text-xs font-semibold text-gray-500">File Size</dt><dd id="info-size" class="mono text-xs text-gray-700 mt-1">-</dd></div>
+<div><dt class="text-xs font-semibold text-gray-500">Input Type</dt><dd id="info-format" class="mono text-xs text-gray-700 mt-1">-</dd></div>
+<button type="button" id="clear-video" class="mt-4 w-full rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700 hover:text-red-600 hover:border-red-200 focus:outline-none focus:ring-2 focus:ring-red-400">Clear video</button>
+</dl>
+</article>
+</section>
+
+<section id="format-section" class="hidden rounded-2xl border border-gray-200 bg-white shadow-sm p-6 mb-6">
+<h2 class="text-lg font-bold text-gray-900 mb-4">Convert to Format</h2>
+<div class="format-grid">
+<button type="button" class="format-btn active" data-format="mp4">MP4</button>
+<button type="button" class="format-btn" data-format="webm">WebM</button>
+<button type="button" class="format-btn" data-format="gif">GIF</button>
+<button type="button" class="format-btn" data-format="mp3">MP3</button>
+<button type="button" class="format-btn" data-format="wav">WAV</button>
+</div>
+
+<div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+<div id="quality-block"><label for="quality-select" class="block text-sm font-semibold text-gray-700 mb-2">Compression preset</label><select id="quality-select" class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"><option value="18">Very high quality / large file</option><option value="23" selected>Balanced quality</option><option value="28">Smaller file</option><option value="34">Maximum compression</option></select><p class="text-xs text-gray-500 mt-1">Lower CRF = higher quality. Applies to MP4/WebM.</p></div>
+<div id="resolution-block"><label for="resolution-select" class="block text-sm font-semibold text-gray-700 mb-2">Resolution</label><select id="resolution-select" class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"><option value="original" selected>Keep original</option><option value="1920">1080p max width</option><option value="1280">720p max width</option><option value="854">480p max width</option><option value="640">360p max width</option></select></div>
+<div id="fps-block"><label for="fps-select" class="block text-sm font-semibold text-gray-700 mb-2">Frame rate</label><select id="fps-select" class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"><option value="original" selected>Keep original</option><option value="60">60 FPS</option><option value="30">30 FPS</option><option value="24">24 FPS</option><option value="15">15 FPS</option><option value="10">10 FPS</option></select></div>
+</div>
+
+<div id="gif-settings" class="hidden mt-6 rounded-2xl border border-indigo-100 bg-indigo-50 p-4">
+<h3 class="font-bold text-indigo-900">GIF settings</h3>
+<div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+<label class="block text-sm font-semibold text-indigo-900">GIF width<input id="gif-width" type="number" value="480" min="160" max="1280" class="mt-2 w-full rounded-lg border border-indigo-200 px-3 py-2 text-sm text-gray-800"></label>
+<label class="block text-sm font-semibold text-indigo-900">GIF FPS<input id="gif-fps" type="number" value="12" min="5" max="30" class="mt-2 w-full rounded-lg border border-indigo-200 px-3 py-2 text-sm text-gray-800"></label>
+<label class="block text-sm font-semibold text-indigo-900">Max GIF duration<input id="gif-max-duration" type="number" value="15" min="1" max="60" class="mt-2 w-full rounded-lg border border-indigo-200 px-3 py-2 text-sm text-gray-800"></label>
+</div>
+<p class="mt-3 text-xs text-indigo-800">GIFs get large quickly. This tool automatically limits GIF output to the max duration above unless you set a shorter trim range.</p>
+</div>
+
+<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+<label class="block text-sm font-semibold text-gray-700">Trim start time<input id="trim-start" type="text" placeholder="00:00 or 12.5" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"><span class="block text-xs text-gray-500 mt-1">Optional. Use seconds or HH:MM:SS.</span></label>
+<label class="block text-sm font-semibold text-gray-700">Trim end time<input id="trim-end" type="text" placeholder="01:30 or 90" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"><span class="block text-xs text-gray-500 mt-1">Optional. Leave blank for end of video.</span></label>
+</div>
+
+<button id="convert-btn" type="button" class="mt-6 w-full rounded-xl bg-indigo-600 px-6 py-3 text-base font-bold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">Convert & Download</button>
+
+<div id="progress-section" class="hidden mt-5">
+<div class="flex items-center justify-between text-xs font-semibold text-gray-500 mb-2"><span id="progress-label">Preparing...</span><span id="progress-percent">0%</span></div>
+<div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+<pre id="ffmpeg-log" class="mono mt-3 max-h-40 overflow-y-auto rounded-xl border border-gray-200 bg-gray-50 p-3 text-xs text-gray-600 whitespace-pre-wrap"></pre>
+</div>
+</section>
+
+<section id="stats-section" class="hidden rounded-xl border border-gray-200 bg-white shadow-sm px-6 py-4 mb-6">
+<dl class="stats-grid text-sm">
+<div class="stat-card"><dt class="text-xs font-semibold text-gray-400">Original Size</dt><dd id="stat-original" class="font-bold text-gray-800 mt-1">-</dd></div>
+<div class="stat-card"><dt class="text-xs font-semibold text-gray-400">Converted Size</dt><dd id="stat-converted" class="font-bold text-gray-800 mt-1">-</dd></div>
+<div class="stat-card"><dt class="text-xs font-semibold text-gray-400">Size Change</dt><dd id="stat-compression" class="font-bold text-gray-800 mt-1">-</dd></div>
+<div class="stat-card"><dt class="text-xs font-semibold text-gray-400">Status</dt><dd id="stat-status" class="font-bold text-green-700 mt-1">Ready</dd></div>
+</dl>
+</section>
+
+<section class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-5">
+<article class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+<h2 class="text-xl font-extrabold text-gray-900">How it works</h2>
+<ol class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-5">
+<li><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">1</span><h3 class="mt-3 font-bold text-gray-900">Upload</h3><p class="mt-1 text-sm text-gray-500">Choose a video from your device. The file stays local.</p></li>
+<li><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">2</span><h3 class="mt-3 font-bold text-gray-900">Configure</h3><p class="mt-1 text-sm text-gray-500">Pick MP4, WebM, GIF, MP3 or WAV, then trim, resize or compress.</p></li>
+<li><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">3</span><h3 class="mt-3 font-bold text-gray-900">Download</h3><p class="mt-1 text-sm text-gray-500">Run conversion locally and download the finished file.</p></li>
+</ol>
+</article>
+<article id="faq" class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+<h2 class="text-xl font-extrabold text-gray-900">Frequently asked questions</h2>
+<details class="mt-4 border-b border-gray-100 py-3"><summary class="cursor-pointer font-semibold text-gray-800">Is my video uploaded to a server?</summary><p class="mt-2 text-sm leading-relaxed text-gray-500">No. Conversion runs inside your browser using WebAssembly. Your file is not uploaded to IndieUtility.</p></details>
+<details class="border-b border-gray-100 py-3"><summary class="cursor-pointer font-semibold text-gray-800">Why is video conversion slower than image conversion?</summary><p class="mt-2 text-sm leading-relaxed text-gray-500">Video encoding is computationally expensive. Browser-based FFmpeg is private and convenient, but large videos may take time.</p></details>
+<details class="border-b border-gray-100 py-3"><summary class="cursor-pointer font-semibold text-gray-800">Can this convert videos to GIF?</summary><p class="mt-2 text-sm leading-relaxed text-gray-500">Yes. Choose GIF as the output format. Short clips work best because GIF files can become very large.</p></details>
+<details class="py-3"><summary class="cursor-pointer font-semibold text-gray-800">What formats are supported?</summary><p class="mt-2 text-sm leading-relaxed text-gray-500">Output formats include MP4, WebM, GIF, MP3 and WAV. Input support depends on browser and FFmpeg WebAssembly support.</p></details>
+</article>
+</section>
+</main>
+
+<footer class="mt-10 bg-gray-900 text-gray-300 py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+<a href="/" class="font-bold text-white">Indie<span class="text-indigo-400">Utility</span></a>
+<p class="text-xs text-gray-500">&copy; 2026 IndieUtility. Privacy-first browser tools.</p>
+</div>
+</footer>
+
+<div id="toast" class="toast fixed bottom-6 right-6 z-50 rounded-xl bg-gray-900 px-4 py-3 text-sm font-bold text-white shadow-xl" role="status">Message</div>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{const uploadBox=document.getElementById('upload-box'),fileInput=document.getElementById('file-input'),editorSection=document.getElementById('editor-section'),formatSection=document.getElementById('format-section'),statsSection=document.getElementById('stats-section'),previewContainer=document.getElementById('preview-container'),convertBtn=document.getElementById('convert-btn'),clearBtn=document.getElementById('clear-video'),toast=document.getElementById('toast'),qualitySelect=document.getElementById('quality-select'),resolutionSelect=document.getElementById('resolution-select'),fpsSelect=document.getElementById('fps-select'),trimStartInput=document.getElementById('trim-start'),trimEndInput=document.getElementById('trim-end'),gifSettings=document.getElementById('gif-settings'),gifWidth=document.getElementById('gif-width'),gifFps=document.getElementById('gif-fps'),gifMaxDuration=document.getElementById('gif-max-duration'),progressSection=document.getElementById('progress-section'),progressFill=document.getElementById('progress-fill'),progressPercent=document.getElementById('progress-percent'),progressLabel=document.getElementById('progress-label'),ffmpegLog=document.getElementById('ffmpeg-log');let originalFile=null,currentFormat='mp4',currentVideoUrl=null,videoDuration=0,videoWidth=0,videoHeight=0,ffmpeg=null,ffmpegLoaded=false;function showToast(m){toast.textContent=m;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2600)}function formatFileSize(b){if(!b)return'0 B';const k=1024,s=['B','KB','MB','GB'],i=Math.min(Math.floor(Math.log(b)/Math.log(k)),s.length-1);return(b/Math.pow(k,i)).toFixed(2)+' '+s[i]}function formatTime(sec){if(!Number.isFinite(sec))return'-';const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=Math.floor(sec%60);return h>0?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${m}:${String(s).padStart(2,'0')}`}function parseTime(v){if(!v||!v.trim())return null;v=v.trim();if(/^\d+(\.\d+)?$/.test(v))return parseFloat(v);const p=v.split(':').map(Number);if(p.some(Number.isNaN))return null;if(p.length===2)return p[0]*60+p[1];if(p.length===3)return p[0]*3600+p[1]*60+p[2];return null}function getExtension(f){const p=f.name.split('?')[0].split('#')[0].split('.');return p.length>1?p.pop().toLowerCase():'mp4'}function getOutputName(fmt){const base=originalFile.name.replace(/\.[^/.]+$/,'').replace(/[^\w\-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'')||'converted-video';return `${base}.${fmt}`}function setProgress(r,label){const pct=Math.max(0,Math.min(100,Math.round(r*100)));progressFill.style.width=pct+'%';progressPercent.textContent=pct+'%';if(label)progressLabel.textContent=label}async function loadFFmpeg(){if(ffmpegLoaded)return;if(!window.FFmpegWASM||!window.FFmpegUtil)throw new Error('FFmpeg library failed to load. Check your connection and try again.');progressSection.classList.remove('hidden');setProgress(.02,'Loading FFmpeg core...');ffmpegLog.textContent='';const{FFmpeg}=window.FFmpegWASM,{toBlobURL}=window.FFmpegUtil;ffmpeg=new FFmpeg();ffmpeg.on('log',({message})=>{ffmpegLog.textContent+=message+'\n';ffmpegLog.scrollTop=ffmpegLog.scrollHeight});ffmpeg.on('progress',({progress})=>{if(typeof progress==='number')setProgress(progress,'Converting...')});const baseURL='https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';await ffmpeg.load({coreURL:await toBlobURL(`${baseURL}/ffmpeg-core.js`,'text/javascript'),wasmURL:await toBlobURL(`${baseURL}/ffmpeg-core.wasm`,'application/wasm')});ffmpegLoaded=true;setProgress(.08,'FFmpeg ready')}function handleVideoUpload(file){if(!file.type.startsWith('video/')&&!/\.(mkv|avi|mov|mp4|webm|m4v|ogv)$/i.test(file.name)){showToast('Please upload a valid video file');return}originalFile=file;if(currentVideoUrl)URL.revokeObjectURL(currentVideoUrl);currentVideoUrl=URL.createObjectURL(file);const video=document.createElement('video');video.controls=true;video.src=currentVideoUrl;video.className='preview-video';video.preload='metadata';video.addEventListener('loadedmetadata',()=>{videoDuration=video.duration||0;videoWidth=video.videoWidth||0;videoHeight=video.videoHeight||0;document.getElementById('info-filename').textContent=file.name;document.getElementById('info-duration').textContent=formatTime(videoDuration);document.getElementById('info-resolution').textContent=videoWidth&&videoHeight?`${videoWidth} × ${videoHeight}`:'Unknown';document.getElementById('info-size').textContent=formatFileSize(file.size);document.getElementById('info-format').textContent=(file.type||getExtension(file)).replace('video/','').toUpperCase();document.getElementById('preview-duration').textContent=`Duration: ${formatTime(videoDuration)}`;editorSection.classList.remove('hidden');formatSection.classList.remove('hidden');statsSection.classList.remove('hidden');document.getElementById('stat-original').textContent=formatFileSize(file.size);document.getElementById('stat-converted').textContent='-';document.getElementById('stat-compression').textContent='-';document.getElementById('stat-status').textContent='Ready'});previewContainer.innerHTML='';previewContainer.appendChild(video)}document.querySelectorAll('.format-btn').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.format-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentFormat=btn.getAttribute('data-format');const isAudio=currentFormat==='mp3'||currentFormat==='wav',isGif=currentFormat==='gif';document.getElementById('quality-block').classList.toggle('hidden',isAudio||isGif);document.getElementById('resolution-block').classList.toggle('hidden',isAudio||isGif);document.getElementById('fps-block').classList.toggle('hidden',isAudio);gifSettings.classList.toggle('hidden',!isGif)}));uploadBox.addEventListener('click',()=>fileInput.click());uploadBox.addEventListener('keypress',e=>{if(e.key==='Enter')fileInput.click()});uploadBox.addEventListener('dragover',e=>{e.preventDefault();uploadBox.classList.add('dragover')});uploadBox.addEventListener('dragleave',()=>uploadBox.classList.remove('dragover'));uploadBox.addEventListener('drop',e=>{e.preventDefault();uploadBox.classList.remove('dragover');if(e.dataTransfer.files[0])handleVideoUpload(e.dataTransfer.files[0])});fileInput.addEventListener('change',e=>{if(e.target.files[0])handleVideoUpload(e.target.files[0])});clearBtn.addEventListener('click',()=>{originalFile=null;fileInput.value='';videoDuration=0;videoWidth=0;videoHeight=0;if(currentVideoUrl)URL.revokeObjectURL(currentVideoUrl);currentVideoUrl=null;editorSection.classList.add('hidden');formatSection.classList.add('hidden');statsSection.classList.add('hidden');progressSection.classList.add('hidden');previewContainer.innerHTML='';ffmpegLog.textContent=''});function buildFFmpegArgs(inputName,outputName){const args=['-i',inputName],start=parseTime(trimStartInput.value),end=parseTime(trimEndInput.value);if(start!==null&&start>=0)args.unshift('-ss',String(start));if(end!==null&&end>0){const duration=start!==null?Math.max(.1,end-start):end;args.push('-t',String(duration))}if(currentFormat==='mp4'){args.push('-c:v','libx264','-preset','veryfast','-crf',qualitySelect.value,'-pix_fmt','yuv420p','-c:a','aac','-b:a','128k');if(resolutionSelect.value!=='original')args.push('-vf',`scale='min(${resolutionSelect.value},iw)':-2`);if(fpsSelect.value!=='original')args.push('-r',fpsSelect.value);args.push('-movflags','+faststart',outputName);return args}if(currentFormat==='webm'){args.push('-c:v','libvpx-vp9','-deadline','realtime','-cpu-used','5','-crf',qualitySelect.value,'-b:v','0','-c:a','libopus','-b:a','96k');const filters=[];if(resolutionSelect.value!=='original')filters.push(`scale='min(${resolutionSelect.value},iw)':-2`);if(fpsSelect.value!=='original')filters.push(`fps=${fpsSelect.value}`);if(filters.length)args.push('-vf',filters.join(','));args.push(outputName);return args}if(currentFormat==='gif'){const maxDur=Math.max(1,Number(gifMaxDuration.value)||15);if(end===null)args.push('-t',String(maxDur));const width=Math.max(160,Number(gifWidth.value)||480),fps=Math.max(5,Math.min(30,Number(gifFps.value)||12));args.push('-vf',`fps=${fps},scale=${width}:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=128[p];[s1][p]paletteuse=dither=bayer:bayer_scale=5`,'-loop','0',outputName);return args}if(currentFormat==='mp3'){args.push('-vn','-c:a','libmp3lame','-b:a','192k',outputName);return args}if(currentFormat==='wav'){args.push('-vn','-c:a','pcm_s16le',outputName);return args}throw new Error('Unsupported output format')}convertBtn.addEventListener('click',async()=>{if(!originalFile){showToast('Upload a video first');return}try{convertBtn.disabled=true;convertBtn.textContent='Converting...';document.getElementById('stat-status').textContent='Converting';progressSection.classList.remove('hidden');setProgress(.01,'Preparing...');await loadFFmpeg();const{fetchFile}=window.FFmpegUtil,inputName=`input.${getExtension(originalFile)}`,outputName=getOutputName(currentFormat);try{await ffmpeg.deleteFile(inputName)}catch(e){}try{await ffmpeg.deleteFile(outputName)}catch(e){}setProgress(.1,'Reading file...');await ffmpeg.writeFile(inputName,await fetchFile(originalFile));const args=buildFFmpegArgs(inputName,outputName);ffmpegLog.textContent+='\nCommand: ffmpeg '+args.join(' ')+'\n\n';setProgress(.15,'Converting...');await ffmpeg.exec(args);setProgress(.95,'Preparing download...');const data=await ffmpeg.readFile(outputName);const mimeMap={mp4:'video/mp4',webm:'video/webm',gif:'image/gif',mp3:'audio/mpeg',wav:'audio/wav'},blob=new Blob([data.buffer],{type:mimeMap[currentFormat]||'application/octet-stream'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=outputName;document.body.appendChild(link);link.click();document.body.removeChild(link);URL.revokeObjectURL(url);document.getElementById('stat-original').textContent=formatFileSize(originalFile.size);document.getElementById('stat-converted').textContent=formatFileSize(blob.size);document.getElementById('stat-compression').textContent=((1-blob.size/originalFile.size)*100).toFixed(1)+'%';document.getElementById('stat-status').textContent='Complete';setProgress(1,'Complete');showToast('Video converted and downloaded!')}catch(error){console.error(error);document.getElementById('stat-status').textContent='Failed';ffmpegLog.textContent+='\nError: '+error.message;showToast('Conversion failed: '+error.message)}finally{convertBtn.disabled=false;convertBtn.textContent='Convert & Download'}})});
+</script>
+</body>
+</html>
