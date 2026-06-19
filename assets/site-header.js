@@ -1,226 +1,636 @@
-(() => {
-    const header = document.getElementById('site-header');
-    if (!header) return;
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    
+    <!-- Primary SEO Metadata -->
+    <title>IndieUtility | Free, Privacy-First Creator & Developer Tools</title>
+    <meta name="description" content="A curated suite of free, client-side web tools. Clean YouTube transcripts, validate JSON, write markdown, and generate CSS layout parameters securely inside your browser.">
+    <meta name="keywords" content="indie utility, free web tools, developer tools, youtube transcript cleaner, json formatter, css glassmorphism, markdown editor, client-side tools">
+    <meta name="author" content="IndieUtility">
+    <link rel="canonical" href="https://indieutility.com/">
 
-    const isToolPage = window.location.pathname.startsWith('/tools/');
-    const isTranscriptPage = window.location.pathname.includes('/youtube-transcript-cleaner');
-    const isGlassPage = window.location.pathname.includes('/glassmorphism-ui-engine');
-    const isJsonPage = window.location.pathname.includes('/json-beautifier-validator');
-    const isSqlPage = window.location.pathname.includes('/sql-formatter');
-    const isRegexPage = window.location.pathname.includes('/regex-editor');
-    const isUrlEncoderPage = window.location.pathname.includes('/url-encoder-decoder');
-    const isImageConverterPage = window.location.pathname.includes('/image-format-converter');
-    const localFaqHref = isToolPage ? '#faq' : '/#faq';
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://indieutility.com/">
+    <meta property="og:title" content="IndieUtility | Free, Privacy-First Creator & Developer Tools">
+    <meta property="og:description" content="Lightning-fast web tools built with 100% local client-side privacy. Clean transcripts, validate JSON, optimize SVGs, and more.">
+    <meta property="og:image" content="https://indieutility.com/og-landing.png">
 
-    header.innerHTML = `
+    <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js?v=tools-3" defer></script>
+    <meta name="google-adsense-account" content="ca-pub-2704008668461544">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2704008668461544" crossorigin="anonymous"></script>
+
+    <!-- Schema.org JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "IndieUtility",
+      "url": "https://indieutility.com/",
+      "description": "A curated collection of privacy-focused developer and creator utilities running entirely in the client's browser.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://indieutility.com/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        main {
+            display: block !important;
+        }
+    </style>
+    <style>
+        /* Subtle homepage motion */
+        .reveal { opacity: 0; transform: translateY(10px) scale(.995); transition: opacity 420ms cubic-bezier(.2,.9,.2,1), transform 420ms cubic-bezier(.2,.9,.2,1); }
+        .reveal.reveal-show { opacity: 1; transform: translateY(0) scale(1); }
+        .card-hover { transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms; will-change: transform; }
+        .card-hover:hover { transform: translateY(-6px) scale(1.01); }
+        /* Hero subtle entrance */
+        .hero-entrance { opacity: 0; transform: translateY(6px); transition: opacity 520ms ease, transform 520ms ease; }
+        .hero-entrance.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-850 min-h-screen flex flex-col font-sans antialiased">
+
+    <!-- Top Navigation Bar -->
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="/" aria-label="IndieUtility homepage" class="flex items-center space-x-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-lg">
+            
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-3 focus:outline-none">
                 <img src="/icon.png" alt="" width="40" height="40" class="h-10 w-10 rounded-xl shadow-sm" aria-hidden="true">
-                <span class="text-xl font-bold text-gray-900 tracking-tight">Indie<span class="text-indigo-600">Utility</span></span>
+                <div>
+                    <span class="text-xl font-bold text-gray-900 tracking-tight">Indie<span class="text-indigo-600">Utility</span></span>
+                </div>
             </a>
 
-            <nav class="flex items-center space-x-3 sm:space-x-6" aria-label="Primary navigation">
+            <!-- Dropdown Menu and Links -->
+            <div class="flex items-center space-x-6">
+                
+                <!-- Utilities Navigation Dropdown Toggle -->
                 <div class="relative inline-block text-left" id="nav-dropdown-wrapper">
-                    <button type="button" id="nav-dropdown-toggle" aria-expanded="false" aria-controls="nav-dropdown-menu" class="inline-flex items-center justify-center font-semibold text-sm text-gray-700 hover:text-indigo-600 transition focus:outline-none py-2 px-1">
-                        Utilities
-                        <svg class="w-4 h-4 ml-1.5 mt-0.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <button type="button" id="nav-dropdown-toggle" class="inline-flex items-center justify-center font-semibold text-sm text-gray-750 hover:text-indigo-600 transition focus:outline-none py-2 px-1">
+                        Select Utility
+                        <svg class="w-4 h-4 ml-1.5 mt-0.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-3 w-80 max-w-[calc(100vw-2rem)] rounded-xl bg-white border border-gray-200 shadow-xl ring-1 ring-black ring-opacity-5 z-50">
+                    
+                    <!-- Dropdown Panel (Populated dynamically) -->
+                    <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-3 w-80 rounded-xl bg-white border border-gray-200 shadow-xl ring-1 ring-black ring-opacity-5 z-50">
                         <div class="p-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
-                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Choose a utility</span>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Quick Switch Tool</span>
                         </div>
-                        <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50"></div>
+                        <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50">
+                            <!-- Injected dynamically from JavaScript -->
+                        </div>
                     </div>
                 </div>
-                <a href="${localFaqHref}" class="hidden sm:inline text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">FAQs</a>
-                <a href="https://ko-fi.com/quikiki212" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg border border-indigo-200 bg-white px-2.5 py-2 text-xs sm:text-sm font-semibold text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    <span aria-hidden="true" class="mr-1">&hearts;</span> Ko-fi
-                </a>
-                ${isToolPage ? `
-                    <a href="/" class="inline-flex items-center rounded-lg bg-indigo-600 px-3 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        <span aria-hidden="true" class="mr-1.5">&larr;</span>
-                        <span class="hidden sm:inline">Back to homepage</span>
-                        <span class="sm:hidden">Home</span>
-                    </a>
-                ` : `
-                    <a href="#utilities" class="hidden md:inline text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">Browse all</a>
-                `}
-            </nav>
-        </div>
-        ${isToolPage ? `
-            <div class="border-t border-gray-100 bg-indigo-50 px-4 py-1.5 text-center text-xs font-medium text-gray-600">
-                ☕ Enjoying this tool?
-                <a href="https://ko-fi.com/quikiki212" target="_blank" rel="noopener noreferrer" class="font-semibold text-indigo-600 hover:text-indigo-800 transition">Support IndieUtility on Ko-fi</a>
+
+                <a href="#faq" class="text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">FAQs</a>
             </div>
-        ` : ''}
-    `;
 
-    const isPalettePage = window.location.pathname.includes('/color-palette-generator');
-    const isAnimationPage = window.location.pathname.includes('/css-animation-generator');
-    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage && !isRegexPage && !isUrlEncoderPage && !isImageConverterPage && !isPalettePage && !isAnimationPage) return;
+        </div>
+    </header>
 
-    const tools = [
-        {
-            name: 'YouTube Transcript Cleaner',
-            description: 'Clean timestamps and overlapping rolling captions.',
-            href: '/tools/youtube-transcript-cleaner/',
-            category: 'text'
-        },
-        {
-            name: 'SVG Pattern Generator',
-            description: 'Create seamless, customizable vector patterns.',
-            href: '/tools/svg-pattern-generator/',
-            category: 'design'
-        },
-        {
-            name: 'Glassmorphism UI Engine',
-            description: 'Design polished glass surfaces and copy the CSS.',
-            href: '/tools/glassmorphism-ui-engine/',
-            category: 'design'
-        },
-        {
-            name: 'JSON Beautifier & Validator',
-            description: 'Format, validate, minify, and inspect JSON safely.',
-            href: '/tools/json-beautifier-validator/',
-            category: 'dev'
-        },
-        {
-            name: 'SQL Formatter',
-            description: 'Beautify, minify, and customize SQL queries.',
-            href: '/tools/sql-formatter/',
-            category: 'dev'
-        },
-        {
-            name: 'Regex Editor & Tester',
-            description: 'Test, debug, and visualize regex patterns with live feedback.',
-            href: '/tools/regex-editor/',
-            category: 'dev'
-        },
-        {
-            name: 'URL Encoder & Decoder',
-            description: 'Encode and decode URLs with multiple encoding options.',
-            href: '/tools/url-encoder-decoder/',
-            category: 'dev'
-        },
-        {
-            name: 'Image Format Converter',
-            description: 'Convert images between PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, and more.',
-            href: '/tools/image-format-converter/',
-            category: 'design'
-        },
-        {
-            name: 'Color Palette Generator',
-            description: 'Generate harmonious palettes, export CSS variables, and copy HEX/RGB/HSL values.',
-            href: '/tools/color-palette-generator/',
-            category: 'design'
-        }
-    ];
+    <!-- Main Workspace -->
+    <main class="flex-grow">
+        
+        <!-- Hero Search Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 text-center">
+            <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full mb-4">100% Secure & Client-Side</span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+                Simple, Fast, & Secure<br class="hidden sm:inline" />
+                <span class="text-indigo-600">Utilities for Creators & Developers</span>
+            </h1>
+            <p class="text-lg text-gray-650 max-w-2xl mx-auto leading-relaxed mb-8">
+                IndieUtility runs entirely in your local browser window. There are no databases, no cloud storage backups, and zero background analytics tools. Your data remains yours.
+            </p>
 
-    const categoryWeights = {
-        text: 1,
-        dev: 2,
-        design: 3
-    };
+            <!-- Hero Search Selector -->
+            <div class="max-w-xl mx-auto relative" id="hero-search-wrapper">
+                <div class="bg-white p-2 rounded-2xl shadow-md border border-gray-200 flex items-center justify-between">
+                    <div class="flex items-center pl-3 flex-grow">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <input type="text" id="hero-search-input" class="w-full text-sm text-gray-850 bg-transparent focus:outline-none" placeholder="Search tools (e.g., Transcript, JSON, Glassmorphism, Palette, Animation)..." />
+                    </div>
+                </div>
 
-    tools.sort((a, b) => {
-        const weightA = categoryWeights[a.category] || 99;
-        const weightB = categoryWeights[b.category] || 99;
-        if (weightA !== weightB) return weightA - weightB;
-        return a.name.localeCompare(b.name);
-    });
+                <!-- Instant Search Dropdown Panel -->
+                <div id="search-dropdown-menu" class="hidden absolute left-0 right-0 mt-2 rounded-2xl bg-white border border-gray-200 shadow-2xl z-40 overflow-hidden divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                    <div id="search-items-container" class="p-2 space-y-1">
+                        <!-- Search results injected dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    const toggle = document.getElementById('nav-dropdown-toggle');
-    const menu = document.getElementById('nav-dropdown-menu');
-    const items = document.getElementById('nav-dropdown-items');
-    const wrapper = document.getElementById('nav-dropdown-wrapper');
+        <!-- Dynamic Grid of Utilities Directory -->
+        <section id="utilities" class="bg-white border-t border-b border-gray-200 py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Category Filters Header -->
+                <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-6">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Browse Utility Directory</h2>
+                        <p class="text-sm text-gray-500 mt-1">Select a filter or search our full index below.</p>
+                    </div>
+                    
+                    <!-- Filter Buttons -->
+                    <div class="flex flex-wrap gap-2" id="filter-btn-group">
+                        <button type="button" data-category="all" class="filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm">All Utilities</button>
+                        <button type="button" data-category="text" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Text & Copy</button>
+                        <button type="button" data-category="dev" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Developer Tools</button>
+                        <button type="button" data-category="design" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Web Design</button>
+                    </div>
+                </div>
 
-    items.innerHTML = tools.map((tool) => `
-        <a href="${tool.href}" class="block p-3 hover:bg-gray-50 transition">
-            <span class="block text-sm font-bold text-gray-900">${tool.name}</span>
-            <span class="block text-[11px] text-gray-500 mt-0.5">${tool.description}</span>
-        </a>
-    `).join('');
+                <!-- Dynamic Cards Grid -->
+                <div id="tools-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Cards populated via JavaScript -->
+                </div>
 
-    const closeMenu = () => {
-        menu.classList.add('hidden');
-        toggle.setAttribute('aria-expanded', 'false');
-    };
+                <!-- Empty State Filter Panel -->
+                <div id="grid-empty-state" class="hidden text-center py-16">
+                    <p class="text-sm text-gray-500 font-medium">No results match your search keywords or active filters.</p>
+                </div>
 
-    toggle.addEventListener('click', (event) => {
-        event.stopPropagation();
-        const willOpen = menu.classList.contains('hidden');
-        menu.classList.toggle('hidden');
-        toggle.setAttribute('aria-expanded', String(willOpen));
-    });
-    document.addEventListener('click', (event) => {
-        if (!wrapper.contains(event.target)) closeMenu();
-    });
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') closeMenu();
-    });
-    // Page transition: smooth entry/exit for internal navigations
-    (function setupPageTransitions() {
-        try {
-            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            const css = `
-                /* Smooth page transitions */
-                html.page-transition body { opacity: 0; transform: translateY(6px); transition: opacity .36s cubic-bezier(.2,.9,.2,1), transform .36s cubic-bezier(.2,.9,.2,1); }
-                html.page-transition body.page-enter { opacity: 1; transform: none; }
-                html.page-transition body.page-exit { opacity: 0; transform: translateY(-6px); transition-duration: .28s; transition-timing-function: cubic-bezier(.2,.9,.2,1); }
-                @media (prefers-reduced-motion: reduce) {
-                    html.page-transition body { transition: none !important; transform: none !important; opacity: 1 !important; }
+            </div>
+        </section>
+
+        <!-- SEO FAQ Block -->
+        <section id="faq" class="bg-gray-50 border-b border-gray-200 py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-10 text-center">Frequently Asked Questions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">How can a web tool run 100% client-side?</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            Modern web APIs allow your browser to handle complex calculations, array sorting, regular expressions, and parsing. By utilizing vanilla JavaScript directly in your browser, we eliminate server roundtrips.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Are my code snippets or outputs saved?</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            No. IndieUtility runs without databases or application servers. Your transcriptions, JSON records, or formatting inputs remain purely inside local storage or active memory on your personal computer.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Are there conversion limits or paid tiers?</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            No. All available modules inside the utility are free and run indefinitely without pricing limits, premium features, registration blockades, or subscription setups.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Can I request tool integrations?</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            We continue to add lightweight modules to our database. Suggest new tools, report bugs, or submit static scripts to our developers to expand our local-first tool ecosystem.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <span class="text-lg font-bold text-white tracking-tight">Indie<span class="text-indigo-500">Utility</span></span>
+                <span class="text-sm border-l border-gray-700 pl-3 ml-3 text-gray-500">Static Creator Suite</span>
+            </div>
+            <div class="flex gap-6 text-sm">
+                <a href="#" class="hover:text-white transition">Back to Top</a>
+                <a href="#faq" class="hover:text-white transition">FAQs</a>
+                <a href="/about.html" class="hover:text-white transition">About</a>
+                <a href="/contact.html" class="hover:text-white transition">Contact</a>
+                <a href="/privacy-policy.html" class="hover:text-white transition">Privacy</a>
+            </div>
+            <p class="text-xs text-gray-500">
+                &copy; 2026 IndieUtility. Free privacy-first utilitarian software licensed under MIT.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Vanilla Javascript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // DYNAMIC TOOLS ARRAY DATABASE: Populates dropdowns, search menus, and cards
+            const toolsDb = [
+                {
+                    id: 'yt-transcript',
+                    name: 'YouTube Transcript Cleaner',
+                    desc: 'Fetch raw transcripts via video link, strip timestamps, and automatically deduplicate overlapping rolling sentences.',
+                    path: '/tools/youtube-transcript-cleaner/',
+                    category: 'text',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                           </svg>`
+                },
+                {
+                    id: 'json-formatter',
+                    name: 'JSON Beautifier & Validator',
+                    desc: 'Prettify nested API payloads, validate key-value arrays, locate formatting errors, and minify raw JSON lists.',
+                    path: '/tools/json-beautifier-validator/',
+                    category: 'dev',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                           </svg>`
+                },
+                {
+                    id: 'sql-formatter',
+                    name: 'SQL Formatter',
+                    desc: 'Beautify complex SQL queries, control keyword casing and indentation, or minify output for production.',
+                    path: '/tools/sql-formatter/',
+                    category: 'dev',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7c0 1.657 3.582 3 8 3s8-1.343 8-3-3.582-3-8-3-8 1.343-8 3zm0 0v5c0 1.657 3.582 3 8 3 .696 0 1.371-.033 2.014-.095M4 12v5c0 1.657 3.582 3 8 3 1.21 0 2.357-.101 3.385-.282M19 14v6m-3-3h6" />
+                           </svg>`
+                },
+                {
+                    id: 'svg-patterns',
+                    name: 'SVG Pattern Generator',
+                    desc: 'Create seamless repeating vector design patterns, modify element parameters, and grab static inline XML output.',
+                    path: '/tools/svg-pattern-generator/',
+                    category: 'design',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                           </svg>`
+                },
+                {
+                    id: 'glass-morphism',
+                    name: 'Glassmorphism UI Engine',
+                    desc: 'Build gorgeous translucent components, apply localized backdrop-blur styling, and capture cross-browser CSS.',
+                    path: '/tools/glassmorphism-ui-engine/',
+                    category: 'design',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                           </svg>`
+                },
+                {
+                    id: 'regex-editor',
+                    name: 'Regex Editor & Tester',
+                    desc: 'Test and debug regular expressions with live matching, capture group visualization, and instant feedback.',
+                    path: '/tools/regex-editor/',
+                    category: 'dev',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                           </svg>`
+                },
+                {
+                    id: 'url-encoder',
+                    name: 'URL Encoder & Decoder',
+                    desc: 'Encode and decode URLs instantly. Support for percent encoding, special characters, and RFC 3986 compliance.',
+                    path: '/tools/url-encoder-decoder/',
+                    category: 'dev',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                           </svg>`
+                },
+                {
+                    id: 'image-converter',
+                    name: 'Image Format Converter',
+                    desc: 'Convert images between PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, and ICO. Resize, adjust quality, and batch convert.',
+                    path: '/tools/image-format-converter/',
+                    category: 'design',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                           </svg>`
+                },
+                {
+                    id: 'palette-generator',
+                    name: 'Color Palette Generator',
+                    desc: 'Generate harmonious color palettes, export CSS variables, and copy HEX/RGB values for web UI and branding.',
+                    path: '/tools/color-palette-generator/',
+                    category: 'design',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 4a3 3 0 110 6 3 3 0 010-6zm0 10a6.978 6.978 0 01-4.76-1.92A7.01 7.01 0 0112 17a7.01 7.01 0 014.76-1.92A6.978 6.978 0 0112 17z" />
+                           </svg>`
+                },
+                {
+                    id: 'animation-generator',
+                    name: 'CSS Animation Generator',
+                    desc: 'Build fade, slide, bounce, pulse, and custom animation code for modern web UI.',
+                    path: '/tools/css-animation-generator/',
+                    category: 'design',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h16M12 4v16M6.343 6.343l11.314 11.314M6.343 17.657l11.314-11.314" />
+                           </svg>`
                 }
-            `;
-            const style = document.createElement('style');
-            style.id = 'page-transition-css';
-            style.textContent = css;
-            document.head.appendChild(style);
-            document.documentElement.classList.add('page-transition');
+            ];
 
-            // Entry animation
-            const runEntry = () => {
-                document.body.classList.remove('page-exit');
-                document.body.classList.add('page-enter');
-                // force style recalc
-                void document.body.offsetWidth;
-                window.setTimeout(() => {
-                    document.body.classList.remove('page-enter');
-                }, 420);
+            const categoryLabels = {
+                text: 'Text & Copy',
+                dev: 'Developer Tools',
+                design: 'Web Design'
             };
-            if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                runEntry();
-            } else {
-                window.addEventListener('DOMContentLoaded', runEntry, { once: true });
+
+            const categoryOrder = {
+                text: 1,
+                dev: 2,
+                design: 3
+            };
+
+            toolsDb.sort((a, b) => {
+                const orderA = categoryOrder[a.category] || 99;
+                const orderB = categoryOrder[b.category] || 99;
+                if (orderA !== orderB) return orderA - orderB;
+                return a.name.localeCompare(b.name);
+            });
+
+            // Selector References
+            const navDropdownToggle = document.getElementById('nav-dropdown-toggle');
+            const navDropdownMenu = document.getElementById('nav-dropdown-menu');
+            const navDropdownItems = document.getElementById('nav-dropdown-items');
+            const navDropdownWrapper = document.getElementById('nav-dropdown-wrapper');
+
+            const heroSearchWrapper = document.getElementById('hero-search-wrapper');
+            const heroSearchInput = document.getElementById('hero-search-input');
+            const searchDropdownMenu = document.getElementById('search-dropdown-menu');
+            const searchItemsContainer = document.getElementById('search-items-container');
+
+            const toolsCardsGrid = document.getElementById('tools-cards-grid');
+            const filterBtnGroup = document.getElementById('filter-btn-group');
+            const gridEmptyState = document.getElementById('grid-empty-state');
+
+            // --- 1. Populate Dropdown Options ---
+            function buildNavDropdown() {
+                navDropdownItems.innerHTML = '';
+                toolsDb.forEach(tool => {
+                    let element;
+                    if (tool.active) {
+                        element = document.createElement('a');
+                        element.href = tool.path;
+                        element.className = "w-full text-left p-3 flex items-center gap-3.5 hover:bg-gray-50 transition focus:outline-none";
+                        element.innerHTML = `
+                            <div class="bg-indigo-50 text-indigo-600 p-2 rounded-xl shrink-0">
+                                ${tool.icon}
+                            </div>
+                            <div class="min-w-0">
+                                <span class="block text-sm font-bold text-gray-900 truncate">${tool.name}</span>
+                                <span class="block text-[10px] text-gray-400 truncate max-w-[210px] mt-0.5">${tool.desc}</span>
+                            </div>
+                        `;
+                    } else {
+                        element = document.createElement('div');
+                        element.className = "w-full text-left p-3 flex items-center gap-3.5 opacity-60 select-none cursor-not-allowed";
+                        element.innerHTML = `
+                            <div class="bg-gray-100 text-gray-400 p-2 rounded-xl shrink-0">
+                                ${tool.icon}
+                            </div>
+                            <div class="min-w-0">
+                                <span class="block text-sm font-bold text-gray-500 truncate">
+                                    ${tool.name}
+                                    <span class="inline-block ml-1.5 text-[8px] font-extrabold bg-gray-200 text-gray-600 rounded px-1 uppercase tracking-wider">Soon</span>
+                                </span>
+                                <span class="block text-[10px] text-gray-400 truncate max-w-[210px] mt-0.5">${tool.desc}</span>
+                            </div>
+                        `;
+                    }
+                    navDropdownItems.appendChild(element);
+                });
             }
 
-            // Intercept clicks on same-origin links to animate exit
+            // --- 2. Populate Card List ---
+            function buildCardsGrid(categoryFilter = 'all', searchQuery = '') {
+                toolsCardsGrid.innerHTML = '';
+                const normQuery = searchQuery.toLowerCase().trim();
+
+                const filtered = toolsDb.filter(tool => {
+                    const matchesCategory = (categoryFilter === 'all' || tool.category === categoryFilter);
+                    const matchesSearch = (!normQuery || 
+                                           tool.name.toLowerCase().includes(normQuery) || 
+                                           tool.desc.toLowerCase().includes(normQuery));
+                    return matchesCategory && matchesSearch;
+                });
+
+                if (filtered.length === 0) {
+                    gridEmptyState.classList.remove('hidden');
+                } else {
+                    gridEmptyState.classList.add('hidden');
+                    filtered.forEach((tool, idx) => {
+                        const card = document.createElement('article');
+                        
+                        if (tool.active) {
+                            card.className = "bg-white rounded-3xl border border-gray-200 p-6 flex flex-col justify-between hover:shadow-md transition duration-200 card-hover reveal";
+                            card.style.transitionDelay = `${idx * 60}ms`;
+                            card.innerHTML = `
+                                <div>
+                                    <div class="bg-indigo-50 text-indigo-600 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
+                                        ${tool.icon}
+                                    </div>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-500 text-[10px] font-semibold uppercase tracking-wide px-3 py-1 mb-3">${categoryLabels[tool.category]}</span>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-2">${tool.name}</h3>
+                                    <p class="text-sm text-gray-500 leading-relaxed mb-6">${tool.desc}</p>
+                                </div>
+                                <a href="${tool.path}" class="w-full inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3.5 px-4 rounded-xl transition focus:outline-none text-center">
+                                    Open Utility &nbsp;🚀
+                                </a>
+                            `;
+                        } else {
+                            card.className = "bg-gray-100 rounded-3xl border border-gray-200 p-6 flex flex-col justify-between select-none cursor-not-allowed opacity-60 card-hover reveal";
+                            card.style.transitionDelay = `${idx * 60}ms`;
+                            card.innerHTML = `
+                                <div>
+                                    <div class="bg-gray-200 text-gray-400 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
+                                        ${tool.icon}
+                                    </div>
+                                    <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-500 text-[10px] font-semibold uppercase tracking-wide px-3 py-1 mb-3">${categoryLabels[tool.category]}</span>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <h3 class="text-lg font-bold text-gray-500">${tool.name}</h3>
+                                        <span class="px-2 py-0.5 text-[8px] font-extrabold bg-gray-200 text-gray-650 rounded-full tracking-wider uppercase shrink-0">Coming Soon</span>
+                                    </div>
+                                    <p class="text-sm text-gray-400 leading-relaxed mb-6">${tool.desc}</p>
+                                </div>
+                                <button disabled type="button" class="w-full inline-flex items-center justify-center bg-gray-250 text-gray-400 text-xs font-bold py-3.5 px-4 rounded-xl cursor-not-allowed">
+                                    Coming Soon &nbsp;🔒
+                                </button>
+                            `;
+                        }
+                        toolsCardsGrid.appendChild(card);
+                    });
+                }
+            }
+
+                // --- Animations: reveal on scroll + hero entrance ---
+                function initRevealObserver() {
+                    const existing = document.querySelectorAll('.reveal');
+                    if (!existing || existing.length === 0) return;
+                    const io = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('reveal-show');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.12 });
+                    existing.forEach(el => io.observe(el));
+                }
+
+                function runHeroEntrance() {
+                    const heroSection = document.querySelector('main > section');
+                    if (!heroSection) return;
+                    const badge = heroSection.querySelector('span.inline-block');
+                    const heading = heroSection.querySelector('h1');
+                    const para = heroSection.querySelector('p');
+                    const search = document.getElementById('hero-search-wrapper');
+                    const items = [badge, heading, para, search].filter(Boolean);
+                    items.forEach((el, i) => {
+                        el.classList.add('hero-entrance');
+                        setTimeout(() => el.classList.add('show'), 80 + i * 80);
+                    });
+                }
+
+            // --- 3. Instant Search Engine ---
+            function runHeroSearch(query) {
+                searchItemsContainer.innerHTML = '';
+                const normQuery = query.toLowerCase().trim();
+
+                if (!normQuery) {
+                    searchDropdownMenu.classList.add('hidden');
+                    return;
+                }
+
+                const matches = toolsDb.filter(t => t.name.toLowerCase().includes(normQuery) || t.desc.toLowerCase().includes(normQuery));
+
+                if (matches.length === 0) {
+                    searchItemsContainer.innerHTML = `
+                        <div class="p-4 text-xs font-medium text-gray-400 text-center">
+                            No match found. Clear and try another keyword.
+                        </div>
+                    `;
+                } else {
+                    matches.forEach(tool => {
+                        let element;
+                        if (tool.active) {
+                            element = document.createElement('a');
+                            element.href = tool.path;
+                            element.className = "w-full text-left p-3 flex items-center gap-3 hover:bg-gray-50 transition rounded-xl focus:outline-none";
+                            element.innerHTML = `
+                                <div class="bg-indigo-50 text-indigo-600 p-2.5 rounded-xl shrink-0">
+                                    ${tool.icon}
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="block text-sm font-bold text-gray-900 truncate">${tool.name}</span>
+                                    <span class="block text-xs text-gray-450 truncate">${tool.desc}</span>
+                                </div>
+                            `;
+                        } else {
+                            element = document.createElement('div');
+                            element.className = "w-full text-left p-3 flex items-center gap-3 opacity-60 rounded-xl select-none cursor-not-allowed";
+                            element.innerHTML = `
+                                <div class="bg-gray-100 text-gray-400 p-2.5 rounded-xl shrink-0">
+                                    ${tool.icon}
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="block text-sm font-bold text-gray-500 truncate">
+                                        ${tool.name}
+                                        <span class="inline-block ml-1.5 text-[8px] font-extrabold bg-gray-200 text-gray-600 rounded px-1 uppercase tracking-wider">Soon</span>
+                                    </span>
+                                    <span class="block text-xs text-gray-400 truncate">${tool.desc}</span>
+                                </div>
+                            `;
+                        }
+                        searchItemsContainer.appendChild(element);
+                    });
+                }
+                searchDropdownMenu.classList.remove('hidden');
+            }
+
+            // --- 4. Interactive Event Triggers ---
+
+            // Toggle Navigation Dropdown
+            navDropdownToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navDropdownMenu.classList.toggle('hidden');
+            });
+
+            // Interactive filtering buttons
+            filterBtnGroup.addEventListener('click', (e) => {
+                const targetBtn = e.target.closest('.filter-btn');
+                if (!targetBtn) return;
+
+                // Adjust focus classes
+                filterBtnGroup.querySelectorAll('.filter-btn').forEach(b => {
+                    b.className = "filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none";
+                });
+                targetBtn.className = "filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm";
+
+                const category = targetBtn.getAttribute('data-category');
+                buildCardsGrid(category, heroSearchInput.value);
+                initRevealObserver();
+            });
+
+            // Input monitoring inside hero search
+            heroSearchInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+                runHeroSearch(heroSearchInput.value);
+            });
+
+            heroSearchInput.addEventListener('input', () => {
+                runHeroSearch(heroSearchInput.value);
+                const activeCategoryBtn = filterBtnGroup.querySelector('.bg-indigo-600');
+                const category = activeCategoryBtn ? activeCategoryBtn.getAttribute('data-category') : 'all';
+                buildCardsGrid(category, heroSearchInput.value);
+                initRevealObserver();
+            });
+
+            // Universal dismissal when clicking off elements
             document.addEventListener('click', (e) => {
-                const el = e.target.closest && e.target.closest('a');
-                if (!el) return;
-                if (el.target && el.target !== '_self') return;
-                if (el.hasAttribute('download') || el.getAttribute('rel') === 'external') return;
-                const href = el.href;
-                if (!href) return;
-                const url = new URL(href, location.href);
-                if (url.origin !== location.origin) return;
-                // allow hash-only navigation without exit animation
-                if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
-                // allow links that opt-out
-                if (el.getAttribute('data-no-transition') !== null) return;
-                // Internal navigation: animate then navigate
-                e.preventDefault();
-                document.body.classList.remove('page-enter');
-                document.body.classList.add('page-exit');
-                const timeout = 320;
-                setTimeout(() => {
-                    location.href = url.href;
-                }, timeout);
-            }, true);
-        } catch (err) {
-            // fail silently
-            console.error('page-transition init failed', err);
-        }
-    })();
-})();
+                if (!navDropdownWrapper.contains(e.target)) {
+                    navDropdownMenu.classList.add('hidden');
+                }
+                if (!heroSearchWrapper.contains(e.target)) {
+                    searchDropdownMenu.classList.add('hidden');
+                }
+            });
+
+            // Init page elements
+            buildNavDropdown();
+            buildCardsGrid();
+            initRevealObserver();
+            runHeroEntrance();
+        });
+    </script>
+</body>
+</html>
