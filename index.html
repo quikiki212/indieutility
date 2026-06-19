@@ -201,69 +201,68 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div class="text-center">
-            <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Small, useful browser tools — built solo</h1>
-            <p class="mt-4 text-lg text-gray-500">Hand-crafted utilities for developers, creators, and small teams. Fast, local-first, and easy to use.</p>
+    <section id="hero" class="bg-gradient-to-b from-white via-gray-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="text-center">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">Small, useful browser tools — built solo</h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Hand-crafted utilities for developers, creators, and small teams. Fast, local-first, and easy to use.</p>
+            </div>
+
+            <!-- Search -->
+            <div class="mt-8 max-w-xl mx-auto relative" id="hero-search-wrapper">
+                <div class="bg-white p-3 sm:p-4 rounded-3xl shadow-lg border border-gray-200 flex items-center">
+                    <div class="flex items-center pl-2 flex-grow">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="h-5 w-5 text-gray-400 mr-3"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+
+                        <input type="text"
+                               id="hero-search-input"
+                               class="w-full text-sm text-gray-800 bg-transparent focus:outline-none"
+                               placeholder="Search tools — try: json, css, regex, image..." aria-label="Search tools" />
+                    </div>
+                </div>
+
+                <!-- Instant Search Dropdown Panel -->
+                <div id="search-dropdown-menu"
+                     class="hidden absolute left-0 right-0 mt-2 rounded-2xl bg-white border border-gray-200 shadow-2xl z-40 overflow-hidden divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                    <div id="search-items-container" class="p-2 space-y-1">
+                        <!-- Search results injected dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="mt-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                    <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center shadow-sm">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600">11+</div>
+                        <div class="mt-1 text-sm text-gray-500">Free Tools</div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center shadow-sm">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-green-600">100%</div>
+                        <div class="mt-1 text-sm text-gray-500">Browser Based</div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center shadow-sm">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-blue-600">0</div>
+                        <div class="mt-1 text-sm text-gray-500">Signups Required</div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-gray-200 p-5 text-center shadow-sm">
+                        <div class="text-2xl sm:text-3xl font-extrabold text-purple-600">∞</div>
+                        <div class="mt-1 text-sm text-gray-500">Free Usage</div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-        <!-- Search -->
-        <div class="max-w-xl mx-auto relative mt-8" id="hero-search-wrapper">
-            <div class="bg-white p-2 rounded-2xl shadow-md border border-gray-200 flex items-center justify-between">
-                <div class="flex items-center pl-3 flex-grow">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="h-5 w-5 text-gray-400 mr-2.5"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-
-                    <input type="text"
-                           id="hero-search-input"
-                           class="w-full text-sm text-gray-850 bg-transparent focus:outline-none"
-                           placeholder="Search tools: JSON, transcript, CSS, image, regex..." />
-                </div>
-            </div>
-
-            <!-- Instant Search Dropdown Panel -->
-            <div id="search-dropdown-menu"
-                 class="hidden absolute left-0 right-0 mt-2 rounded-2xl bg-white border border-gray-200 shadow-2xl z-40 overflow-hidden divide-y divide-gray-100 max-h-96 overflow-y-auto">
-                <div id="search-items-container" class="p-2 space-y-1">
-                    <!-- Search results injected dynamically -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats Section -->
-        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-
-                <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
-                    <div class="text-2xl font-bold text-indigo-600">11+</div>
-                    <div class="text-sm text-gray-500">Free Tools</div>
-                </div>
-
-                <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
-                    <div class="text-2xl font-bold text-green-600">100%</div>
-                    <div class="text-sm text-gray-500">Browser Based</div>
-                </div>
-
-                <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
-                    <div class="text-2xl font-bold text-blue-600">0</div>
-                    <div class="text-sm text-gray-500">Signups Required</div>
-                </div>
-
-                <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
-                    <div class="text-2xl font-bold text-purple-600">∞</div>
-                    <div class="text-sm text-gray-500">Free Usage</div>
-                </div>
-
-            </div>
-        </section>
     </section>
 
     <!-- Dynamic Grid of Utilities Directory -->
