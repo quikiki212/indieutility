@@ -5,6 +5,7 @@
     const isToolPage = window.location.pathname.startsWith('/tools/');
     const isTranscriptPage = window.location.pathname.includes('/youtube-transcript-cleaner');
     const isGlassPage = window.location.pathname.includes('/glassmorphism-ui-engine');
+    const isJsonPage = window.location.pathname.includes('/json-beautifier-validator');
     const localFaqHref = isToolPage ? '#faq' : '/#faq';
 
     header.innerHTML = `
@@ -56,7 +57,7 @@
         ` : ''}
     `;
 
-    if (!isTranscriptPage && !isGlassPage) return;
+    if (!isTranscriptPage && !isGlassPage && !isJsonPage) return;
 
     const tools = [
         {
@@ -73,6 +74,11 @@
             name: 'Glassmorphism UI Engine',
             description: 'Design polished glass surfaces and copy the CSS.',
             href: '/tools/glassmorphism-ui-engine/'
+        },
+        {
+            name: 'JSON Beautifier & Validator',
+            description: 'Format, validate, minify, and inspect JSON safely.',
+            href: '/tools/json-beautifier-validator/'
         }
     ];
 
