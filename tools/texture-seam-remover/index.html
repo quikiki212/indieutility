@@ -6,19 +6,20 @@
     <link rel="icon" type="image/png" href="/icon.png">
     <link rel="apple-touch-icon" href="/icon.png">
     <title>Texture Seam Remover | IndieUtility</title>
-    <meta name="description" content="Tile and fix texture seams by blending opposite edges. Preview as a 3x3 grid and export a tiled texture.">
+    <meta name="description" content="Fix visible texture seams, preview tiled results, and download a cleaner seamless texture for web or game assets.">
     <link rel="canonical" href="https://indieutility.com/tools/texture-seam-remover/">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <script src="/assets/site-header.js?v=tools-3" defer></script>
     <style>
         * { box-sizing: border-box; }
         body { overflow-x: hidden; }
-        .preview-card { min-height: 220px; }
-        .diff-preview:hover #before-wrapper { opacity: 1 !important; }
-        .diff-preview:hover #after-wrapper { opacity: 0 !important; }
-        #before-wrapper { opacity: 0; }
-        #after-wrapper { opacity: 1; }
-        canvas { image-rendering: auto; display: block; }
+        canvas { display: block; image-rendering: auto; }
+        .toast { opacity: 0; transform: translateY(8px); pointer-events: none; transition: all 180ms ease; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .preview-panel { background: linear-gradient(135deg, rgba(59,130,246,.12), rgba(99,102,241,.08)); }
+        .canvas-shell { background: linear-gradient(180deg, #0f172a, #1e293b); box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 45px -30px rgba(15,23,42,.5); }
+        .zoom-canvas-wrap canvas { transition: transform 220ms ease; transform-origin: center; }
+        .zoom-canvas-wrap:hover canvas { transform: scale(1.8); }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
@@ -29,79 +30,112 @@
             <div class="max-w-3xl">
                 <p class="text-sm uppercase tracking-widest text-indigo-600 font-bold">Design Tools</p>
                 <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold text-gray-900">Texture Seam Remover</h1>
-                <p class="mt-4 text-base text-gray-600">Import a texture, preview tiled 3x3, and blend seams to create seamless patterns for web or game assets.</p>
+                <p class="mt-4 text-base text-gray-600">Import a texture, soften visible tile seams, inspect the result in a tiled preview, and download the processed texture.</p>
             </div>
         </section>
 
-        <section class="grid gap-6 lg:grid-cols-[1.5fr_1fr] mb-8">
+        <section class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6 mb-8">
+            <div class="flex flex-wrap gap-4 items-start justify-between mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">How to Use</h2>
+                    <p class="mt-1 text-sm text-gray-500">Follow the preview from top to bottom: load, inspect, adjust, then download.</p>
+                </div>
+            </div>
+            <div class="grid gap-4 md:grid-cols-5">
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">1</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Upload</h3>
+                    <p class="mt-2 text-sm text-gray-600">Choose the source texture from your device.</p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">2</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Preview</h3>
+                    <p class="mt-2 text-sm text-gray-600">Check the single tile and repeated tile views.</p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">3</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Adjust width</h3>
+                    <p class="mt-2 text-sm text-gray-600">Increase the seam width until edge transitions soften.</p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">4</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Adjust softness</h3>
+                    <p class="mt-2 text-sm text-gray-600">Use softness to feather the patched area.</p>
+                </div>
+                <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">5</span>
+                    <h3 class="mt-3 font-bold text-gray-900">Download</h3>
+                    <p class="mt-2 text-sm text-gray-600">Save the processed texture when the repeat looks clean.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-2 mb-8">
             <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
-                <div class="flex flex-wrap gap-4 items-center justify-between mb-6">
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900">Texture Settings</h2>
-                        <p class="mt-1 text-sm text-gray-500">Import a texture and refine the seams with live preview updates.</p>
+                <h2 class="text-xl font-bold text-gray-900">Single Tile</h2>
+                <p class="mt-2 text-sm text-gray-500">Processed texture preview.</p>
+                <div class="preview-panel mt-6 rounded-3xl border border-gray-200 p-6 flex items-center justify-center">
+                    <div class="canvas-shell w-full max-w-[420px] overflow-hidden rounded-3xl border border-gray-200 shadow-sm flex items-center justify-center aspect-square">
+                        <canvas id="tile-canvas" width="512" height="512" class="h-full w-full"></canvas>
                     </div>
-                    <button id="btn-apply" class="inline-flex items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Update Preview</button>
-                </div>
-
-                <div class="space-y-4">
-                    <label class="block text-sm font-semibold text-gray-700">Import Texture</label>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <label for="file-input" class="inline-flex cursor-pointer items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Choose File
-                        </label>
-                        <span id="file-name" class="text-sm text-gray-500">No file selected</span>
-                        <input type="file" id="file-input" accept="image/*" class="sr-only" />
-                    </div>
-
-                    <label class="space-y-2 text-sm font-semibold text-gray-700">
-                        Seam Width
-                        <div class="flex items-center gap-3">
-                            <input type="range" id="seam-slider" min="1" max="128" value="8" class="flex-grow accent-indigo-600" />
-                            <span id="seam-value" class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-gray-700">8px</span>
-                        </div>
-                    </label>
-
-                    <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm text-gray-500">Use a small seam width (4-16px) for photographic textures; larger widths may blur details.</div>
-                </div>
-
-                <div class="mt-6 flex gap-2">
-                    <button id="btn-download" class="inline-flex items-center rounded-full bg-gray-800 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-900 transition">Download Tile</button>
                 </div>
             </article>
 
             <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
-                <h2 class="text-xl font-bold text-gray-900">Preview</h2>
-                <p class="mt-2 text-sm text-gray-500">A compact single-tile preview sits beside the 3x3 comparison view.</p>
-
-                <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                    <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4">
-                        <h3 class="text-sm font-semibold text-gray-800">Single Tile</h3>
-                        <div class="mt-3 flex items-center justify-center rounded-2xl border border-gray-200 bg-white p-3">
-                            <canvas id="tile-canvas" width="160" height="160" class="block w-full max-w-[140px]"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4">
-                        <h3 class="text-sm font-semibold text-gray-800">3x3 Tiling</h3>
-                        <p class="mt-1 text-xs text-gray-500">After first. Hover to compare before.</p>
-                        <div class="mt-3 relative diff-preview overflow-hidden rounded-2xl border border-gray-200 bg-white h-44 sm:h-48">
-                            <div id="after-wrapper" class="absolute inset-0 z-10 transition-opacity duration-200">
-                                <canvas id="after-tiled-canvas" width="320" height="320" class="block h-full w-full"></canvas>
-                            </div>
-                            <div id="before-wrapper" class="absolute inset-0 z-0 transition-opacity duration-200">
-                                <canvas id="before-tiled-canvas" width="320" height="320" class="block h-full w-full"></canvas>
-                            </div>
-                            <div class="absolute bottom-2 left-2 rounded-full bg-black/40 px-2 py-1 text-[11px] font-medium text-white">Hover to view before</div>
-                        </div>
+                <h2 class="text-xl font-bold text-gray-900">3×3 Tiling</h2>
+                <p class="mt-2 text-sm text-gray-500">Repeated texture preview.</p>
+                <div class="preview-panel mt-6 rounded-3xl border border-gray-200 p-6 flex items-center justify-center">
+                    <div class="canvas-shell zoom-canvas-wrap w-full max-w-[420px] overflow-hidden rounded-3xl border border-gray-200 shadow-sm flex items-center justify-center aspect-square">
+                        <canvas id="tiled-canvas" width="512" height="512" class="h-full w-full"></canvas>
                     </div>
                 </div>
             </article>
         </section>
+
+        <section class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6 mb-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-gray-900">Texture Settings</h2>
+                <p class="mt-1 text-sm text-gray-500">Upload a texture and tune the seam processing. Preview updates automatically.</p>
+            </div>
+            <div class="grid gap-6 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Import Texture</label>
+                    <div class="flex flex-wrap items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-3">
+                        <label for="file-input" class="inline-flex cursor-pointer items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Choose File</label>
+                        <span id="file-name" class="text-sm text-gray-500">No file selected</span>
+                        <input type="file" id="file-input" accept="image/*" class="sr-only" />
+                    </div>
+                </div>
+
+                <label class="space-y-2 text-sm font-semibold text-gray-700">
+                    Seam Width
+                    <div class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-3">
+                        <input type="range" id="seam-slider" min="1" max="40" value="20" class="flex-grow accent-indigo-600" />
+                        <span id="seam-value" class="rounded-full bg-white border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">20px</span>
+                    </div>
+                </label>
+
+                <label class="space-y-2 text-sm font-semibold text-gray-700">
+                    Softness
+                    <div class="flex items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-3">
+                        <input type="range" id="softness-slider" min="0" max="10" value="6" class="flex-grow accent-indigo-600" />
+                        <span id="softness-value" class="rounded-full bg-white border border-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">6px</span>
+                    </div>
+                </label>
+
+                <button id="btn-download" class="inline-flex h-[50px] items-center justify-center rounded-full bg-gray-800 px-5 py-2 text-sm font-semibold text-white hover:bg-gray-900 transition">Download Tile</button>
+            </div>
+        </section>
     </main>
 
-    <footer class="bg-gray-900 text-gray-400 mt-8 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-center">&copy; 2026 IndieUtility. Texture tool.</div>
+    <footer class="bg-gray-900 text-gray-300 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-sm">&copy; 2026 IndieUtility. Privacy-first browser tools.</p>
+            <a href="/" class="text-sm font-semibold text-indigo-400 hover:text-white">Back to homepage</a>
+        </div>
     </footer>
+
+    <div id="toast" class="toast fixed bottom-6 right-6 rounded-full bg-slate-900 px-5 py-3 text-sm text-white shadow-lg">Texture ready</div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -109,21 +143,26 @@
         const fileName = document.getElementById('file-name');
         const seamSlider = document.getElementById('seam-slider');
         const seamValue = document.getElementById('seam-value');
-        const btnApply = document.getElementById('btn-apply');
+        const softnessSlider = document.getElementById('softness-slider');
+        const softnessValue = document.getElementById('softness-value');
         const btnDownload = document.getElementById('btn-download');
+        const toast = document.getElementById('toast');
 
         const tileCanvas = document.getElementById('tile-canvas');
         const tileCtx = tileCanvas.getContext('2d');
-        const beforeTiledCanvas = document.getElementById('before-tiled-canvas');
-        const beforeTiledCtx = beforeTiledCanvas.getContext('2d');
-        const afterTiledCanvas = document.getElementById('after-tiled-canvas');
-        const afterTiledCtx = afterTiledCanvas.getContext('2d');
+        const tiledCanvas = document.getElementById('tiled-canvas');
+        const tiledCtx = tiledCanvas.getContext('2d');
 
         let img = null;
         let processedCanvas = null;
 
         seamSlider.addEventListener('input', () => {
             seamValue.innerText = `${seamSlider.value}px`;
+            if (img) render();
+        });
+
+        softnessSlider.addEventListener('input', () => {
+            softnessValue.innerText = `${softnessSlider.value}px`;
             if (img) render();
         });
 
@@ -134,16 +173,18 @@
             const reader = new FileReader();
             reader.onload = (ev) => {
                 const image = new Image();
-                image.onload = () => { img = image; processedCanvas = null; render(); };
+                image.onload = () => { img = image; render(); };
                 image.src = ev.target.result;
             };
             reader.readAsDataURL(f);
         });
 
-        btnApply.addEventListener('click', () => { if (!img) return; applyProcessing(); });
         btnDownload.addEventListener('click', () => {
-            if (!processedCanvas) applyProcessing();
-            if (!processedCanvas) return;
+            if (!processedCanvas && img) render();
+            if (!processedCanvas) {
+                showToast('Upload a texture first');
+                return;
+            }
             processedCanvas.toBlob((b) => {
                 const url = URL.createObjectURL(b);
                 const a = document.createElement('a');
@@ -153,121 +194,198 @@
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
+                showToast('Downloaded texture');
             });
         });
 
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast.timer);
+            toast.timer = setTimeout(() => toast.classList.remove('show'), 1800);
+        }
+
         function render() {
-            tileCtx.clearRect(0,0, tileCanvas.width, tileCanvas.height);
-            if (!img) {
-                tileCtx.fillStyle = '#f8fafc';
-                tileCtx.fillRect(0,0,tileCanvas.width,tileCanvas.height);
-                tileCtx.fillStyle = '#94a3b8';
-                tileCtx.font = '12px sans-serif';
-                tileCtx.fillText('No image loaded', 10, 20);
-                beforeTiledCtx.clearRect(0,0,beforeTiledCanvas.width,beforeTiledCanvas.height);
-                afterTiledCtx.clearRect(0,0,afterTiledCanvas.width,afterTiledCanvas.height);
-                return;
-            }
+            drawEmpty(tileCtx, tileCanvas, 'Single tile preview');
+            drawEmpty(tiledCtx, tiledCanvas, '3×3 preview');
 
-            const srcOriginal = createImageCanvas(img);
-            const seam = Math.max(1, Math.min(Math.floor(parseInt(seamSlider.value) || 8), Math.floor(Math.min(img.width, img.height) / 2)));
-            const srcProcessed = removeSeams(srcOriginal, seam);
+            if (!img) return;
 
-            const tileScale = Math.min(tileCanvas.width / srcProcessed.width, tileCanvas.height / srcProcessed.height);
-            const tileDrawWidth = srcProcessed.width * tileScale;
-            const tileDrawHeight = srcProcessed.height * tileScale;
-            const tileOffsetX = (tileCanvas.width - tileDrawWidth) / 2;
-            const tileOffsetY = (tileCanvas.height - tileDrawHeight) / 2;
-            tileCtx.drawImage(srcProcessed, 0, 0, srcProcessed.width, srcProcessed.height, tileOffsetX, tileOffsetY, tileDrawWidth, tileDrawHeight);
+            const source = createImageCanvas(img);
+            const seam = Math.max(1, Math.min(parseInt(seamSlider.value, 10) || 20, 40, Math.floor(Math.min(source.width, source.height) / 3)));
+            const softness = Math.max(0, Math.min(parseInt(softnessSlider.value, 10) || 0, 10));
+            const processed = removeSeams(source, seam, softness);
 
-            beforeTiledCtx.clearRect(0,0,beforeTiledCanvas.width,beforeTiledCanvas.height);
-            const tw = srcOriginal.width;
-            const th = srcOriginal.height;
-            const gridScale = Math.min(beforeTiledCanvas.width / (tw * 3), beforeTiledCanvas.height / (th * 3));
-            const tileWidth = tw * gridScale;
-            const tileHeight = th * gridScale;
-            const gridOffsetX = (beforeTiledCanvas.width - tileWidth * 3) / 2;
-            const gridOffsetY = (beforeTiledCanvas.height - tileHeight * 3) / 2;
-            for (let y=0;y<3;y++){
-                for (let x=0;x<3;x++){
-                    const destX = gridOffsetX + x * tileWidth;
-                    const destY = gridOffsetY + y * tileHeight;
-                    beforeTiledCtx.drawImage(srcOriginal, 0, 0, tw, th, destX, destY, tileWidth, tileHeight);
-                }
-            }
+            drawContainedCanvas(tileCtx, tileCanvas, processed);
+            drawTiledNoGaps(tiledCtx, tiledCanvas, processed);
+            processedCanvas = processed;
+        }
 
-            afterTiledCtx.clearRect(0,0,afterTiledCanvas.width,afterTiledCanvas.height);
-            for (let y=0;y<3;y++){
-                for (let x=0;x<3;x++){
-                    const destX = gridOffsetX + x * tileWidth;
-                    const destY = gridOffsetY + y * tileHeight;
-                    afterTiledCtx.drawImage(srcProcessed, 0, 0, tw, th, destX, destY, tileWidth, tileHeight);
-                }
-            }
-
-            processedCanvas = srcProcessed;
+        function drawEmpty(ctx, canvas, text) {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '16px ui-sans-serif, system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+            ctx.restore();
         }
 
         function createImageCanvas(image) {
             const c = document.createElement('canvas');
-            c.width = image.width;
-            c.height = image.height;
-            const ctx = c.getContext('2d');
-            ctx.drawImage(image,0,0);
+            c.width = image.naturalWidth || image.width;
+            c.height = image.naturalHeight || image.height;
+            const ctx = c.getContext('2d', { willReadFrequently: true });
+            ctx.drawImage(image, 0, 0, c.width, c.height);
             return c;
         }
 
-        function applyProcessing() {
-            if (!img) return;
-            render();
+        function drawContainedCanvas(ctx, canvas, src) {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            const scale = Math.min(canvas.width / src.width, canvas.height / src.height);
+            const dw = Math.round(src.width * scale);
+            const dh = Math.round(src.height * scale);
+            const dx = Math.round((canvas.width - dw) / 2);
+            const dy = Math.round((canvas.height - dh) / 2);
+            ctx.drawImage(src, 0, 0, src.width, src.height, dx, dy, dw, dh);
+            ctx.restore();
         }
 
-        function removeSeams(canvasSrc, seam) {
+        function drawTiledNoGaps(ctx, canvas, src) {
+            const grid = document.createElement('canvas');
+            grid.width = src.width * 3;
+            grid.height = src.height * 3;
+            const g = grid.getContext('2d');
+            g.imageSmoothingEnabled = false;
+
+            for (let y = 0; y < 3; y++) {
+                for (let x = 0; x < 3; x++) {
+                    g.drawImage(src, x * src.width, y * src.height);
+                }
+            }
+
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            const scale = Math.min(canvas.width / grid.width, canvas.height / grid.height);
+            const dw = Math.round(grid.width * scale);
+            const dh = Math.round(grid.height * scale);
+            const dx = Math.round((canvas.width - dw) / 2);
+            const dy = Math.round((canvas.height - dh) / 2);
+            ctx.drawImage(grid, 0, 0, grid.width, grid.height, dx, dy, dw, dh);
+            ctx.restore();
+        }
+
+        function removeSeams(source, seam, softness) {
+            const w = source.width;
+            const h = source.height;
+            const halfX = Math.floor(w / 2);
+            const halfY = Math.floor(h / 2);
+
+            const shifted = document.createElement('canvas');
+            shifted.width = w;
+            shifted.height = h;
+            const sctx = shifted.getContext('2d');
+            sctx.drawImage(source, -halfX, -halfY);
+            sctx.drawImage(source, w - halfX, -halfY);
+            sctx.drawImage(source, -halfX, h - halfY);
+            sctx.drawImage(source, w - halfX, h - halfY);
+
+            const patched = patchCenterCross(shifted, seam, softness);
+
+            const out = document.createElement('canvas');
+            out.width = w;
+            out.height = h;
+            const octx = out.getContext('2d');
+            octx.drawImage(patched, halfX, halfY);
+            octx.drawImage(patched, halfX - w, halfY);
+            octx.drawImage(patched, halfX, halfY - h);
+            octx.drawImage(patched, halfX - w, halfY - h);
+            return out;
+        }
+
+        function patchCenterCross(canvasSrc, seam, softness) {
             const w = canvasSrc.width;
             const h = canvasSrc.height;
-            const c = document.createElement('canvas'); c.width = w; c.height = h;
-            const ctx = c.getContext('2d');
-            ctx.drawImage(canvasSrc,0,0);
-            const imgData = ctx.getImageData(0,0,w,h);
+            const c = document.createElement('canvas');
+            c.width = w;
+            c.height = h;
+            const ctx = c.getContext('2d', { willReadFrequently: true });
+            ctx.drawImage(canvasSrc, 0, 0);
+
+            if (softness > 0) {
+                ctx.save();
+                ctx.filter = `blur(${softness}px)`;
+                ctx.globalAlpha = 0.35;
+                ctx.drawImage(canvasSrc, 0, 0);
+                ctx.restore();
+            }
+
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const originalCtx = canvasSrc.getContext('2d', { willReadFrequently: true });
+            const original = originalCtx.getImageData(0, 0, w, h).data;
             const data = imgData.data;
+            const centerX = Math.floor(w / 2);
+            const centerY = Math.floor(h / 2);
+            const radius = Math.max(1, seam);
+            const sampleOffset = Math.max(radius + softness + 1, radius + 2);
 
-            for (let x=0;x<seam;x++){
-                const xOpp = w - seam + x;
-                const t = (x + 1) / (seam + 1);
-                for (let y=0;y<h;y++){
-                    const idxL = (y*w + x) * 4;
-                    const idxR = (y*w + xOpp) * 4;
-                    for (let k=0;k<3;k++){
-                        const vl = data[idxL + k];
-                        const vr = data[idxR + k];
-                        const avg = Math.round(vl * (1 - t) + vr * t);
-                        data[idxL + k] = avg;
-                        data[idxR + k] = avg;
+            function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+            function smoothstep(edge0, edge1, x) {
+                const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+                return t * t * (3 - 2 * t);
+            }
+            function idx(x, y) { return (y * w + x) * 4; }
+
+            for (let y = 0; y < h; y++) {
+                for (let dx = -radius; dx <= radius; dx++) {
+                    const x = clamp(centerX + dx, 0, w - 1);
+                    const leftX = clamp(centerX - sampleOffset + dx, 0, w - 1);
+                    const rightX = clamp(centerX + sampleOffset + dx, 0, w - 1);
+                    const weight = 1 - smoothstep(0, radius, Math.abs(dx));
+                    const target = idx(x, y);
+                    const a = idx(leftX, y);
+                    const b = idx(rightX, y);
+                    for (let k = 0; k < 4; k++) {
+                        const patch = (original[a + k] + original[b + k]) / 2;
+                        data[target + k] = Math.round(data[target + k] * (1 - weight) + patch * weight);
                     }
-                    data[idxL+3] = Math.max(data[idxL+3], data[idxR+3]);
-                    data[idxR+3] = data[idxL+3];
                 }
             }
 
-            for (let y=0;y<seam;y++){
-                const yOpp = h - seam + y;
-                const t = (y + 1) / (seam + 1);
-                for (let x=0;x<w;x++){
-                    const idxT = (y*w + x) * 4;
-                    const idxB = (yOpp*w + x) * 4;
-                    for (let k=0;k<3;k++){
-                        const vt = data[idxT + k];
-                        const vb = data[idxB + k];
-                        const avg = Math.round(vt * (1 - t) + vb * t);
-                        data[idxT + k] = avg;
-                        data[idxB + k] = avg;
+            for (let x = 0; x < w; x++) {
+                for (let dy = -radius; dy <= radius; dy++) {
+                    const y = clamp(centerY + dy, 0, h - 1);
+                    const topY = clamp(centerY - sampleOffset + dy, 0, h - 1);
+                    const bottomY = clamp(centerY + sampleOffset + dy, 0, h - 1);
+                    const weight = 1 - smoothstep(0, radius, Math.abs(dy));
+                    const target = idx(x, y);
+                    const a = idx(x, topY);
+                    const b = idx(x, bottomY);
+                    for (let k = 0; k < 4; k++) {
+                        const patch = (original[a + k] + original[b + k]) / 2;
+                        data[target + k] = Math.round(data[target + k] * (1 - weight) + patch * weight);
                     }
-                    data[idxT+3] = Math.max(data[idxT+3], data[idxB+3]);
-                    data[idxB+3] = data[idxT+3];
                 }
             }
 
-            ctx.putImageData(imgData,0,0);
+            ctx.putImageData(imgData, 0, 0);
             return c;
         }
 
