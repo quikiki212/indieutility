@@ -79,7 +79,7 @@
           "mainEntity": [
             { "@type": "Question", "name": "How can a web tool run 100% client-side?", "acceptedAnswer": { "@type": "Answer", "text": "Modern browser APIs can handle parsing, formatting, conversion, validation and generation locally using JavaScript, without sending files or text to an application server." } },
             { "@type": "Question", "name": "Are my code snippets or outputs saved?", "acceptedAnswer": { "@type": "Answer", "text": "No. IndieUtility tools are designed to run in your browser without application databases or cloud storage for your input data." } },
-            { "@type": "Question", "name": "Are there conversion limits or paid tiers?", "acceptedAnswer": { "@type": "Answer", "text": "The tools I publish here are free to use without account creation, subscriptions or premium feature gates." } },
+            { "@type": "Question", "name": "Are there conversion limits or paid tiers?", "acceptedAnswer": { "@type": "Answer", "text": "The tools I publish here are free to use without pricing limits, premium feature locks, registration walls, or subscription setups." } },
             { "@type": "Question", "name": "What kinds of tools are available?", "acceptedAnswer": { "@type": "Answer", "text": "IndieUtility includes the developer tools, text tools, browser-based design generators, data formatters, validators and file-processing utilities I have built so far." } }
           ]
         }
@@ -168,87 +168,33 @@
                 <div class="relative inline-block text-left" id="nav-dropdown-wrapper">
                     <button type="button" id="nav-dropdown-toggle" class="inline-flex items-center justify-center font-semibold text-sm text-gray-750 hover:text-indigo-600 transition focus:outline-none py-2 px-1">
                         Select Utility
-                        <svg class="w-4 h-4 ml-1.5 mt-0.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="w-4 h-4 ml-1.5 mt-0.5 text-gray-500" fill="none" stroke="currentColor" viewBox="00 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    
-                    <!-- Dropdown Panel (Populated dynamically) -->
-                    <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-3 w-80 rounded-xl bg-white border border-gray-200 shadow-xl ring-1 ring-black ring-opacity-5 z-50">
+                    <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-3 rounded-xl bg-white border border-gray-200 shadow-xl ring-1 ring-black ring-opacity-5 z-50">
                         <div class="p-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
-                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Quick switch tool</span>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Choose a utility</span>
                         </div>
-                        <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50">
-                            <!-- Injected dynamically from JavaScript -->
-                        </div>
+                        <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50"></div>
                     </div>
                 </div>
-
-                <a href="#faq" class="text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">FAQs</a>
+                <a href="#faq" class="hidden sm:inline text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">FAQs</a>
+                <a href="https://ko-fi.com/quikiki212" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-lg border border-indigo-200 bg-white px-2.5 py-2 text-xs sm:text-sm font-semibold text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <span aria-hidden="true" class="mr-1">&hearts;</span> Ko-fi
+                </a>
             </div>
-
         </div>
     </header>
 
-    <!-- Main Workspace -->
-    <main class="flex-grow">
-        
-<!-- Hero Search Section -->
-<section class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16 overflow-hidden">
-
-    <div
-    class="absolute left-1/2 top-32 rounded-full blur-3xl"
-    style="
-        width:800px;
-        height:500px;
-        background:#818cf8;
-        opacity:0.22;
-        transform:translateX(-50%);
-    ">
-</div>
-
-<div
-    class="absolute left-1/2 top-40 rounded-full blur-3xl"
-    style="
-        width:400px;
-        height:400px;
-        background:#a78bfa;
-        opacity:0.18;
-        transform:translateX(-50%);
-    ">
-</div>
-
-    <div class="relative z-10">
-
-        <!-- Small maker note -->
-        <div class="mx-auto mb-16 max-w-2xl rounded-2xl border border-yellow-200 bg-gradient-to-r from-yellow-50 to-amber-50 px-8 py-6 text-center shadow-md">
-            <p class="text-sm text-gray-700 leading-relaxed">
-                👋 Hi, I’m Harry, the developer behind IndieUtility.
-                I built these tools for my own workflow first, then put them online in case they help someone else. The site is supported by donations and a few ads to help cover costs.
-
-                <a href="https://ko-fi.com/quikiki212"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="font-bold text-indigo-600 hover:underline">
-                    Buy me a coffee →
-                </a>
-            </p>
+    <!-- Hero Section -->
+    <section id="hero" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center">
+            <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Free Online Tools for Developers, Creators & Small Businesses</h1>
+            <p class="mt-4 text-lg text-gray-500">Clean transcripts, validate JSON, format SQL, test regex, generate CSS, create color palettes and process files directly in your browser.</p>
         </div>
 
-        <!-- Main hero -->
-        <div class="mx-auto max-w-4xl text-center">
-
-            <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight">
-                Useful little web tools,
-                <span class="block text-indigo-600">made by an indie developer</span>
-            </h1>
-
-            <p class="mt-6 text-lg text-gray-650 max-w-2xl mx-auto leading-relaxed">
-                I made these tools for real little jobs I kept running into. No grand platform — just useful pages that do the task and stay out of your way.
-            </p>
-        </div>
-
-                <!-- Search -->
+        <!-- Search -->
         <div class="max-w-xl mx-auto relative mt-8" id="hero-search-wrapper">
             <div class="bg-white p-2 rounded-2xl shadow-md border border-gray-200 flex items-center justify-between">
                 <div class="flex items-center pl-3 flex-grow">
@@ -278,197 +224,155 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
 
+        <!-- Stats Section -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
-<!-- Stats Section -->
-<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
+                    <div class="text-2xl font-bold text-indigo-600">11+</div>
+                    <div class="text-sm text-gray-500">Free Tools</div>
+                </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
-            <div class="text-2xl font-bold text-indigo-600">11+</div>
-            <div class="text-sm text-gray-500">Free Tools</div>
-        </div>
+                <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
+                    <div class="text-2xl font-bold text-green-600">100%</div>
+                    <div class="text-sm text-gray-500">Browser Based</div>
+                </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
-            <div class="text-2xl font-bold text-green-600">100%</div>
-            <div class="text-sm text-gray-500">Browser Based</div>
-        </div>
+                <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
+                    <div class="text-2xl font-bold text-blue-600">0</div>
+                    <div class="text-sm text-gray-500">Signups Required</div>
+                </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
-            <div class="text-2xl font-bold text-blue-600">0</div>
-            <div class="text-sm text-gray-500">Signups Required</div>
-        </div>
+                <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
+                    <div class="text-2xl font-bold text-purple-600">∞</div>
+                    <div class="text-sm text-gray-500">Free Usage</div>
+                </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-4 text-center shadow-sm">
-            <div class="text-2xl font-bold text-purple-600">∞</div>
-            <div class="text-sm text-gray-500">Free Usage</div>
-        </div>
+            </div>
+        </section>
+    </section>
 
-    </div>
-</section>
-   
-
-        <!-- Dynamic Grid of Utilities Directory -->
-        <section id="utilities" class="bg-white border-t border-b border-gray-200 py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Dynamic Grid of Utilities Directory -->
+    <section id="utilities" class="bg-white border-t border-b border-gray-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Category Filters Header -->
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Browse Utility Directory</h2>
+                    <p class="text-sm text-gray-500 mt-1">Pick a filter or search through the tools I have built so far.</p>
+                </div>
                 
-                <!-- Category Filters Header -->
-                <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-6">
-                    <div>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Browse Utility Directory</h2>
-                        <p class="text-sm text-gray-500 mt-1">Pick a filter or search through the tools I have built so far.</p>
-                    </div>
-                    
-                    <!-- Filter Buttons -->
-                    <div class="flex flex-wrap gap-2" id="filter-btn-group">
-                        <button type="button" data-category="all" class="filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm">All Utilities</button>
-                        <button type="button" data-category="text" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Text & Copy</button>
-                        <button type="button" data-category="dev" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Developer Tools</button>
-                        <button type="button" data-category="design" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Web Design</button>
-                    </div>
-                </div>
-
-                <!-- Dynamic Cards Grid -->
-                <div id="tools-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Cards populated via JavaScript -->
-                </div>
-
-                <!-- Empty State Filter Panel -->
-                <div id="grid-empty-state" class="hidden text-center py-16">
-                    <p class="text-sm text-gray-500 font-medium">No results match your search keywords or active filters.</p>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Static SEO Tool Index: visible fallback links for crawlers and no-JS users -->
-        <section id="tool-index" class="bg-gray-50 border-b border-gray-200 py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-3xl mb-10">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Free Browser-Based Tool Categories</h2>
-                    <p class="mt-3 text-sm text-gray-600 leading-relaxed">
-                        Browse IndieUtility by workflow. I built these free online tools for repeatable tasks such as formatting code, cleaning text, generating interface assets, converting files and preparing content for publishing.
-                    </p>
-                </div>
-                <div class="grid gap-6 md:grid-cols-3">
-                    <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <h3 class="text-lg font-bold text-gray-900">Developer Tools</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">Format, validate and debug code or structured data directly in your browser.</p>
-                        <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
-                            <li><a href="/tools/json-beautifier-validator/" class="hover:underline">JSON Beautifier & Validator</a></li>
-                            <li><a href="/tools/sql-formatter/" class="hover:underline">SQL Formatter</a></li>
-                            <li><a href="/tools/regex-editor/" class="hover:underline">Regex Editor & Tester</a></li>
-                            <li><a href="/tools/url-encoder-decoder/" class="hover:underline">URL Encoder & Decoder</a></li>
-                        </ul>
-                    </article>
-                    <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <h3 class="text-lg font-bold text-gray-900">Design & CSS Generators</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">Generate visual assets, CSS snippets and reusable design tokens for web projects.</p>
-                        <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
-                            <li><a href="/tools/svg-pattern-generator/" class="hover:underline">SVG Pattern Generator</a></li>
-                            <li><a href="/tools/glassmorphism-ui-engine/" class="hover:underline">Glassmorphism UI Engine</a></li>
-                            <li><a href="/tools/color-palette-generator/" class="hover:underline">Color Palette Generator</a></li>
-                            <li><a href="/tools/css-animation-generator/" class="hover:underline">CSS Animation Generator</a></li>
-                        </ul>
-                    </article>
-                    <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-                        <h3 class="text-lg font-bold text-gray-900">Creator & File Tools</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">Clean content, prepare files and speed up common publishing workflows.</p>
-                        <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
-                            <li><a href="/tools/youtube-transcript-cleaner/" class="hover:underline">YouTube Transcript Cleaner</a></li>
-                            <li><a href="/tools/image-format-converter/" class="hover:underline">Image Format Converter</a></li>
-                        </ul>
-                    </article>
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap gap-2" id="filter-btn-group">
+                    <button type="button" data-category="all" class="filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm">All Utilities</button>
+                    <button type="button" data-category="text" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Text & Copy</button>
+                    <button type="button" data-category="dev" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Developer Tools</button>
+                    <button type="button" data-category="design" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Web Design</button>
                 </div>
             </div>
-        </section>
 
-        <!-- SEO Content Section -->
-        <section id="about-indieutility" class="bg-white border-b border-gray-200 py-16">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">What Is IndieUtility?</h2>
-                <div class="mt-6 space-y-5 text-gray-600 leading-relaxed">
-                    <p>
-                        IndieUtility is my growing collection of free online tools for developers, content creators, designers, marketers and small businesses. I focus on practical browser utilities that solve common workflow problems: cleaning messy transcripts, validating JSON, formatting SQL, testing regular expressions, creating SVG backgrounds, generating color palettes, converting images and building CSS effects.
-                    </p>
-                    <p>
-                        Most tools are designed to run locally in your browser. That means your files, text, code snippets and generated outputs are processed on your own device instead of being uploaded to an application database. I use this local-first approach because it is better for quick development work, client content, internal notes, drafts, configuration files and other material you may not want to send to a third-party server.
-                    </p>
-                    <p>
-                        My goal is simple: make small tools that open quickly, do one job clearly, and get out of the way. No mandatory account creation, no software installation and no complicated dashboards. Each tool is built as a focused page with its own workflow, controls, examples and copyable or downloadable results.
-                    </p>
+            <!-- Dynamic Cards Grid -->
+            <div id="tools-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards populated via JavaScript -->
+            </div>
+
+            <!-- Empty State Filter Panel -->
+            <div id="grid-empty-state" class="hidden text-center py-16">
+                <p class="text-sm text-gray-500 font-medium">No results match your search keywords or active filters.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Static SEO Tool Index: visible fallback links for crawlers and no-JS users -->
+    <section id="tool-index" class="bg-gray-50 border-b border-gray-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mb-10">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Free Browser-Based Tool Categories</h2>
+                <p class="mt-3 text-sm text-gray-600 leading-relaxed">
+                    Browse IndieUtility by workflow. I built these free online tools for repeatable tasks such as formatting code, cleaning text, generating interface assets, converting files and preparing content for publishing.
+                </p>
+            </div>
+            <div class="grid gap-6 md:grid-cols-3">
+                <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900">Developer Tools</h3>
+                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">Format, validate and debug code or structured data directly in your browser.</p>
+                    <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
+                        <li><a href="/tools/json-beautifier-validator/" class="hover:underline">JSON Beautifier & Validator</a></li>
+                        <li><a href="/tools/sql-formatter/" class="hover:underline">SQL Formatter</a></li>
+                        <li><a href="/tools/regex-editor/" class="hover:underline">Regex Editor & Tester</a></li>
+                        <li><a href="/tools/url-encoder-decoder/" class="hover:underline">URL Encoder & Decoder</a></li>
+                    </ul>
+                </article>
+                <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900">Design & CSS Generators</h3>
+                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">Generate visual assets, CSS snippets and reusable design tokens for web projects.</p>
+                    <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
+                        <li><a href="/tools/svg-pattern-generator/" class="hover:underline">SVG Pattern Generator</a></li>
+                        <li><a href="/tools/glassmorphism-ui-engine/" class="hover:underline">Glassmorphism UI Engine</a></li>
+                        <li><a href="/tools/color-palette-generator/" class="hover:underline">Color Palette Generator</a></li>
+                    </ul>
+                </article>
+                <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900">Creator & File Tools</h3>
+                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">Clean content, prepare files and speed up common publishing workflows.</p>
+                    <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
+                        <li><a href="/tools/youtube-transcript-cleaner/" class="hover:underline">YouTube Transcript Cleaner</a></li>
+                        <li><a href="/tools/image-format-converter/" class="hover:underline">Image Format Converter</a></li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO Content Section -->
+    <section id="about-indieutility" class="bg-white border-b border-gray-200 py-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">What Is IndieUtility?</h2>
+            <div class="mt-6 space-y-5 text-gray-600 leading-relaxed">
+                <p>
+                    IndieUtility is my growing collection of free online tools for developers, content creators, designers, marketers and small businesses. I focus on practical browser utilities that solve common workflow problems: cleaning messy transcripts, validating JSON, formatting SQL, testing regular expressions, creating SVG backgrounds, generating color palettes, converting images and building CSS effects.
+                </p>
+                <p>
+                    Most tools are designed to run locally in your browser. That means your files, text, code snippets and generated outputs are processed on your own device instead of being uploaded to an application database. I use this local-first approach because it is better for quick development work, client content, internal notes, drafts, configuration files and other material you may not want to send to a third-party server.
+                </p>
+                <p>
+                    My goal is simple: make small tools that open quickly, do one job clearly, and get out of the way. No mandatory account creation, no software installation and no complicated dashboards. Each tool is built as a focused page with its own workflow, controls, examples and copyable or downloadable results.
+                </p>
+            </div>
+
+            <div class="mt-10 grid gap-6 md:grid-cols-3">
+                <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
+                    <h3 class="font-bold text-gray-900">Privacy-first by default</h3>
+                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">I try to keep ordinary tool input local whenever possible, reducing unnecessary uploads and storage.</p>
                 </div>
-
-                <div class="mt-10 grid gap-6 md:grid-cols-3">
-                    <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
-                        <h3 class="font-bold text-gray-900">Privacy-first by default</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">I try to keep ordinary tool input local whenever possible, reducing unnecessary uploads and storage.</p>
-                    </div>
-                    <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
-                        <h3 class="font-bold text-gray-900">Built for repeat tasks</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">I build around repetitive jobs people already do in editors, spreadsheets, terminals, CMS dashboards and content workflows.</p>
-                    </div>
-                    <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
-                        <h3 class="font-bold text-gray-900">Free and accessible</h3>
-                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">I keep the tools usable without subscriptions, sign-up gates or complex onboarding flows.</p>
-                    </div>
+                <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
+                    <h3 class="font-bold text-gray-900">Built for repeat tasks</h3>
+                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">I build around repetitive jobs people already do in editors, spreadsheets, terminals, CMS dashboards and content workflows.</p>
+                </div>
+                <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
+                    <h3 class="font-bold text-gray-900">Free and accessible</h3>
+                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">I keep the tools usable without subscriptions, sign-up gates or complex onboarding flows.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Latest Tools / Freshness Signals -->
-        <section id="latest-tools" class="bg-gray-50 border-b border-gray-200 py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Recently Added and Updated Tools</h2>
-                <p class="mt-3 text-sm text-gray-600 max-w-3xl leading-relaxed">I update IndieUtility with new browser tools for code, design, content and productivity workflows when I build something useful enough to publish.</p>
-                <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    <a href="/tools/css-animation-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Web Design</span><h3 class="mt-2 font-bold text-gray-900">CSS Animation Generator</h3><p class="mt-1 text-sm text-gray-500">Generate keyframes and reusable animation snippets.</p></a>
-                    <a href="/tools/color-palette-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Design</span><h3 class="mt-2 font-bold text-gray-900">Color Palette Generator</h3><p class="mt-1 text-sm text-gray-500">Create palettes, HEX values and CSS variables.</p></a>
-                    <a href="/tools/regex-editor/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Developer</span><h3 class="mt-2 font-bold text-gray-900">Regex Editor & Tester</h3><p class="mt-1 text-sm text-gray-500">Test expressions and inspect live matches.</p></a>
-                    <a href="/tools/image-format-converter/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Files</span><h3 class="mt-2 font-bold text-gray-900">Image Format Converter</h3><p class="mt-1 text-sm text-gray-500">Convert and resize images in the browser.</p></a>
-                </div>
+    <!-- Latest Tools / Freshness Signals -->
+    <section id="latest-tools" class="bg-gray-50 border-b border-gray-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Recently Added and Updated Tools</h2>
+            <p class="mt-3 text-sm text-gray-600 max-w-3xl leading-relaxed">I update IndieUtility with new browser tools for code, design, content and productivity workflows when I build something useful enough to publish.</p>
+            <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <a href="/tools/css-animation-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Web Design</span><h3 class="mt-2 font-bold text-gray-900">CSS Animation Generator</h3><p class="mt-1 text-sm text-gray-500">Generate keyframes and reusable animation snippets.</p></a>
+                <a href="/tools/color-palette-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Design</span><h3 class="mt-2 font-bold text-gray-900">Color Palette Generator</h3><p class="mt-1 text-sm text-gray-500">Create palettes, HEX values and CSS variables.</p></a>
+                <a href="/tools/regex-editor/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Developer</span><h3 class="mt-2 font-bold text-gray-900">Regex Editor & Tester</h3><p class="mt-1 text-sm text-gray-500">Test expressions and inspect live matches.</p></a>
+                <a href="/tools/image-format-converter/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Files</span><h3 class="mt-2 font-bold text-gray-900">Image Format Converter</h3><p class="mt-1 text-sm text-gray-500">Convert and resize images in the browser.</p></a>
             </div>
-        </section>
-
-        <!-- SEO FAQ Block -->
-        <section id="faq" class="bg-gray-50 border-b border-gray-200 py-16">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-10 text-center">Frequently Asked Questions</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="font-bold text-gray-900 mb-2">How can a web tool run 100% client-side?</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            Modern web APIs allow your browser to handle complex calculations, array sorting, regular expressions, and parsing. By utilizing vanilla JavaScript directly in your browser, I eliminate server roundtrips.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 class="font-bold text-gray-900 mb-2">Are my code snippets or outputs saved?</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            No. IndieUtility runs without databases or application servers. Your transcriptions, JSON records, or formatting inputs remain purely inside local storage or active memory on your personal computer.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 class="font-bold text-gray-900 mb-2">Are there conversion limits or paid tiers?</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            No. The tools I publish here are free to use without pricing limits, premium feature locks, registration walls, or subscription setups.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 class="font-bold text-gray-900 mb-2">Can I request tool integrations?</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            I keep adding lightweight tools when I find useful problems to solve. You can suggest new ideas, report bugs, or send feedback if something feels clunky.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 border-t border-gray-800">
@@ -495,7 +399,7 @@
                 </div>
                 <div>
                     <h3 class="text-white font-bold mb-3">Design Tools</h3>
-                    <ul class="space-y-2"><li><a href="/tools/svg-pattern-generator/" class="hover:text-white">SVG Pattern Generator</a></li><li><a href="/tools/glassmorphism-ui-engine/" class="hover:text-white">Glassmorphism UI Engine</a></li><li><a href="/tools/color-palette-generator/" class="hover:text-white">Color Palette Generator</a></li><li><a href="/tools/css-animation-generator/" class="hover:text-white">CSS Animation Generator</a></li></ul>
+                    <ul class="space-y-2"><li><a href="/tools/svg-pattern-generator/" class="hover:text-white">SVG Pattern Generator</a></li><li><a href="/tools/glassmorphism-ui-engine/" class="hover:text-white">Glassmorphism UI Engine</a></li><li><a href="/tools/color-palette-generator/" class="hover:text-white">Color Palette Generator</a></li></ul>
                 </div>
                 <div>
                     <h3 class="text-white font-bold mb-3">Creator Tools</h3>
@@ -538,7 +442,7 @@
                     path: '/tools/youtube-transcript-cleaner/',
                     category: 'text',
                     active: true,
-                    icon: `<svg class="h-6 w-6" fill="none" viewBox="00 0 24 24" stroke="currentColor">
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                            </svg>`
                 },
