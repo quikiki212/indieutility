@@ -7,6 +7,7 @@
     const isGlassPage = window.location.pathname.includes('/glassmorphism-ui-engine');
     const isJsonPage = window.location.pathname.includes('/json-beautifier-validator');
     const isSqlPage = window.location.pathname.includes('/sql-formatter');
+    const isRegexPage = window.location.pathname.includes('/regex-editor');
     const localFaqHref = isToolPage ? '#faq' : '/#faq';
 
     header.innerHTML = `
@@ -54,7 +55,7 @@
         ` : ''}
     `;
 
-    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage) return;
+    if (!isTranscriptPage && !isGlassPage && !isJsonPage && !isSqlPage && !isRegexPage) return;
 
     const tools = [
         {
@@ -81,6 +82,11 @@
             name: 'SQL Formatter',
             description: 'Beautify, minify, and customize SQL queries.',
             href: '/tools/sql-formatter/'
+        },
+        {
+            name: 'Regex Editor & Tester',
+            description: 'Test, debug, and visualize regex patterns with live feedback.',
+            href: '/tools/regex-editor/'
         }
     ];
 
