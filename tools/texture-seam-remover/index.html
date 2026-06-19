@@ -57,12 +57,12 @@
                 <div class="mb-3">
                     <canvas id="tile-canvas" width="256" height="256" class="w-full border rounded"></canvas>
                 </div>
-                <div class="relative group">
+                <div class="relative group h-96">
                     <!-- before/after stacked canvases; hover to reveal AFTER (processed) -->
-                    <div class="absolute inset-0 border rounded overflow-hidden" style="background:#fff">
+                    <div class="absolute inset-0 border rounded overflow-hidden z-0" style="background:#fff">
                         <canvas id="before-tiled-canvas" width="768" height="768" class="w-full h-full block"></canvas>
                     </div>
-                    <div class="absolute inset-0 border rounded overflow-hidden transition-opacity duration-200" style="opacity:0; pointer-events:none" id="after-wrapper">
+                    <div class="absolute inset-0 border rounded overflow-hidden transition-opacity duration-200 z-10" style="opacity:0;" id="after-wrapper">
                         <canvas id="after-tiled-canvas" width="768" height="768" class="w-full h-full block"></canvas>
                     </div>
                     <!-- hover overlay instruction -->
@@ -70,7 +70,7 @@
                 </div>
                 <style>
                     /* reveal processed tiles on preview hover */
-                    .group:hover #after-wrapper { opacity: 1 !important; }
+                    .group:hover #after-wrapper { opacity: 1 !important; pointer-events: auto; }
                 </style>
             </article>
         </section>
