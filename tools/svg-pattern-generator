@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Metadata -->
+    <title>Free SVG Pattern Generator | CSS Repeating Background Code Creator</title>
+    <meta name="description" content="Generate seamless repeating CSS and SVG background patterns. Customize sizing, stroke thickness, colors, and opacity. Export clean CSS data-URLs or raw SVG code instantly.">
+    <meta name="keywords" content="svg pattern generator, repeating background generator, css background pattern, free pattern maker, seamless svg pattern, raw svg code exporter">
+    <meta name="author" content="IndieUtility">
+    <link rel="canonical" href="http://indieutility.com/tools/svg-pattern-generator/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://indieutility.com/tools/svg-pattern-generator/">
+    <meta property="og:title" content="Free SVG Pattern Generator | CSS Background Creator">
+    <meta property="og:description" content="Generate beautiful seamless background patterns client-side. Export clean repeating SVG files or inline CSS code with absolute privacy.">
+    <meta property="og:image" content="http://indieutility.com/og-pattern.png">
+
+    <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+    <!-- Schema.org JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SVG Pattern Generator",
+      "description": "A client-side utility to create seamless, repeating CSS and SVG background patterns online, featuring customizable sizing, color selection, and raw asset extraction.",
+      "url": "http://indieutility.com/tools/svg-pattern-generator/",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I use an SVG background in CSS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Copy the generated CSS background-image code from this tool. It embeds the SVG directly as an optimized, encoded data-URL string inside the background-image URL attribute, completely removing the need for a separate image file."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are there resolution limits for SVG background patterns?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SVG vectors are scalable. They render crisp, sharp patterns on screens of any size or resolution without increasing file size."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        main {
+            display: block !important;
+        }
+        /* Custom UI sliders styling for range items */
+        .slider-thumb::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .slider-thumb::-webkit-slider-thumb:hover {
+            background: #4338ca;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Logo Section -->
+            <a href="http://indieutility.com/" class="flex items-center space-x-3 focus:outline-none">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg flex items-center justify-center shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-xl font-bold text-gray-900 tracking-tight">Indie<span class="text-indigo-600">Utility</span></span>
+                </div>
+            </a>
+
+            <!-- Dropdown Menu and Links -->
+            <div class="flex items-center space-x-6">
+                
+                <!-- Utilities Navigation Dropdown Toggle -->
+                <div class="relative inline-block text-left" id="nav-dropdown-wrapper">
+                    <button type="button" id="nav-dropdown-toggle" class="inline-flex items-center justify-center font-semibold text-sm text-gray-750 hover:text-indigo-600 transition focus:outline-none py-2 px-1">
+                        Select Utility
+                        <svg class="w-4 h-4 ml-1.5 mt-0.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Dropdown Panel (Populated dynamically) -->
+                    <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-3 w-80 rounded-xl bg-white border border-gray-200 shadow-xl ring-1 ring-black ring-opacity-5 z-50">
+                        <div class="p-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
+                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Quick Switch Tool</span>
+                        </div>
+                        <div id="nav-dropdown-items" class="py-1 max-h-96 overflow-y-auto divide-y divide-gray-50">
+                            <!-- Injected dynamically from JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#faq" class="text-sm font-semibold text-gray-500 hover:text-indigo-600 transition">FAQs</a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- Hero Title -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+                SVG Pattern <span class="text-indigo-600">Generator</span>
+            </h1>
+            <p class="text-lg text-gray-600 leading-relaxed">
+                Generate high-performance, seamless repeating patterns for modern web designs. Customize presets and extract inline CSS codes or raw files instantly.
+            </p>
+        </div>
+
+        <!-- App Layout Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left Panel: Preset Selectors & Dimension Sliders -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Pattern Type Selector Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <h2 class="text-sm font-bold text-gray-800 mb-4 uppercase tracking-wider">1. Select Base Pattern</h2>
+                    <div class="grid grid-cols-2 gap-3" id="pattern-presets-grid">
+                        <button type="button" data-preset="dots" class="preset-btn p-3 flex flex-col items-center justify-center rounded-xl border border-indigo-600 bg-indigo-50/50 text-indigo-700 font-bold text-xs transition focus:outline-none">
+                            <span class="text-xl mb-1">⚫</span> Dots
+                        </button>
+                        <button type="button" data-preset="grid" class="preset-btn p-3 flex flex-col items-center justify-center rounded-xl border border-gray-200 text-gray-600 font-semibold text-xs hover:bg-gray-50 transition focus:outline-none">
+                            <span class="text-xl mb-1">🏁</span> Square Grid
+                        </button>
+                        <button type="button" data-preset="v-stripes" class="preset-btn p-3 flex flex-col items-center justify-center rounded-xl border border-gray-200 text-gray-600 font-semibold text-xs hover:bg-gray-50 transition focus:outline-none">
+                            <span class="text-xl mb-1">║</span> Vertical Stripes
+                        </button>
+                        <button type="button" data-preset="d-stripes" class="preset-btn p-3 flex flex-col items-center justify-center rounded-xl border border-gray-200 text-gray-600 font-semibold text-xs hover:bg-gray-50 transition focus:outline-none">
+                            <span class="text-xl mb-1">╱</span> Diagonal Stripes
+                        </button>
+                        <button type="button" data-preset="chevron" class="preset-btn p-3 flex flex-col items-center justify-center rounded-xl border border-gray-200 text-gray-600 font-semibold text-xs hover:bg-gray-50 transition focus:outline-none">
+                            <span class="text-xl mb-1">∧</span> Chevrons
+                        </button>
+                        <button type="button" data-preset="waves" class="preset-btn p-3 flex flex-col items-center justify-center rounded-xl border border-gray-200 text-gray-600 font-semibold text-xs hover:bg-gray-50 transition focus:outline-none">
+                            <span class="text-xl mb-1">〰️</span> Waves
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Customizations Controls Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-5">
+                    <h2 class="text-sm font-bold text-gray-800 uppercase tracking-wider mb-2">2. Customize Dimensions</h2>
+
+                    <!-- Color Inputs Grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="color-bg" class="block text-xs font-bold text-gray-500 uppercase mb-2">Background</label>
+                            <div class="flex items-center space-x-2 border border-gray-200 rounded-xl p-2 bg-gray-50">
+                                <input type="color" id="color-bg" value="#ffffff" class="w-8 h-8 rounded-lg cursor-pointer border-0 bg-transparent" />
+                                <input type="text" id="color-bg-hex" value="#ffffff" class="w-full text-xs font-bold font-mono bg-transparent border-0 focus:outline-none" />
+                            </div>
+                        </div>
+                        <div>
+                            <label for="color-pattern" class="block text-xs font-bold text-gray-500 uppercase mb-2">Pattern Stroke</label>
+                            <div class="flex items-center space-x-2 border border-gray-200 rounded-xl p-2 bg-gray-50">
+                                <input type="color" id="color-pattern" value="#4f46e5" class="w-8 h-8 rounded-lg cursor-pointer border-0 bg-transparent" />
+                                <input type="text" id="color-pattern-hex" value="#4f46e5" class="w-full text-xs font-bold font-mono bg-transparent border-0 focus:outline-none" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Size slider -->
+                    <div class="space-y-2 pt-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-gray-650">Pattern Box Size</span>
+                            <span class="font-mono font-bold bg-gray-100 text-gray-700 px-2 py-0.5 rounded" id="val-size">24px</span>
+                        </div>
+                        <input type="range" id="slider-size" min="10" max="120" value="24" class="w-full slider-thumb accent-indigo-600 h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+                    </div>
+
+                    <!-- Thickness slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-gray-650">Stroke Thickness / Radius</span>
+                            <span class="font-mono font-bold bg-gray-100 text-gray-700 px-2 py-0.5 rounded" id="val-thickness">4px</span>
+                        </div>
+                        <input type="range" id="slider-thickness" min="1" max="40" value="4" class="w-full slider-thumb accent-indigo-600 h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+                    </div>
+
+                    <!-- Opacity slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-gray-650">Pattern Opacity</span>
+                            <span class="font-mono font-bold bg-gray-100 text-gray-700 px-2 py-0.5 rounded" id="val-opacity">0.40</span>
+                        </div>
+                        <input type="range" id="slider-opacity" min="5" max="100" value="40" class="w-full slider-thumb accent-indigo-600 h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Panel: Live Preview & Code Exporter -->
+            <div class="lg:col-span-7 space-y-6 lg:sticky lg:top-24">
+                
+                <!-- Live Preview Block -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-sm font-bold text-gray-800 uppercase tracking-wider">Live Pattern Preview</h2>
+                        
+                        <!-- Mini scale display -->
+                        <div class="flex items-center space-x-2 text-xs text-gray-500">
+                            <span>Zoom:</span>
+                            <button type="button" id="zoom-out" class="bg-gray-100 hover:bg-gray-200 font-bold px-2 py-1 rounded focus:outline-none">-</button>
+                            <span id="zoom-label" class="font-mono font-semibold">100%</span>
+                            <button type="button" id="zoom-in" class="bg-gray-100 hover:bg-gray-200 font-bold px-2 py-1 rounded focus:outline-none">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Live Repeating Container Frame -->
+                    <div id="live-preview-box" class="w-full h-80 rounded-xl border border-gray-200 shadow-inner relative overflow-hidden transition-all duration-150" style="background-color: #ffffff;">
+                        <!-- Absolute mock design elements to test pattern against UI components -->
+                        <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none select-none">
+                            <div class="bg-white/95 backdrop-blur-md rounded-2xl p-6 border border-gray-250/50 shadow-xl max-w-sm text-center">
+                                <h3 class="text-base font-extrabold text-gray-900">Pattern Contrast Sandbox</h3>
+                                <p class="text-xs text-gray-500 mt-1.5 leading-relaxed">Ensure patterns are delicate enough to not distract from typography, elements, and structural interface layouts.</p>
+                                <button type="button" class="mt-4 bg-indigo-600 text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-sm">Sample Action Button</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Outputs Exporter Card -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-4">
+                        <nav class="flex space-x-6" id="output-tabs">
+                            <button type="button" data-tab="css" class="tab-btn border-indigo-600 text-indigo-600 font-bold text-sm border-b-2 pb-2.5 focus:outline-none">CSS Code</button>
+                            <button type="button" data-tab="svg" class="tab-btn border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm border-b-2 pb-2.5 focus:outline-none">Raw SVG Code</button>
+                        </nav>
+                        <span id="toast" class="hidden text-xs bg-green-500 text-white font-medium px-2 py-1 rounded transition-opacity duration-300">Copied!</span>
+                    </div>
+
+                    <!-- Tabbed Text Area Viewers -->
+                    <div class="relative mb-4">
+                        <!-- CSS code snippet block -->
+                        <div id="panel-css" class="tab-panel">
+                            <textarea id="code-css" readonly rows="5" class="w-full rounded-xl border-gray-200 border bg-gray-50 p-4 text-xs text-gray-700 focus:outline-none font-mono resize-none"></textarea>
+                        </div>
+                        <!-- SVG code snippet block -->
+                        <div id="panel-svg" class="tab-panel hidden">
+                            <textarea id="code-svg" readonly rows="5" class="w-full rounded-xl border-gray-200 border bg-gray-50 p-4 text-xs text-gray-700 focus:outline-none font-mono resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Actions Panel -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="btn-copy" class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-sm transition focus:outline-none">
+                            <svg class="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            Copy Code
+                        </button>
+                        <button type="button" id="btn-download" class="w-full flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl shadow-sm transition focus:outline-none">
+                            <svg class="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Export SVG File
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SEO Article Info Block -->
+        <section id="how-it-works" class="mt-16 bg-white rounded-3xl border border-gray-200 p-8 sm:p-12 shadow-sm max-w-4xl mx-auto">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 text-center">
+                How to Use Repeating SVG Backgrounds in CSS
+            </h2>
+            
+            <div class="space-y-8 text-gray-650 leading-relaxed text-sm">
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 mb-2 flex items-center gap-2">
+                        <span class="flex items-center justify-center bg-indigo-100 text-indigo-700 h-6 w-6 rounded-full text-xs font-bold">1</span>
+                        Why use Inline SVG backgrounds?
+                    </h3>
+                    <p class="pl-8 text-gray-600">
+                        Instead of loading traditional image assets like `.png` or `.jpg` patterns (which increase page requests and slow core web vital speeds), inline SVG vectors compile directly inside your stylesheet. They remain lightweight, render crisply on Retina screens, and are completely modular.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 mb-2 flex items-center gap-2">
+                        <span class="flex items-center justify-center bg-indigo-100 text-indigo-700 h-6 w-6 rounded-full text-xs font-bold">2</span>
+                        Understanding CSS Base64 / URI Encoding
+                    </h3>
+                    <p class="pl-8 text-gray-600">
+                        Browsers cannot read raw XML tags directly inside `background-image` CSS rules without proper encoding. Our tool dynamically parses your pattern, safely replaces special URL symbols (like replacing `#` with `%23` for colored hex codes), and creates an optimized Data URI string ready for production environments.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-base font-bold text-gray-900 mb-2 flex items-center gap-2">
+                        <span class="flex items-center justify-center bg-indigo-100 text-indigo-700 h-6 w-6 rounded-full text-xs font-bold">3</span>
+                        Implementing the stylesheet in code
+                    </h3>
+                    <div class="pl-8 text-gray-600 space-y-2">
+                        <p>To implement, simply paste the copied CSS class code block onto your target DOM elements:</p>
+                        <pre class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs font-mono text-gray-700 overflow-x-auto leading-relaxed">
+.grid-pattern-hero {
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,...");
+  /* Optional: tune pattern size scaling dynamically */
+  background-size: auto; 
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ block for search keywords indexing -->
+        <section id="faq" class="mt-12 max-w-4xl mx-auto">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-8 text-center">
+                Frequently Asked Questions
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-2 text-sm">Can I scale the generated pattern using CSS?</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Yes. By appending the standard `background-size` property to your element inside your CSS files, you can override and scale the pattern dynamically (e.g., `background-size: 50px;` will force the pattern tiles to repeat every 50 pixels).
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-2 text-sm">Do these patterns block rendering or page loads?</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        No. Since the SVG assets are directly inline data strings inside your stylesheet rules, there are no slow, secondary HTTP asset requests. The background patterns render alongside the layout.
+                    </p>
+                </div>
+                
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-2 text-sm">Do patterns work in dark mode?</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Absolutely. Simply switch your stroke colors to light gray, white, or opaque indigo variations, and adjust the background color parameters to dark slate colors.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-2 text-sm">Is my configuration data private?</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        Completely. There are no tracking tools or servers storing coordinates or configurations. All logic runs inside active memory in your browser.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 mt-16 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <span class="text-lg font-bold text-white tracking-tight">Indie<span class="text-indigo-500">Utility</span></span>
+                <span class="text-sm border-l border-gray-700 pl-3 ml-3 text-gray-500">Static Creator Suite</span>
+            </div>
+            <div class="flex gap-6 text-sm">
+                <a href="#" class="hover:text-white transition">Back to Top</a>
+                <a href="#how-it-works" class="hover:text-white transition">Tutorial</a>
+                <a href="#faq" class="hover:text-white transition">FAQs</a>
+            </div>
+            <p class="text-xs text-gray-500">
+                &copy; 2026 IndieUtility. Free to use, open-source static software under MIT.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Logic Script (Vanilla JS) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // DYNAMIC TOOLS NAVIGATION LIST (Consistent with other tools in the suite)
+            const toolsDb = [
+                {
+                    id: 'yt-transcript',
+                    name: 'YouTube Transcript Cleaner',
+                    desc: 'Fetch raw transcripts via video link, strip timestamps, and automatically deduplicate overlapping rolling sentences.',
+                    path: 'http://indieutility.com/tools/youtube-transcript-cleaner/',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                           </svg>`
+                },
+                {
+                    id: 'markdown-preview',
+                    name: 'Markdown Live Editor',
+                    desc: 'A split-screen markdown editor to parse prose, customize text patterns, and instantly export HTML code packages.',
+                    path: '#',
+                    category: 'text',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                           </svg>`
+                },
+                {
+                    id: 'json-formatter',
+                    name: 'JSON Beautifier & Validator',
+                    desc: 'Prettify nested API payloads, validate key-value arrays, locate formatting errors, and minify raw JSON lists.',
+                    path: '#',
+                    category: 'dev',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                           </svg>`
+                },
+                {
+                    id: 'svg-patterns',
+                    name: 'SVG Pattern Generator',
+                    desc: 'Create seamless repeating vector design patterns, modify element parameters, and grab static inline XML output.',
+                    path: 'http://indieutility.com/tools/svg-pattern-generator/',
+                    category: 'design',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                           </svg>`
+                },
+                {
+                    id: 'glass-morphism',
+                    name: 'Glassmorphism UI Engine',
+                    desc: 'Build gorgeous translucent components, apply localized backdrop-blur styling, and capture cross-browser CSS.',
+                    path: '#',
+                    category: 'design',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                           </svg>`
+                },
+                {
+                    id: 'slug-creator',
+                    name: 'SEO Slug Permalinker',
+                    desc: 'Remove illegal unicode symbols, strip punctuation parameters, and transform raw text fields into clean URL strings.',
+                    path: '#',
+                    category: 'dev',
+                    active: false,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                           </svg>`
+                }
+            ];
+
+            // Setup Navigation Dropdown
+            const navDropdownToggle = document.getElementById('nav-dropdown-toggle');
+            const navDropdownMenu = document.getElementById('nav-dropdown-menu');
+            const navDropdownItems = document.getElementById('nav-dropdown-items');
+            const navDropdownWrapper = document.getElementById('nav-dropdown-wrapper');
+
+            function buildNavDropdown() {
+                navDropdownItems.innerHTML = '';
+                toolsDb.forEach(tool => {
+                    let element;
+                    if (tool.active) {
+                        element = document.createElement('a');
+                        element.href = tool.path;
+                        element.className = "w-full text-left p-3 flex items-center gap-3.5 hover:bg-gray-50 transition focus:outline-none";
+                        element.innerHTML = `
+                            <div class="bg-indigo-50 text-indigo-600 p-2 rounded-xl shrink-0">
+                                ${tool.icon}
+                            </div>
+                            <div class="min-w-0">
+                                <span class="block text-sm font-bold text-gray-900 truncate">${tool.name}</span>
+                                <span class="block text-[10px] text-gray-400 truncate max-w-[210px] mt-0.5">${tool.desc}</span>
+                            </div>
+                        `;
+                    } else {
+                        element = document.createElement('div');
+                        element.className = "w-full text-left p-3 flex items-center gap-3.5 opacity-60 select-none cursor-not-allowed";
+                        element.innerHTML = `
+                            <div class="bg-gray-100 text-gray-400 p-2 rounded-xl shrink-0">
+                                ${tool.icon}
+                            </div>
+                            <div class="min-w-0">
+                                <span class="block text-sm font-bold text-gray-500 truncate">
+                                    ${tool.name}
+                                    <span class="inline-block ml-1.5 text-[8px] font-extrabold bg-gray-200 text-gray-600 rounded px-1 uppercase tracking-wider">Soon</span>
+                                </span>
+                                <span class="block text-[10px] text-gray-400 truncate max-w-[210px] mt-0.5">${tool.desc}</span>
+                            </div>
+                        `;
+                    }
+                    navDropdownItems.appendChild(element);
+                });
+            }
+
+            // Toggle Navigation Dropdown Menu
+            navDropdownToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navDropdownMenu.classList.toggle('hidden');
+            });
+            document.addEventListener('click', (e) => {
+                if (!navDropdownWrapper.contains(e.target)) {
+                    navDropdownMenu.classList.add('hidden');
+                }
+            });
+
+            // UI Workspace Selectors
+            const livePreviewBox = document.getElementById('live-preview-box');
+            const patternPresetsGrid = document.getElementById('pattern-presets-grid');
+            
+            const colorBg = document.getElementById('color-bg');
+            const colorBgHex = document.getElementById('color-bg-hex');
+            const colorPattern = document.getElementById('color-pattern');
+            const colorPatternHex = document.getElementById('color-pattern-hex');
+
+            const sliderSize = document.getElementById('slider-size');
+            const sliderThickness = document.getElementById('slider-thickness');
+            const sliderOpacity = document.getElementById('slider-opacity');
+
+            const valSize = document.getElementById('val-size');
+            const valThickness = document.getElementById('val-thickness');
+            const valOpacity = document.getElementById('val-opacity');
+
+            // Zoom Preview Controls
+            const btnZoomIn = document.getElementById('zoom-in');
+            const btnZoomOut = document.getElementById('zoom-out');
+            const zoomLabel = document.getElementById('zoom-label');
+
+            // Code Tab Controls
+            const outputTabs = document.getElementById('output-tabs');
+            const codeCss = document.getElementById('code-css');
+            const codeSvg = document.getElementById('code-svg');
+            const btnCopy = document.getElementById('btn-copy');
+            const btnDownload = document.getElementById('btn-download');
+            const toast = document.getElementById('toast');
+
+            // State Parameters
+            let activePreset = 'dots';
+            let activeScale = 1.0;
+
+            const presets = {
+                dots: (size, thickness, color, opacity) => {
+                    const radius = Math.max(0.5, thickness / 2);
+                    const center = size / 2;
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">\n  <circle cx="${center}" cy="${center}" r="${radius}" fill="${color}" fill-opacity="${opacity}" />\n</svg>`;
+                },
+                grid: (size, thickness, color, opacity) => {
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">\n  <path d="M ${size} 0 L 0 0 0 ${size}" fill="none" stroke="${color}" stroke-width="${thickness}" stroke-opacity="${opacity}" />\n</svg>`;
+                },
+                'v-stripes': (size, thickness, color, opacity) => {
+                    const position = size / 2;
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">\n  <line x1="${position}" y1="0" x2="${position}" y2="${size}" stroke="${color}" stroke-width="${thickness}" stroke-opacity="${opacity}" />\n</svg>`;
+                },
+                'd-stripes': (size, thickness, color, opacity) => {
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">\n  <path d="M 0 ${size} L ${size} 0 M -${size/4} ${size/4} L ${size/4} -${size/4} M ${3*size/4} ${5*size/4} L ${5*size/4} ${3*size/4}" stroke="${color}" stroke-width="${thickness}" stroke-opacity="${opacity}" />\n</svg>`;
+                },
+                chevron: (size, thickness, color, opacity) => {
+                    const h = size;
+                    const w = size;
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">\n  <path d="M 0 ${h/2} L ${w/2} 0 L ${w} ${h/2} M 0 ${h*1.5} L ${w/2} ${h} L ${w} ${h*1.5} M 0 -${h/2} L ${w/2} -${h} L ${w} -${h/2}" fill="none" stroke="${color}" stroke-width="${thickness}" stroke-opacity="${opacity}" />\n</svg>`;
+                },
+                waves: (size, thickness, color, opacity) => {
+                    const h = size;
+                    const w = size;
+                    return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">\n  <path d="M 0 ${h/2} Q ${w/4} ${h/4} ${w/2} ${h/2} T ${w} ${h/2}" fill="none" stroke="${color}" stroke-width="${thickness}" stroke-opacity="${opacity}" />\n</svg>`;
+                }
+            };
+
+            // Main Generation Controller
+            function updateGenerator() {
+                const size = parseInt(sliderSize.value);
+                const thickness = parseInt(sliderThickness.value);
+                const opacity = (parseInt(sliderOpacity.value) / 100).toFixed(2);
+                const bgColor = colorBg.value;
+                const patternColor = colorPattern.value;
+
+                // Sync Hex strings
+                colorBgHex.value = bgColor;
+                colorPatternHex.value = patternColor;
+
+                // Sync text values
+                valSize.innerText = `${size}px`;
+                valThickness.innerText = `${thickness}px`;
+                valOpacity.innerText = opacity;
+
+                // Compile XML markup
+                const generatorFunction = presets[activePreset];
+                const rawSvg = generatorFunction(size, thickness, patternColor, opacity);
+
+                // CSS background image compiler logic (safe url encoding, bypassing '#' problems)
+                const safeSvgCode = rawSvg
+                    .replace(/"/g, "'")
+                    .replace(/%/g, '%25')
+                    .replace(/#/g, '%23')
+                    .replace(/{/g, '%7B')
+                    .replace(/}/g, '%7D')
+                    .replace(/</g, '%3C')
+                    .replace(/>/g, '%3E')
+                    .replace(/\s+/g, ' ');
+
+                const compiledCss = `background-color: ${bgColor};\nbackground-image: url("data:image/svg+xml,${safeSvgCode}");\nbackground-size: ${Math.round(size * activeScale)}px ${Math.round(size * activeScale)}px;`;
+
+                // Update Output text elements
+                codeSvg.value = rawSvg;
+                codeCss.value = compiledCss;
+
+                // Set preview styles directly
+                livePreviewBox.style.backgroundColor = bgColor;
+                livePreviewBox.style.backgroundImage = `url("data:image/svg+xml,${safeSvgCode}")`;
+                livePreviewBox.style.backgroundSize = `${Math.round(size * activeScale)}px ${Math.round(size * activeScale)}px`;
+            }
+
+            // Presets Click Selector
+            patternPresetsGrid.addEventListener('click', (e) => {
+                const button = e.target.closest('button');
+                if (!button) return;
+
+                // Clear current active styling
+                patternPresetsGrid.querySelectorAll('button').forEach(btn => {
+                    btn.className = "preset-btn p-3 flex flex-col items-center justify-center rounded-xl border border-gray-200 text-gray-600 font-semibold text-xs hover:bg-gray-50 transition focus:outline-none";
+                });
+
+                // Style active button
+                button.className = "preset-btn p-3 flex flex-col items-center justify-center rounded-xl border border-indigo-600 bg-indigo-50/50 text-indigo-700 font-bold text-xs transition focus:outline-none";
+                activePreset = button.getAttribute('data-preset');
+                
+                // Adjust thickness boundaries based on preset behaviors
+                if (activePreset === 'dots') {
+                    sliderThickness.max = "80";
+                } else {
+                    sliderThickness.max = "30";
+                    if (parseInt(sliderThickness.value) > 30) {
+                        sliderThickness.value = 4;
+                    }
+                }
+
+                updateGenerator();
+            });
+
+            // Sliders & Inputs Listeners
+            [sliderSize, sliderThickness, sliderOpacity].forEach(slider => {
+                slider.addEventListener('input', updateGenerator);
+            });
+
+            colorBg.addEventListener('input', updateGenerator);
+            colorPattern.addEventListener('input', updateGenerator);
+
+            // Manual Hex Input syncing logic
+            colorBgHex.addEventListener('change', () => {
+                const hexVal = colorBgHex.value.trim();
+                if (/^#[0-9A-F]{6}$/i.test(hexVal)) {
+                    colorBg.value = hexVal;
+                    updateGenerator();
+                }
+            });
+            colorPatternHex.addEventListener('change', () => {
+                const hexVal = colorPatternHex.value.trim();
+                if (/^#[0-9A-F]{6}$/i.test(hexVal)) {
+                    colorPattern.value = hexVal;
+                    updateGenerator();
+                }
+            });
+
+            // Zoom Scaling Handles
+            btnZoomIn.addEventListener('click', () => {
+                if (activeScale < 4.0) {
+                    activeScale += 0.25;
+                    zoomLabel.innerText = `${Math.round(activeScale * 100)}%`;
+                    updateGenerator();
+                }
+            });
+            btnZoomOut.addEventListener('click', () => {
+                if (activeScale > 0.25) {
+                    activeScale -= 0.25;
+                    zoomLabel.innerText = `${Math.round(activeScale * 100)}%`;
+                    updateGenerator();
+                }
+            });
+
+            // Code Output Tab Panel Selector
+            outputTabs.addEventListener('click', (e) => {
+                const button = e.target.closest('button');
+                if (!button) return;
+
+                // Unfocus inactive tabs
+                outputTabs.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.className = "tab-btn border-transparent text-gray-500 hover:text-gray-700 font-medium text-sm border-b-2 pb-2.5 focus:outline-none";
+                });
+                document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+
+                // Set focus classes
+                button.className = "tab-btn border-indigo-600 text-indigo-600 font-bold text-sm border-b-2 pb-2.5 focus:outline-none";
+                const targetPanel = document.getElementById(`panel-${button.getAttribute('data-tab')}`);
+                targetPanel.classList.remove('hidden');
+            });
+
+            // Exporter Handles
+            btnCopy.addEventListener('click', () => {
+                const activeTab = outputTabs.querySelector('.text-indigo-600').getAttribute('data-tab');
+                const textToCopy = activeTab === 'css' ? codeCss.value : codeSvg.value;
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    toast.classList.remove('hidden');
+                    toast.style.opacity = '1';
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        setTimeout(() => toast.classList.add('hidden'), 300);
+                    }, 2000);
+                });
+            });
+
+            btnDownload.addEventListener('click', () => {
+                const svgPayload = codeSvg.value;
+                const blob = new Blob([svgPayload], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `indieutility-pattern-${activePreset}.svg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+
+            // Initialize Page Elements on load
+            buildNavDropdown();
+            updateGenerator();
+        });
+    </script>
+</body>
+</html>
