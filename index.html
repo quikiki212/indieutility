@@ -9,17 +9,18 @@
     <meta name="description" content="A curated suite of free, client-side web tools. Clean YouTube transcripts, validate JSON, write markdown, and generate CSS layout parameters securely inside your browser.">
     <meta name="keywords" content="indie utility, free web tools, developer tools, youtube transcript cleaner, json formatter, css glassmorphism, markdown editor, client-side tools">
     <meta name="author" content="IndieUtility">
-    <link rel="canonical" href="http://indieutility.com/">
+    <link rel="canonical" href="https://indieutility.com/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://indieutility.com/">
+    <meta property="og:url" content="https://indieutility.com/">
     <meta property="og:title" content="IndieUtility | Free, Privacy-First Creator & Developer Tools">
     <meta property="og:description" content="Lightning-fast web tools built with 100% local client-side privacy. Clean transcripts, validate JSON, optimize SVGs, and more.">
-    <meta property="og:image" content="http://indieutility.com/og-landing.png">
+    <meta property="og:image" content="https://indieutility.com/og-landing.png">
 
     <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js" defer></script>
 
     <!-- Schema.org JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
@@ -27,11 +28,11 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "IndieUtility",
-      "url": "http://indieutility.com/",
+      "url": "https://indieutility.com/",
       "description": "A curated collection of privacy-focused developer and creator utilities running entirely in the client's browser.",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "http://indieutility.com/?search={search_term_string}",
+        "target": "https://indieutility.com/?search={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     }
@@ -61,11 +62,11 @@
 <body class="bg-gray-50 text-gray-850 min-h-screen flex flex-col font-sans antialiased">
 
     <!-- Top Navigation Bar -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             
             <!-- Logo -->
-            <a href="http://indieutility.com/" class="flex items-center space-x-3 focus:outline-none">
+            <a href="/" class="flex items-center space-x-3 focus:outline-none">
                 <div class="bg-indigo-600 text-white p-2 rounded-lg flex items-center justify-center shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
@@ -140,7 +141,7 @@
         </section>
 
         <!-- Dynamic Grid of Utilities Directory -->
-        <section class="bg-white border-t border-b border-gray-200 py-16">
+        <section id="utilities" class="bg-white border-t border-b border-gray-200 py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <!-- Category Filters Header -->
@@ -237,7 +238,7 @@
                     id: 'yt-transcript',
                     name: 'YouTube Transcript Cleaner',
                     desc: 'Fetch raw transcripts via video link, strip timestamps, and automatically deduplicate overlapping rolling sentences.',
-                    path: 'http://indieutility.com/tools/youtube-transcript-cleaner/',
+                    path: '/tools/youtube-transcript-cleaner/',
                     category: 'text',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -270,7 +271,7 @@
                     id: 'svg-patterns',
                     name: 'SVG Pattern Generator',
                     desc: 'Create seamless repeating vector design patterns, modify element parameters, and grab static inline XML output.',
-                    path: 'https://indieutility.com/tools/svg-pattern-generator/',
+                    path: '/tools/svg-pattern-generator/',
                     category: 'design',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

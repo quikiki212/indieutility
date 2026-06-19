@@ -9,17 +9,18 @@
     <meta name="description" content="Generate seamless repeating CSS and SVG background patterns. Customize sizing, stroke thickness, colors, and opacity. Export clean CSS data-URLs or raw SVG code instantly.">
     <meta name="keywords" content="svg pattern generator, repeating background generator, css background pattern, free pattern maker, seamless svg pattern, raw svg code exporter">
     <meta name="author" content="IndieUtility">
-    <link rel="canonical" href="http://indieutility.com/tools/svg-pattern-generator/">
+    <link rel="canonical" href="https://indieutility.com/tools/svg-pattern-generator/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://indieutility.com/tools/svg-pattern-generator/">
+    <meta property="og:url" content="https://indieutility.com/tools/svg-pattern-generator/">
     <meta property="og:title" content="Free SVG Pattern Generator | CSS Background Creator">
     <meta property="og:description" content="Generate beautiful seamless background patterns client-side. Export clean repeating SVG files or inline CSS code with absolute privacy.">
-    <meta property="og:image" content="http://indieutility.com/og-pattern.png">
+    <meta property="og:image" content="https://indieutility.com/og-pattern.png">
 
     <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js" defer></script>
 
     <!-- Schema.org JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
@@ -28,7 +29,7 @@
       "@type": "WebApplication",
       "name": "SVG Pattern Generator",
       "description": "A client-side utility to create seamless, repeating CSS and SVG background patterns online, featuring customizable sizing, color selection, and raw asset extraction.",
-      "url": "http://indieutility.com/tools/svg-pattern-generator/",
+      "url": "https://indieutility.com/tools/svg-pattern-generator/",
       "applicationCategory": "DesignApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
@@ -103,11 +104,11 @@
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
 
     <!-- Top Navigation Bar -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             
             <!-- Logo Section -->
-            <a href="http://indieutility.com/" class="flex items-center space-x-3 focus:outline-none">
+            <a href="/" class="flex items-center space-x-3 focus:outline-none">
                 <div class="bg-indigo-600 text-white p-2 rounded-lg flex items-center justify-center shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
@@ -434,7 +435,7 @@
                     id: 'yt-transcript',
                     name: 'YouTube Transcript Cleaner',
                     desc: 'Fetch raw transcripts via video link, strip timestamps, and automatically deduplicate overlapping rolling sentences.',
-                    path: 'http://indieutility.com/tools/youtube-transcript-cleaner/',
+                    path: '/tools/youtube-transcript-cleaner/',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
@@ -466,7 +467,7 @@
                     id: 'svg-patterns',
                     name: 'SVG Pattern Generator',
                     desc: 'Create seamless repeating vector design patterns, modify element parameters, and grab static inline XML output.',
-                    path: 'http://indieutility.com/tools/svg-pattern-generator/',
+                    path: '/tools/svg-pattern-generator/',
                     category: 'design',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
