@@ -145,6 +145,12 @@
             </div>
 
         </div>
+        <div class="border-t border-gray-100 bg-indigo-50 px-4 py-1.5 text-center text-xs font-medium text-gray-600">
+            ☕ Enjoying this tool?
+            <a href="https://ko-fi.com/quikiki212" target="_blank" rel="noopener noreferrer" class="font-semibold text-indigo-600 hover:text-indigo-800 transition">
+                Support IndieUtility on Ko-fi
+            </a>
+        </div>
     </header>
 
     <!-- Main Content Grid -->
