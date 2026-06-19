@@ -7,18 +7,23 @@
     <link rel="apple-touch-icon" href="/icon.png">
     
     <!-- Primary SEO Metadata -->
-    <title>IndieUtility | Free, Privacy-First Creator & Developer Tools</title>
-    <meta name="description" content="A curated suite of free, client-side web tools. Clean YouTube transcripts, validate JSON, write markdown, and generate CSS layout parameters securely inside your browser.">
-    <meta name="keywords" content="indie utility, free web tools, developer tools, youtube transcript cleaner, json formatter, css glassmorphism, markdown editor, client-side tools">
+    <title>Free Online Tools for Developers, Creators & Small Businesses | IndieUtility</title>
+    <meta name="description" content="Free online tools for developers, creators, designers and small businesses. Clean transcripts, validate JSON, format SQL, test regex, generate CSS, create color palettes and process files directly in your browser.">
+    <meta name="keywords" content="free online tools, developer tools, creator tools, privacy first tools, json validator, sql formatter, regex tester, transcript cleaner, css generator, color palette generator, svg pattern generator, image converter">
     <meta name="author" content="IndieUtility">
     <link rel="canonical" href="https://indieutility.com/">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://indieutility.com/">
-    <meta property="og:title" content="IndieUtility | Free, Privacy-First Creator & Developer Tools">
-    <meta property="og:description" content="Lightning-fast web tools built with 100% local client-side privacy. Clean transcripts, validate JSON, optimize SVGs, and more.">
+    <meta property="og:title" content="Free Online Tools for Developers, Creators & Small Businesses | IndieUtility">
+    <meta property="og:description" content="Use free privacy-first browser tools to clean transcripts, validate JSON, format SQL, test regex, generate CSS, create color palettes and more.">
     <meta property="og:image" content="https://indieutility.com/og-landing.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Online Tools for Developers, Creators & Small Businesses | IndieUtility">
+    <meta name="twitter:description" content="Privacy-first browser tools for code, content, design and everyday workflows.">
+    <meta name="twitter:image" content="https://indieutility.com/og-landing.png">
 
     <!-- Pre-compiled, Production-Ready CSS (No runtime JS compiler required) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
@@ -30,15 +35,55 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "IndieUtility",
-      "url": "https://indieutility.com/",
-      "description": "A curated collection of privacy-focused developer and creator utilities running entirely in the client's browser.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://indieutility.com/?search={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://indieutility.com/#organization",
+          "name": "IndieUtility",
+          "url": "https://indieutility.com/",
+          "logo": "https://indieutility.com/icon.png"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://indieutility.com/#website",
+          "name": "IndieUtility",
+          "url": "https://indieutility.com/",
+          "publisher": { "@id": "https://indieutility.com/#organization" },
+          "description": "Free online tools for developers, creators, designers and small businesses that run directly in the browser.",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://indieutility.com/?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://indieutility.com/#tools",
+          "name": "IndieUtility Free Online Tool Directory",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "YouTube Transcript Cleaner", "url": "https://indieutility.com/tools/youtube-transcript-cleaner/" },
+            { "@type": "ListItem", "position": 2, "name": "JSON Beautifier & Validator", "url": "https://indieutility.com/tools/json-beautifier-validator/" },
+            { "@type": "ListItem", "position": 3, "name": "SQL Formatter", "url": "https://indieutility.com/tools/sql-formatter/" },
+            { "@type": "ListItem", "position": 4, "name": "SVG Pattern Generator", "url": "https://indieutility.com/tools/svg-pattern-generator/" },
+            { "@type": "ListItem", "position": 5, "name": "Glassmorphism UI Engine", "url": "https://indieutility.com/tools/glassmorphism-ui-engine/" },
+            { "@type": "ListItem", "position": 6, "name": "Regex Editor & Tester", "url": "https://indieutility.com/tools/regex-editor/" },
+            { "@type": "ListItem", "position": 7, "name": "URL Encoder & Decoder", "url": "https://indieutility.com/tools/url-encoder-decoder/" },
+            { "@type": "ListItem", "position": 8, "name": "Image Format Converter", "url": "https://indieutility.com/tools/image-format-converter/" },
+            { "@type": "ListItem", "position": 9, "name": "Color Palette Generator", "url": "https://indieutility.com/tools/color-palette-generator/" },
+            { "@type": "ListItem", "position": 10, "name": "CSS Animation Generator", "url": "https://indieutility.com/tools/css-animation-generator/" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://indieutility.com/#faq-schema",
+          "mainEntity": [
+            { "@type": "Question", "name": "How can a web tool run 100% client-side?", "acceptedAnswer": { "@type": "Answer", "text": "Modern browser APIs can handle parsing, formatting, conversion, validation and generation locally using JavaScript, without sending files or text to an application server." } },
+            { "@type": "Question", "name": "Are my code snippets or outputs saved?", "acceptedAnswer": { "@type": "Answer", "text": "No. IndieUtility tools are designed to run in your browser without application databases or cloud storage for your input data." } },
+            { "@type": "Question", "name": "Are there conversion limits or paid tiers?", "acceptedAnswer": { "@type": "Answer", "text": "Available tools are free to use without account creation, subscriptions or premium feature gates." } },
+            { "@type": "Question", "name": "What kinds of tools are available?", "acceptedAnswer": { "@type": "Answer", "text": "IndieUtility includes developer tools, text tools, browser-based design generators, data formatters, validators and file-processing utilities." } }
+          ]
+        }
+      ]
     }
     </script>
 
@@ -123,11 +168,11 @@
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 text-center">
             <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full mb-4">100% Secure & Client-Side</span>
             <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
-                Simple, Fast, & Secure<br class="hidden sm:inline" />
-                <span class="text-indigo-600">Utilities for Creators & Developers</span>
+                Free Online Tools for<br class="hidden sm:inline" />
+                <span class="text-indigo-600">Developers, Creators & Small Businesses</span>
             </h1>
             <p class="text-lg text-gray-650 max-w-2xl mx-auto leading-relaxed mb-8">
-                IndieUtility runs entirely in your local browser window. There are no databases, no cloud storage backups, and zero background analytics tools. Your data remains yours.
+                Use privacy-first browser tools to clean transcripts, validate JSON, format SQL, test regex patterns, generate CSS, create color palettes, convert images and solve everyday workflow problems without accounts or software downloads.
             </p>
 
             <!-- Hero Search Selector -->
@@ -180,6 +225,95 @@
                     <p class="text-sm text-gray-500 font-medium">No results match your search keywords or active filters.</p>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Static SEO Tool Index: visible fallback links for crawlers and no-JS users -->
+        <section id="tool-index" class="bg-gray-50 border-b border-gray-200 py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Free Browser-Based Tool Categories</h2>
+                    <p class="mt-3 text-sm text-gray-600 leading-relaxed">
+                        Browse IndieUtility by workflow. These free online tools are designed for repeatable tasks such as formatting code, cleaning text, generating interface assets, converting files and preparing content for publishing.
+                    </p>
+                </div>
+                <div class="grid gap-6 md:grid-cols-3">
+                    <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-900">Developer Tools</h3>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">Format, validate and debug code or structured data directly in your browser.</p>
+                        <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
+                            <li><a href="/tools/json-beautifier-validator/" class="hover:underline">JSON Beautifier & Validator</a></li>
+                            <li><a href="/tools/sql-formatter/" class="hover:underline">SQL Formatter</a></li>
+                            <li><a href="/tools/regex-editor/" class="hover:underline">Regex Editor & Tester</a></li>
+                            <li><a href="/tools/url-encoder-decoder/" class="hover:underline">URL Encoder & Decoder</a></li>
+                        </ul>
+                    </article>
+                    <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-900">Design & CSS Generators</h3>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">Generate visual assets, CSS snippets and reusable design tokens for web projects.</p>
+                        <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
+                            <li><a href="/tools/svg-pattern-generator/" class="hover:underline">SVG Pattern Generator</a></li>
+                            <li><a href="/tools/glassmorphism-ui-engine/" class="hover:underline">Glassmorphism UI Engine</a></li>
+                            <li><a href="/tools/color-palette-generator/" class="hover:underline">Color Palette Generator</a></li>
+                            <li><a href="/tools/css-animation-generator/" class="hover:underline">CSS Animation Generator</a></li>
+                        </ul>
+                    </article>
+                    <article class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-900">Creator & File Tools</h3>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">Clean content, prepare files and speed up common publishing workflows.</p>
+                        <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
+                            <li><a href="/tools/youtube-transcript-cleaner/" class="hover:underline">YouTube Transcript Cleaner</a></li>
+                            <li><a href="/tools/image-format-converter/" class="hover:underline">Image Format Converter</a></li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content Section -->
+        <section id="about-indieutility" class="bg-white border-b border-gray-200 py-16">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">What Is IndieUtility?</h2>
+                <div class="mt-6 space-y-5 text-gray-600 leading-relaxed">
+                    <p>
+                        IndieUtility is a growing collection of free online tools for developers, content creators, designers, marketers and small businesses. The site focuses on practical browser utilities that solve common workflow problems: cleaning messy transcripts, validating JSON, formatting SQL, testing regular expressions, creating SVG backgrounds, generating color palettes, converting images and building CSS effects.
+                    </p>
+                    <p>
+                        Most tools are designed to run locally in the browser. That means your files, text, code snippets and generated outputs are processed on your own device instead of being uploaded to an application database. This local-first approach is useful for quick development work, client content, internal notes, drafts, configuration files and other material you may not want to send to a third-party server.
+                    </p>
+                    <p>
+                        The goal is to provide fast utilities with clear output, no mandatory account creation, no software installation and no complicated dashboards. Each tool is built as a focused page with its own workflow, controls, examples and copyable or downloadable results.
+                    </p>
+                </div>
+
+                <div class="mt-10 grid gap-6 md:grid-cols-3">
+                    <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-900">Privacy-first by default</h3>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">Browser-side processing keeps ordinary tool input local whenever possible, reducing unnecessary uploads and storage.</p>
+                    </div>
+                    <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-900">Built for repeat tasks</h3>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">The tools target repetitive jobs people do in editors, spreadsheets, terminals, CMS dashboards and content workflows.</p>
+                    </div>
+                    <div class="rounded-3xl bg-gray-50 border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-900">Free and accessible</h3>
+                        <p class="mt-2 text-sm text-gray-600 leading-relaxed">IndieUtility tools are usable without subscriptions, sign-up gates or complex onboarding flows.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Tools / Freshness Signals -->
+        <section id="latest-tools" class="bg-gray-50 border-b border-gray-200 py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Recently Added and Updated Tools</h2>
+                <p class="mt-3 text-sm text-gray-600 max-w-3xl leading-relaxed">IndieUtility is updated with new browser tools for code, design, content and productivity workflows. Check back as more utilities are added to the directory.</p>
+                <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    <a href="/tools/css-animation-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Web Design</span><h3 class="mt-2 font-bold text-gray-900">CSS Animation Generator</h3><p class="mt-1 text-sm text-gray-500">Generate keyframes and reusable animation snippets.</p></a>
+                    <a href="/tools/color-palette-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Design</span><h3 class="mt-2 font-bold text-gray-900">Color Palette Generator</h3><p class="mt-1 text-sm text-gray-500">Create palettes, HEX values and CSS variables.</p></a>
+                    <a href="/tools/regex-editor/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Developer</span><h3 class="mt-2 font-bold text-gray-900">Regex Editor & Tester</h3><p class="mt-1 text-sm text-gray-500">Test expressions and inspect live matches.</p></a>
+                    <a href="/tools/image-format-converter/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Files</span><h3 class="mt-2 font-bold text-gray-900">Image Format Converter</h3><p class="mt-1 text-sm text-gray-500">Convert and resize images in the browser.</p></a>
+                </div>
             </div>
         </section>
 
@@ -238,8 +372,42 @@
             <p class="text-xs text-gray-500">
                 &copy; 2026 IndieUtility. Free privacy-first utilitarian software licensed under MIT.
             </p>
+
+            <div class="w-full border-t border-gray-800 pt-8 mt-4 grid gap-6 sm:grid-cols-3 text-sm">
+                <div>
+                    <h3 class="text-white font-bold mb-3">Developer Tools</h3>
+                    <ul class="space-y-2"><li><a href="/tools/json-beautifier-validator/" class="hover:text-white">JSON Beautifier & Validator</a></li><li><a href="/tools/sql-formatter/" class="hover:text-white">SQL Formatter</a></li><li><a href="/tools/regex-editor/" class="hover:text-white">Regex Editor & Tester</a></li><li><a href="/tools/url-encoder-decoder/" class="hover:text-white">URL Encoder & Decoder</a></li></ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-3">Design Tools</h3>
+                    <ul class="space-y-2"><li><a href="/tools/svg-pattern-generator/" class="hover:text-white">SVG Pattern Generator</a></li><li><a href="/tools/glassmorphism-ui-engine/" class="hover:text-white">Glassmorphism UI Engine</a></li><li><a href="/tools/color-palette-generator/" class="hover:text-white">Color Palette Generator</a></li><li><a href="/tools/css-animation-generator/" class="hover:text-white">CSS Animation Generator</a></li></ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-3">Creator Tools</h3>
+                    <ul class="space-y-2"><li><a href="/tools/youtube-transcript-cleaner/" class="hover:text-white">YouTube Transcript Cleaner</a></li><li><a href="/tools/image-format-converter/" class="hover:text-white">Image Format Converter</a></li><li><a href="/about.html" class="hover:text-white">About IndieUtility</a></li><li><a href="/privacy-policy.html" class="hover:text-white">Privacy Policy</a></li></ul>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <noscript>
+        <div class="max-w-5xl mx-auto p-6 text-sm text-gray-700">
+            <h2 class="text-xl font-bold text-gray-900">Browse IndieUtility Tools</h2>
+            <p class="mt-2">JavaScript is disabled, but you can still access these tool pages directly.</p>
+            <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+                <li><a href="/tools/youtube-transcript-cleaner/">YouTube Transcript Cleaner</a></li>
+                <li><a href="/tools/json-beautifier-validator/">JSON Beautifier & Validator</a></li>
+                <li><a href="/tools/sql-formatter/">SQL Formatter</a></li>
+                <li><a href="/tools/regex-editor/">Regex Editor & Tester</a></li>
+                <li><a href="/tools/svg-pattern-generator/">SVG Pattern Generator</a></li>
+                <li><a href="/tools/glassmorphism-ui-engine/">Glassmorphism UI Engine</a></li>
+                <li><a href="/tools/color-palette-generator/">Color Palette Generator</a></li>
+                <li><a href="/tools/css-animation-generator/">CSS Animation Generator</a></li>
+                <li><a href="/tools/url-encoder-decoder/">URL Encoder & Decoder</a></li>
+                <li><a href="/tools/image-format-converter/">Image Format Converter</a></li>
+            </ul>
+        </div>
+    </noscript>
 
     <!-- Vanilla Javascript Logic -->
     <script>
