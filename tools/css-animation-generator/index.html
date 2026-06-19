@@ -22,8 +22,8 @@
         .code-font { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
         .toast { opacity: 0; transform: translateY(8px); pointer-events: none; transition: all 180ms ease; }
         .toast.show { opacity: 1; transform: translateY(0); }
-        .preview-card { min-height: 180px; }
-        .preview-box { min-height: 150px; }
+        .preview-card { min-height: 220px; background: linear-gradient(135deg, rgba(59,130,246,.12), rgba(99,102,241,.08)); }
+        .preview-box { min-height: 150px; background: linear-gradient(180deg, #0f172a, #1e293b); color: #f8fafc; border: 1px solid rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), 0 18px 45px -30px rgba(15,23,42,.5); }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
@@ -218,15 +218,13 @@
             const preset = animationType.value;
             const duration = parseFloat(animationDuration.value) || 1;
             const delay = parseFloat(animationDelay.value) || 0;
-            const count = animationCount.value === 'infinite' ? 'infinite' : parseInt(animationCount.value, 10) || 1;
+            const count = 'infinite';
             const easing = animationEasing.value;
             const direction = slideDirection.value;
-            const keyframes = preset === 'custom' ? customKeyframes.value.trim() : animationTemplates[preset];
-            let animationName = preset === 'custom' ? 'custom' : preset;
-            let additional = '';
+            let keyframes = preset === 'custom' ? customKeyframes.value.trim() : animationTemplates[preset];
+            const animationName = preset === 'custom' ? 'custom' : preset;
 
             if (preset === 'slide') {
-                const offset = normalizeDirection('slide', direction);
                 if (direction === 'top' || direction === 'bottom') {
                     const transformAxis = direction === 'top' ? 'translateY(-30px)' : 'translateY(30px)';
                     keyframes = `@keyframes slide {
@@ -245,9 +243,10 @@
             const animationClass = `.animated-element {
   animation: ${animationName} ${duration}s ${easing} ${delay}s ${count};
   animation-fill-mode: both;
+  animation-play-state: running;
 }`;
 
-            return `${keyframes}\n\n${animationClass}${additional}`;
+            return `${keyframes}\n\n${animationClass}`;
         }
 
         function updatePreview() {
@@ -262,12 +261,15 @@
             cssOutput.textContent = css;
             customPanel.classList.toggle('hidden', animationType.value !== 'custom');
 
+            previewBox.style.animation = 'none';
+            previewBox.offsetWidth;
             previewBox.style.animationName = className;
             previewBox.style.animationDuration = `${duration}s`;
             previewBox.style.animationDelay = `${delay}s`;
             previewBox.style.animationTimingFunction = easing;
             previewBox.style.animationIterationCount = count;
             previewBox.style.animationFillMode = 'both';
+            previewBox.style.animationPlayState = 'running';
 
             if (animationType.value === 'slide') {
                 const slideOffset = direction === 'left' ? '-30px' : direction === 'right' ? '30px' : direction === 'top' ? '0px' : '0px';
