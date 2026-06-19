@@ -62,6 +62,16 @@
             display: block !important;
         }
     </style>
+    <style>
+        /* Subtle homepage motion */
+        .reveal { opacity: 0; transform: translateY(10px) scale(.995); transition: opacity 420ms cubic-bezier(.2,.9,.2,1), transform 420ms cubic-bezier(.2,.9,.2,1); }
+        .reveal.reveal-show { opacity: 1; transform: translateY(0) scale(1); }
+        .card-hover { transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms; will-change: transform; }
+        .card-hover:hover { transform: translateY(-6px) scale(1.01); }
+        /* Hero subtle entrance */
+        .hero-entrance { opacity: 0; transform: translateY(6px); transition: opacity 520ms ease, transform 520ms ease; }
+        .hero-entrance.show { opacity: 1; transform: translateY(0); }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-850 min-h-screen flex flex-col font-sans antialiased">
 
@@ -438,11 +448,12 @@
                     gridEmptyState.classList.remove('hidden');
                 } else {
                     gridEmptyState.classList.add('hidden');
-                    filtered.forEach(tool => {
+                    filtered.forEach((tool, idx) => {
                         const card = document.createElement('article');
                         
                         if (tool.active) {
-                            card.className = "bg-white rounded-3xl border border-gray-200 p-6 flex flex-col justify-between hover:shadow-md transition duration-200";
+                            card.className = "bg-white rounded-3xl border border-gray-200 p-6 flex flex-col justify-between hover:shadow-md transition duration-200 card-hover reveal";
+                            card.style.transitionDelay = `${idx * 60}ms`;
                             card.innerHTML = `
                                 <div>
                                     <div class="bg-indigo-50 text-indigo-600 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
@@ -457,7 +468,8 @@
                                 </a>
                             `;
                         } else {
-                            card.className = "bg-gray-100 rounded-3xl border border-gray-200 p-6 flex flex-col justify-between select-none cursor-not-allowed opacity-60";
+                            card.className = "bg-gray-100 rounded-3xl border border-gray-200 p-6 flex flex-col justify-between select-none cursor-not-allowed opacity-60 card-hover reveal";
+                            card.style.transitionDelay = `${idx * 60}ms`;
                             card.innerHTML = `
                                 <div>
                                     <div class="bg-gray-200 text-gray-400 p-3 rounded-2xl w-12 h-12 flex items-center justify-center mb-5">
@@ -479,6 +491,35 @@
                     });
                 }
             }
+
+                // --- Animations: reveal on scroll + hero entrance ---
+                function initRevealObserver() {
+                    const existing = document.querySelectorAll('.reveal');
+                    if (!existing || existing.length === 0) return;
+                    const io = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('reveal-show');
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.12 });
+                    existing.forEach(el => io.observe(el));
+                }
+
+                function runHeroEntrance() {
+                    const heroSection = document.querySelector('main > section');
+                    if (!heroSection) return;
+                    const badge = heroSection.querySelector('span.inline-block');
+                    const heading = heroSection.querySelector('h1');
+                    const para = heroSection.querySelector('p');
+                    const search = document.getElementById('hero-search-wrapper');
+                    const items = [badge, heading, para, search].filter(Boolean);
+                    items.forEach((el, i) => {
+                        el.classList.add('hero-entrance');
+                        setTimeout(() => el.classList.add('show'), 80 + i * 80);
+                    });
+                }
 
             // --- 3. Instant Search Engine ---
             function runHeroSearch(query) {
@@ -557,6 +598,7 @@
 
                 const category = targetBtn.getAttribute('data-category');
                 buildCardsGrid(category, heroSearchInput.value);
+                initRevealObserver();
             });
 
             // Input monitoring inside hero search
@@ -570,6 +612,7 @@
                 const activeCategoryBtn = filterBtnGroup.querySelector('.bg-indigo-600');
                 const category = activeCategoryBtn ? activeCategoryBtn.getAttribute('data-category') : 'all';
                 buildCardsGrid(category, heroSearchInput.value);
+                initRevealObserver();
             });
 
             // Universal dismissal when clicking off elements
@@ -585,6 +628,8 @@
             // Init page elements
             buildNavDropdown();
             buildCardsGrid();
+            initRevealObserver();
+            runHeroEntrance();
         });
     </script>
 </body>
