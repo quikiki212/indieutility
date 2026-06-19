@@ -160,4 +160,107 @@
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') closeMenu();
     });
+    // Page transition: smooth entry/exit for internal navigations
+    (function setupPageTransitions() {
+        try {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const css = `
+                /* Smooth page transitions */
+                html.page-transition body { opacity: 0; transform: translateY(6px); transition: opacity .36s cubic-bezier(.2,.9,.2,1), transform .36s cubic-bezier(.2,.9,.2,1); }
+                html.page-transition body.page-enter { opacity: 1; transform: none; }
+                html.page-transition body.page-exit { opacity: 0; transform: translateY(-6px); transition-duration: .28s; transition-timing-function: cubic-bezier(.2,.9,.2,1); }
+                @media (prefers-reduced-motion: reduce) {
+                    html.page-transition body { transition: none !important; transform: none !important; opacity: 1 !important; }
+                }
+            `;
+            const style = document.createElement('style');
+            style.id = 'page-transition-css';
+            style.textContent = css;
+            document.head.appendChild(style);
+            document.documentElement.classList.add('page-transition');
+
+            // Entry animation
+            const runEntry = () => {
+                document.body.classList.remove('page-exit');
+                document.body.classList.add('page-enter');
+                // force style recalc
+                void document.body.offsetWidth;
+                window.setTimeout(() => {
+                    document.body.classList.remove('page-enter');
+                }, 420);
+            };
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                runEntry();
+            } else {
+                window.addEventListener('DOMContentLoaded', runEntry, { once: true });
+            }
+
+            // Intercept clicks on same-origin links to animate exit
+            document.addEventListener('click', (e) => {
+                const el = e.target.closest && e.target.closest('a');
+                if (!el) return;
+                if (el.target && el.target !== '_self') return;
+                if (el.hasAttribute('download') || el.getAttribute('rel') === 'external') return;
+                const href = el.href;
+                if (!href) return;
+                const url = new URL(href, location.href);
+                if (url.origin !== location.origin) return;
+                // allow hash-only navigation without exit animation
+                if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
+                // allow links that opt-out
+                if (el.getAttribute('data-no-transition') !== null) return;
+                // Internal navigation: animate then navigate
+                e.preventDefault();
+                document.body.classList.remove('page-enter');
+                document.body.classList.add('page-exit');
+                const timeout = 320;
+                setTimeout(() => {
+                    location.href = url.href;
+                }, timeout);
+            }, true);
+        } catch (err) {
+            // fail silently
+            console.error('page-transition init failed', err);
+        }
+    })();
+    // Site preloader (accent-colored spinner)
+    (function setupPreloader() {
+        try {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const css = `
+                #site-preloader { position: fixed; inset: 0; display:flex; align-items:center; justify-content:center; background: #ffffff; z-index: 99999; transition: opacity .36s ease; }
+                #site-preloader.preloader-hide { opacity: 0; pointer-events: none; }
+                #site-preloader .spinner { width: 44px; height: 44px; border-radius: 50%; border: 4px solid rgba(15,23,42,0.06); border-top-color: #4F46E5; animation: iu-spin 1s linear infinite; box-shadow: 0 6px 18px rgba(79,70,229,0.08); }
+                @keyframes iu-spin { to { transform: rotate(360deg); } }
+            `;
+            if (!document.getElementById('site-preloader-css')) {
+                const style = document.createElement('style');
+                style.id = 'site-preloader-css';
+                style.textContent = css;
+                document.head.appendChild(style);
+            }
+
+            const existing = document.getElementById('site-preloader');
+            if (existing) return;
+            const pre = document.createElement('div');
+            pre.id = 'site-preloader';
+            pre.innerHTML = `<div class="spinner" aria-hidden="true"></div>`;
+            document.documentElement.appendChild(pre);
+
+            const hide = () => {
+                pre.classList.add('preloader-hide');
+                setTimeout(() => { try { pre.remove(); } catch(e){} }, 540);
+            };
+
+            if (document.readyState === 'complete') {
+                // small delay so entry animation uses preloader briefly
+                setTimeout(hide, 120);
+            } else {
+                window.addEventListener('load', () => setTimeout(hide, 120), { once: true });
+            }
+        } catch (err) {
+            // don't block the page
+            console.error('preloader failed', err);
+        }
+    })();
 })();
