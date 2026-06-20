@@ -113,6 +113,10 @@ Pasta</textarea>
                         <button id="load-wheel" class="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition">Load</button>
                         <button id="delete-wheel" class="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition">Delete</button>
                     </div>
+                    <label class="mt-4 flex items-center gap-3 text-sm font-semibold text-gray-700">
+                        <input id="remove-winner-toggle" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                        Remove winner after each spin
+                    </label>
                 </div>
             </article>
 
@@ -122,10 +126,6 @@ Pasta</textarea>
                 <div class="mt-5 wheel-pointer" aria-hidden="true"></div>
                 <canvas id="wheel-canvas" class="wheel-canvas" width="520" height="520"></canvas>
                 <canvas id="confetti-canvas" class="confetti-layer" width="600" height="600"></canvas>
-
-                <div class="mt-5">
-                    <button id="spin-button" class="w-full rounded-2xl bg-emerald-600 px-4 py-3 text-base font-extrabold text-white hover:bg-emerald-700 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">🎯 Spin Now</button>
-                </div>
 
                 <div id="result-box" class="mt-4 hidden result-glow rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
                     <p class="text-xs uppercase tracking-[0.16em] font-bold text-emerald-700">Winner</p>
@@ -153,7 +153,7 @@ Pasta</textarea>
         const savedWheelsSelect = document.getElementById('saved-wheels');
         const loadWheelBtn = document.getElementById('load-wheel');
         const deleteWheelBtn = document.getElementById('delete-wheel');
-        const spinButton = document.getElementById('spin-button');
+        const removeWinnerToggle = document.getElementById('remove-winner-toggle');
         const resultBox = document.getElementById('result-box');
         const resultText = document.getElementById('result-text');
         const actionStatus = document.getElementById('action-status');
@@ -167,6 +167,7 @@ Pasta</textarea>
         let spinning = false;
         let savedWheels = {};
         let audioContext = null;
+        let centerSpinRadius = 30;
 
         function setStatus(message, tone = 'neutral') {
             actionStatus.textContent = message;
@@ -191,12 +192,6 @@ Pasta</textarea>
         function updateDecisionCount() {
             const count = getDecisions().length;
             decisionCount.textContent = `${count} valid decision${count === 1 ? '' : 's'} (max ${MAX_ITEMS})`;
-            if (!spinning) {
-                const canSpin = count >= 2;
-                spinButton.disabled = !canSpin;
-                spinButton.classList.toggle('opacity-60', !canSpin);
-                spinButton.classList.toggle('cursor-not-allowed', !canSpin);
-            }
         }
 
         function makePalette(size) {
@@ -259,11 +254,12 @@ Pasta</textarea>
             });
 
             wheelCtx.beginPath();
-            wheelCtx.arc(0, 0, 30, 0, Math.PI * 2);
+            centerSpinRadius = Math.max(24, Math.round(radius * 0.12));
+            wheelCtx.arc(0, 0, centerSpinRadius, 0, Math.PI * 2);
             wheelCtx.fillStyle = '#111827';
             wheelCtx.fill();
             wheelCtx.fillStyle = '#f9fafb';
-            wheelCtx.font = '700 12px system-ui';
+            wheelCtx.font = `700 ${Math.max(11, Math.round(centerSpinRadius * 0.42))}px system-ui`;
             wheelCtx.textAlign = 'center';
             wheelCtx.textBaseline = 'middle';
             wheelCtx.fillText('SPIN', 0, 0);
@@ -388,8 +384,6 @@ Pasta</textarea>
             }
 
             spinning = true;
-            spinButton.disabled = true;
-            spinButton.classList.add('opacity-60', 'cursor-not-allowed');
 
             const segment = 360 / entries.length;
             const winnerIndex = Math.floor(Math.random() * entries.length);
@@ -429,13 +423,34 @@ Pasta</textarea>
                 resultBox.classList.add('result-glow');
                 launchConfetti();
                 playWinChime();
+                if (removeWinnerToggle.checked) {
+                    const nextEntries = entries.filter((_, index) => index !== winnerIndex);
+                    decisionInput.value = nextEntries.join('\n');
+                    updateDecisionCount();
+                    drawWheel(wheelRotation);
+                    if (nextEntries.length < 2) {
+                        setStatus('Winner removed. Add more decisions to keep spinning.', 'success');
+                    } else {
+                        setStatus(`Winner "${winner}" removed from the wheel.`, 'success');
+                    }
+                }
 
                 spinning = false;
-                spinButton.disabled = false;
-                spinButton.classList.remove('opacity-60', 'cursor-not-allowed');
             }
 
             requestAnimationFrame(animate);
+        }
+
+        function spinCenterHitTest(event) {
+            const rect = wheelCanvas.getBoundingClientRect();
+            const scaleX = wheelCanvas.width / rect.width;
+            const scaleY = wheelCanvas.height / rect.height;
+            const x = (event.clientX - rect.left) * scaleX;
+            const y = (event.clientY - rect.top) * scaleY;
+            const dx = x - (wheelCanvas.width / 2);
+            const dy = y - (wheelCanvas.height / 2);
+            const distance = Math.hypot(dx, dy);
+            return distance <= centerSpinRadius;
         }
 
         function loadSavedWheels() {
@@ -542,7 +557,17 @@ Pasta</textarea>
         loadWheelBtn.addEventListener('click', loadSelectedWheel);
         deleteWheelBtn.addEventListener('click', deleteSelectedWheel);
         shuffleBtn.addEventListener('click', shuffleDecisions);
-        spinButton.addEventListener('click', spinWheel);
+        wheelCanvas.addEventListener('click', (event) => {
+            if (spinCenterHitTest(event)) {
+                spinWheel();
+            }
+        });
+        wheelCanvas.addEventListener('mousemove', (event) => {
+            wheelCanvas.style.cursor = spinCenterHitTest(event) ? 'pointer' : 'default';
+        });
+        wheelCanvas.addEventListener('mouseleave', () => {
+            wheelCanvas.style.cursor = 'default';
+        });
         window.addEventListener('resize', resizeCanvases);
 
         loadSavedWheels();
