@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QHL75YBPC0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-QHL75YBPC0');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <title>How Rare Am I? Percentile Calculator</title>
+    <meta name="description" content="Discover how rare your height, income, age and other traits are compared to the general population.">
+    <link rel="canonical" href="https://indieutility.com/tools/how-rare-am-i/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://indieutility.com/tools/how-rare-am-i/">
+    <meta property="og:title" content="How Rare Am I? Percentile Calculator">
+    <meta property="og:description" content="Discover how rare your height, income, age and other traits are compared to the general population.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js?v=tools-3" defer></script>
+    <meta name="google-adsense-account" content="ca-pub-2704008668461544">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2704008668461544" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "How Rare Am I? Percentile Calculator",
+          "url": "https://indieutility.com/tools/how-rare-am-i/",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Any",
+          "description": "Discover how rare your height, income, age and other traits are compared to the general population."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does this tool upload my data?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Everything runs in your browser and stays on your device."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How accurate are the percentile estimates?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "They are realistic estimates built from local lookup tables and statistical approximations. They are useful for direction, not official demographic reporting."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does country matter?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Countries have different population ages, income levels, average heights and typical shoe sizes, so the same number can rank differently depending on where you live."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What does the rarity score mean?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The score combines how far each trait is from the population middle point. Higher scores mean your profile is more unusual overall."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <style>
+        * { box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        .rare-page {
+            background:
+                radial-gradient(circle at 12% 10%, rgba(253, 224, 71, 0.28), transparent 26%),
+                radial-gradient(circle at 84% 14%, rgba(236, 72, 153, 0.22), transparent 24%),
+                radial-gradient(circle at 18% 84%, rgba(59, 130, 246, 0.16), transparent 28%),
+                linear-gradient(180deg, #fff7ed 0%, #ffffff 30%, #eef2ff 100%);
+            position: relative;
+        }
+        .rare-page::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 20% 18%, rgba(244, 114, 182, 0.10), transparent 10%),
+                radial-gradient(circle at 78% 24%, rgba(34, 197, 94, 0.08), transparent 12%),
+                radial-gradient(circle at 56% 80%, rgba(168, 85, 247, 0.08), transparent 14%);
+            animation: driftParty 18s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+        .page-layer, .panel, .hero-layer {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            border-radius: 9999px;
+            padding: .42rem .85rem;
+            font-size: .72rem;
+            font-weight: 900;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: #9d174d;
+            background: linear-gradient(120deg, rgba(254, 240, 138, 0.96), rgba(253, 164, 175, 0.95));
+            box-shadow: 0 8px 22px rgba(244, 114, 182, 0.2);
+        }
+        .hero-title {
+            background: linear-gradient(90deg, #db2777, #7c3aed, #2563eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            border-radius: 9999px;
+            padding: .55rem .85rem;
+            font-size: .74rem;
+            font-weight: 800;
+            color: #312e81;
+            background: rgba(255,255,255,0.84);
+            border: 1px solid rgba(129, 140, 248, 0.22);
+            box-shadow: 0 10px 24px rgba(99,102,241,0.08);
+        }
+        .panel {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 18px 40px rgba(124, 58, 237, 0.08);
+            backdrop-filter: blur(12px) saturate(125%);
+            -webkit-backdrop-filter: blur(12px) saturate(125%);
+        }
+        .result-panel {
+            background:
+                radial-gradient(circle at top left, rgba(253, 224, 71, 0.34), transparent 28%),
+                radial-gradient(circle at top right, rgba(236, 72, 153, 0.22), transparent 22%),
+                radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.20), transparent 26%),
+                linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,247,237,0.94));
+            box-shadow: 0 24px 60px rgba(249, 115, 22, 0.12);
+        }
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            border-radius: 9999px;
+            padding: .38rem .7rem;
+            font-size: .65rem;
+            font-weight: 900;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        .badge-common { color: #166534; background: #dcfce7; }
+        .badge-uncommon { color: #0f766e; background: #ccfbf1; }
+        .badge-rare { color: #7c3aed; background: #ede9fe; }
+        .badge-very-rare { color: #be185d; background: #fce7f3; }
+        .badge-extreme { color: #9a3412; background: #ffedd5; }
+        .score-ring {
+            width: 144px;
+            height: 144px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: conic-gradient(from 0deg, #ec4899 var(--ring, 0%), rgba(255,255,255,0.55) 0);
+            box-shadow: inset 0 0 0 14px rgba(255,255,255,0.75), 0 14px 30px rgba(124,58,237,0.12);
+        }
+        .score-ring-inner {
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.95);
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+        .bar-track {
+            height: 12px;
+            border-radius: 9999px;
+            background: rgba(229, 231, 235, 0.9);
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #f59e0b, #ec4899, #6366f1);
+            transition: width 700ms cubic-bezier(.22,.61,.36,1);
+        }
+        .fact-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,247,237,0.95));
+            border: 1px solid rgba(255,255,255,0.65);
+            box-shadow: 0 12px 26px rgba(15,23,42,0.06);
+        }
+        .mini-note {
+            color: #7c3aed;
+            font-weight: 700;
+            font-size: .78rem;
+        }
+        .input-wrap {
+            position: relative;
+        }
+        .input-wrap::after {
+            content: "";
+            position: absolute;
+            inset: auto 1rem .65rem auto;
+            width: .65rem;
+            height: .65rem;
+            border-radius: 9999px;
+            background: linear-gradient(120deg, #ec4899, #f59e0b);
+            opacity: .6;
+            pointer-events: none;
+        }
+        .percent-title {
+            animation: popIn 360ms ease-out;
+        }
+        @keyframes popIn {
+            0% { transform: translateY(8px) scale(0.98); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes driftParty {
+            from { transform: translate3d(-1%, -1%, 0) scale(1); }
+            to { transform: translate3d(1%, 1%, 0) scale(1.03); }
+        }
+    </style>
+</head>
+<body class="rare-page text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50"></header>
+
+    <main class="page-layer flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <section class="hero-layer mb-8">
+            <div class="max-w-4xl">
+                <p class="hero-kicker">🎉 Fun tool • Fully local • No uploads</p>
+                <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold hero-title">How Rare Am I?</h1>
+                <p class="mt-4 text-base text-gray-600 max-w-3xl">Enter a few personal stats and get an estimated rarity breakdown for your age, country, height, income and more. Everything stays in your browser.</p>
+                <div class="mt-5 flex flex-wrap gap-2">
+                    <span class="hero-chip">🔒 Client-side only</span>
+                    <span class="hero-chip">📊 Percentile bars</span>
+                    <span class="hero-chip">🖼️ Shareable result image</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-[1.08fr_1fr]">
+            <article class="panel rounded-3xl border border-pink-100 p-6">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Your details</h2>
+                        <p class="mt-1 text-sm text-gray-600">The more fields you fill in, the better the estimate gets.</p>
+                    </div>
+                    <p class="mini-note">100% local browser calculations</p>
+                </div>
+
+                <div class="mt-5 grid gap-4 sm:grid-cols-2">
+                    <label class="block text-sm font-semibold text-gray-700 input-wrap">
+                        Age
+                        <input id="age" type="number" min="1" max="120" placeholder="29" class="mt-2 w-full rounded-2xl border border-pink-100 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100">
+                    </label>
+
+                    <label class="block text-sm font-semibold text-gray-700 input-wrap">
+                        Country
+                        <select id="country" class="mt-2 w-full rounded-2xl border border-pink-100 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100">
+                            <option value="global">Global average</option>
+                            <option value="us">United States</option>
+                            <option value="ca">Canada</option>
+                            <option value="uk">United Kingdom</option>
+                            <option value="au">Australia</option>
+                            <option value="nz">New Zealand</option>
+                            <option value="de">Germany</option>
+                            <option value="fr">France</option>
+                            <option value="in">India</option>
+                            <option value="jp">Japan</option>
+                            <option value="br">Brazil</option>
+                            <option value="mx">Mexico</option>
+                            <option value="za">South Africa</option>
+                        </select>
+                    </label>
+
+                    <label class="block text-sm font-semibold text-gray-700 input-wrap">
+                        Gender (optional)
+                        <select id="gender" class="mt-2 w-full rounded-2xl border border-pink-100 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100">
+                            <option value="">Prefer not to say</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                            <option value="neutral">Other / non-binary</option>
+                        </select>
+                    </label>
+
+                    <label class="block text-sm font-semibold text-gray-700 input-wrap">
+                        Height (cm)
+                        <input id="height" type="number" min="120" max="230" step="0.1" placeholder="175" class="mt-2 w-full rounded-2xl border border-pink-100 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100">
+                    </label>
+
+                    <label class="block text-sm font-semibold text-gray-700 input-wrap">
+                        Income (annual, USD approx.)
+                        <input id="income" type="number" min="0" step="100" placeholder="55000" class="mt-2 w-full rounded-2xl border border-pink-100 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100">
+                    </label>
+
+                    <label class="block text-sm font-semibold text-gray-700 input-wrap">
+                        Net worth (optional, USD approx.)
+                        <input id="net-worth" type="number" min="0" step="1000" placeholder="120000" class="mt-2 w-full rounded-2xl border border-pink-100 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100">
+                    </label>
+
+                    <label class="block text-sm font-semibold text-gray-700 input-wrap sm:col-span-2">
+                        Shoe size (optional, US size)
+                        <input id="shoe-size" type="number" min="1" max="18" step="0.5" placeholder="9" class="mt-2 w-full rounded-2xl border border-pink-100 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-100">
+                    </label>
+                </div>
+
+                <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                    <button id="calculate-btn" class="rounded-2xl bg-gradient-to-r from-pink-500 via-fuchsia-500 to-indigo-500 px-4 py-3 text-sm font-semibold text-white hover:opacity-95 transition focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">Calculate rarity</button>
+                    <button id="copy-btn" class="rounded-2xl border border-pink-100 bg-white px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-pink-50 transition">Copy results</button>
+                </div>
+                <p id="status" class="mt-3 text-xs font-semibold text-gray-500" aria-live="polite">Fill in your details to see your estimated rarity.</p>
+
+                <div class="mt-6 rounded-2xl border border-pink-100 bg-pink-50/70 p-4">
+                    <h3 class="text-sm font-bold text-gray-900">Privacy</h3>
+                    <p class="mt-1 text-sm text-gray-600">No accounts. No uploads. No tracking of your numbers. Every calculation happens locally in your browser.</p>
+                </div>
+            </article>
+
+            <article id="result-card" class="panel result-panel rounded-3xl border border-pink-100 p-6">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Your rarity score</h2>
+                        <p class="mt-1 text-sm text-gray-600">An overall estimate from 0 to 100, based on how far your stats sit from the middle of the population.</p>
+                    </div>
+                    <span id="badge" class="badge-pill badge-common">Common</span>
+                </div>
+
+                <div class="mt-6 grid gap-6 md:grid-cols-[auto_1fr] md:items-center">
+                    <div class="score-ring" id="score-ring" style="--ring: 0%;">
+                        <div class="score-ring-inner">
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-[0.18em] text-gray-500">Score</p>
+                                <p id="score-value" class="mt-1 text-3xl font-extrabold text-gray-900">--</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p id="result-summary" class="text-base font-semibold text-gray-800">Enter your stats to see where you land.</p>
+                        <p class="mt-2 text-sm text-gray-600">Your result blends age, country, height, income and optional details into one rarity estimate.</p>
+                        <div class="mt-4 grid gap-3 sm:grid-cols-3">
+                            <button id="share-btn" class="rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition">Share image</button>
+                            <button id="download-btn" class="rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition">Download PNG</button>
+                            <button id="reset-btn" class="rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-gray-700 border border-gray-200 hover:bg-gray-50 transition">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 space-y-4" id="bars"></div>
+                <canvas id="results-canvas" width="1200" height="1500" class="hidden"></canvas>
+            </article>
+        </section>
+
+        <section class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <article class="fact-card rounded-3xl p-5">
+                <h3 class="font-bold text-gray-900">Age percentile</h3>
+                <p class="mt-2 text-sm text-gray-600">Age is compared against the age profile of your selected country. In younger populations, the same age can feel more common than in older ones.</p>
+            </article>
+            <article class="fact-card rounded-3xl p-5">
+                <h3 class="font-bold text-gray-900">Height percentile</h3>
+                <p class="mt-2 text-sm text-gray-600">Height uses country and gender-adjusted averages. Taller values usually land in rarer bands, especially when the average height is lower.</p>
+            </article>
+            <article class="fact-card rounded-3xl p-5">
+                <h3 class="font-bold text-gray-900">Income and net worth</h3>
+                <p class="mt-2 text-sm text-gray-600">Money-related traits are heavily skewed, so the top end rises quickly. A small increase can move you a long way up the percentile ladder.</p>
+            </article>
+        </section>
+
+        <section class="mt-8 panel rounded-3xl border border-gray-200 p-6">
+            <h2 class="text-2xl font-extrabold text-gray-900">FAQ</h2>
+            <div class="mt-5 space-y-3">
+                <details class="rounded-2xl border border-gray-200 bg-white p-4">
+                    <summary class="cursor-pointer font-semibold text-gray-900">Is my data uploaded anywhere?</summary>
+                    <p class="mt-2 text-sm text-gray-600">No. Everything is calculated locally in your browser and stays on your device.</p>
+                </details>
+                <details class="rounded-2xl border border-gray-200 bg-white p-4">
+                    <summary class="cursor-pointer font-semibold text-gray-900">How accurate are these percentiles?</summary>
+                    <p class="mt-2 text-sm text-gray-600">They are built from realistic local datasets and statistical estimates. They are useful for comparison, not official demographic reporting.</p>
+                </details>
+                <details class="rounded-2xl border border-gray-200 bg-white p-4">
+                    <summary class="cursor-pointer font-semibold text-gray-900">Why does country matter so much?</summary>
+                    <p class="mt-2 text-sm text-gray-600">Countries differ in age structure, income levels, average height and typical shoe sizes, so the same number can rank differently depending on location.</p>
+                </details>
+                <details class="rounded-2xl border border-gray-200 bg-white p-4">
+                    <summary class="cursor-pointer font-semibold text-gray-900">What does the rarity badge mean?</summary>
+                    <p class="mt-2 text-sm text-gray-600">Common means your profile is near the middle of the population. Extremely Rare means several of your traits sit far away from the middle.</p>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <footer id="site-footer"></footer>
+    <script src="/assets/site-footer.js?v=1" defer></script>
+
+    <script>
+        const COUNTRY_DATA = {
+            global: { label: 'Global average', ageMedian: 30, ageSpread: 15, height: { male: 171, female: 159, neutral: 165 }, heightSpread: 7.2, incomeMedian: 12000, incomeSigma: 0.95, netWorthMedian: 8000, netWorthSigma: 1.2, shoe: { male: 9.5, female: 7.5, neutral: 8.5 }, shoeSpread: 1.4 },
+            us: { label: 'United States', ageMedian: 38, ageSpread: 16, height: { male: 176, female: 163.5, neutral: 169.5 }, heightSpread: 7.0, incomeMedian: 56000, incomeSigma: 0.88, netWorthMedian: 121000, netWorthSigma: 1.18, shoe: { male: 10, female: 8, neutral: 9 }, shoeSpread: 1.3 },
+            ca: { label: 'Canada', ageMedian: 41, ageSpread: 15, height: { male: 175.5, female: 162.5, neutral: 169 }, heightSpread: 6.9, incomeMedian: 51000, incomeSigma: 0.88, netWorthMedian: 106000, netWorthSigma: 1.18, shoe: { male: 10, female: 8, neutral: 9 }, shoeSpread: 1.3 },
+            uk: { label: 'United Kingdom', ageMedian: 40, ageSpread: 15, height: { male: 175, female: 162, neutral: 168.5 }, heightSpread: 6.8, incomeMedian: 36000, incomeSigma: 0.90, netWorthMedian: 86000, netWorthSigma: 1.18, shoe: { male: 9.5, female: 7, neutral: 8.5 }, shoeSpread: 1.3 },
+            au: { label: 'Australia', ageMedian: 38, ageSpread: 15, height: { male: 176, female: 163, neutral: 169.5 }, heightSpread: 6.9, incomeMedian: 54000, incomeSigma: 0.88, netWorthMedian: 118000, netWorthSigma: 1.17, shoe: { male: 10, female: 8, neutral: 9 }, shoeSpread: 1.3 },
+            nz: { label: 'New Zealand', ageMedian: 37, ageSpread: 15, height: { male: 175.5, female: 162.5, neutral: 169 }, heightSpread: 6.9, incomeMedian: 47000, incomeSigma: 0.89, netWorthMedian: 96000, netWorthSigma: 1.17, shoe: { male: 10, female: 8, neutral: 9 }, shoeSpread: 1.3 },
+            de: { label: 'Germany', ageMedian: 45, ageSpread: 14, height: { male: 180, female: 166, neutral: 173 }, heightSpread: 6.8, incomeMedian: 47000, incomeSigma: 0.88, netWorthMedian: 90000, netWorthSigma: 1.17, shoe: { male: 10.5, female: 8, neutral: 9.25 }, shoeSpread: 1.25 },
+            fr: { label: 'France', ageMedian: 42, ageSpread: 14, height: { male: 178, female: 165, neutral: 171.5 }, heightSpread: 6.7, incomeMedian: 39000, incomeSigma: 0.89, netWorthMedian: 82000, netWorthSigma: 1.18, shoe: { male: 10, female: 7.5, neutral: 8.75 }, shoeSpread: 1.25 },
+            in: { label: 'India', ageMedian: 29, ageSpread: 16, height: { male: 166, female: 153, neutral: 159.5 }, heightSpread: 6.6, incomeMedian: 4200, incomeSigma: 0.98, netWorthMedian: 2500, netWorthSigma: 1.25, shoe: { male: 8.5, female: 6.5, neutral: 7.5 }, shoeSpread: 1.4 },
+            jp: { label: 'Japan', ageMedian: 49, ageSpread: 13, height: { male: 171, female: 158, neutral: 164.5 }, heightSpread: 6.5, incomeMedian: 43000, incomeSigma: 0.86, netWorthMedian: 78000, netWorthSigma: 1.17, shoe: { male: 9, female: 6.5, neutral: 7.75 }, shoeSpread: 1.2 },
+            br: { label: 'Brazil', ageMedian: 34, ageSpread: 15, height: { male: 173, female: 160, neutral: 166.5 }, heightSpread: 6.7, incomeMedian: 8200, incomeSigma: 0.96, netWorthMedian: 6800, netWorthSigma: 1.22, shoe: { male: 9.5, female: 7, neutral: 8.25 }, shoeSpread: 1.3 },
+            mx: { label: 'Mexico', ageMedian: 30, ageSpread: 15, height: { male: 170, female: 157, neutral: 163.5 }, heightSpread: 6.7, incomeMedian: 9000, incomeSigma: 0.96, netWorthMedian: 5800, netWorthSigma: 1.23, shoe: { male: 9, female: 6.5, neutral: 7.75 }, shoeSpread: 1.3 },
+            za: { label: 'South Africa', ageMedian: 28, ageSpread: 16, height: { male: 171, female: 159, neutral: 165 }, heightSpread: 6.8, incomeMedian: 6200, incomeSigma: 0.97, netWorthMedian: 4200, netWorthSigma: 1.24, shoe: { male: 9.5, female: 7, neutral: 8.25 }, shoeSpread: 1.35 }
+        };
+
+        const fields = {
+            age: document.getElementById('age'),
+            country: document.getElementById('country'),
+            gender: document.getElementById('gender'),
+            height: document.getElementById('height'),
+            income: document.getElementById('income'),
+            netWorth: document.getElementById('net-worth'),
+            shoeSize: document.getElementById('shoe-size')
+        };
+
+        const scoreRing = document.getElementById('score-ring');
+        const scoreValue = document.getElementById('score-value');
+        const badge = document.getElementById('badge');
+        const summary = document.getElementById('result-summary');
+        const bars = document.getElementById('bars');
+        const status = document.getElementById('status');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const resultsCanvas = document.getElementById('results-canvas');
+        const resultCard = document.getElementById('result-card');
+        const ctx = resultsCanvas.getContext('2d');
+
+        let latestResult = null;
+
+        function clamp(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function numberOrNull(value) {
+            if (value === '' || value === null || value === undefined) return null;
+            const parsed = Number(value);
+            return Number.isFinite(parsed) ? parsed : null;
+        }
+
+        function erf(x) {
+            const sign = x < 0 ? -1 : 1;
+            const ax = Math.abs(x);
+            const a1 = 0.254829592;
+            const a2 = -0.284496736;
+            const a3 = 1.421413741;
+            const a4 = -1.453152027;
+            const a5 = 1.061405429;
+            const p = 0.3275911;
+            const t = 1 / (1 + p * ax);
+            const y = 1 - ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t * Math.exp(-ax * ax);
+            return sign * y;
+        }
+
+        function normalCdf(value, mean, sd) {
+            if (!Number.isFinite(value) || !Number.isFinite(mean) || !Number.isFinite(sd) || sd <= 0) return 0.5;
+            return 0.5 * (1 + erf((value - mean) / (sd * Math.SQRT2)));
+        }
+
+        function logNormalCdf(value, median, sigma) {
+            if (!Number.isFinite(value) || value <= 0 || !Number.isFinite(median) || median <= 0 || !Number.isFinite(sigma) || sigma <= 0) return 0.5;
+            return normalCdf(Math.log(value), Math.log(median), sigma);
+        }
+
+        function getCountry() {
+            return COUNTRY_DATA[fields.country.value] || COUNTRY_DATA.global;
+        }
+
+        function getGenderKey() {
+            return fields.gender.value || 'neutral';
+        }
+
+        function badgeForScore(score) {
+            if (score < 15) return { label: 'Common', className: 'badge-common' };
+            if (score < 30) return { label: 'Uncommon', className: 'badge-uncommon' };
+            if (score < 50) return { label: 'Rare', className: 'badge-rare' };
+            if (score < 70) return { label: 'Very Rare', className: 'badge-very-rare' };
+            return { label: 'Extremely Rare', className: 'badge-extreme' };
+        }
+
+        function buildTrait(name, value, percentile, suffix, note) {
+            const topPercent = clamp(Math.round(100 - percentile), 1, 99);
+            const moreCommon = clamp(Math.round(percentile), 1, 99);
+            const lessCommon = clamp(Math.round(100 - percentile), 1, 99);
+            return {
+                name,
+                value,
+                percentile: clamp(percentile, 0, 100),
+                topPercent,
+                moreCommon,
+                lessCommon,
+                suffix,
+                note
+            };
+        }
+
+        function getMetrics() {
+            const country = getCountry();
+            const genderKey = getGenderKey();
+            const heightMean = country.height[genderKey] || country.height.neutral;
+            const shoeMean = country.shoe[genderKey] || country.shoe.neutral;
+
+            const age = numberOrNull(fields.age.value);
+            const height = numberOrNull(fields.height.value);
+            const income = numberOrNull(fields.income.value);
+            const netWorth = numberOrNull(fields.netWorth.value);
+            const shoeSize = numberOrNull(fields.shoeSize.value);
+
+            if (age === null || height === null || income === null) {
+                return null;
+            }
+
+            const traits = [
+                buildTrait('Age', age, normalCdf(age, country.ageMedian, country.ageSpread) * 100, 'years', `Compared against a ${country.label.toLowerCase()} age profile.`),
+                buildTrait('Height', height, normalCdf(height, heightMean, country.heightSpread) * 100, 'cm', `Adjusted for ${country.label.toLowerCase()} and ${genderKey === 'neutral' ? 'general' : genderKey} averages.`),
+                buildTrait('Income', income, logNormalCdf(income, country.incomeMedian, country.incomeSigma) * 100, 'USD', `Compared with a skewed income distribution for ${country.label.toLowerCase()}.`)
+            ];
+
+            if (netWorth !== null) {
+                traits.push(buildTrait('Net worth', netWorth, logNormalCdf(netWorth, country.netWorthMedian, country.netWorthSigma) * 100, 'USD', 'Net worth is usually much more unevenly distributed than income.'));
+            }
+
+            if (shoeSize !== null) {
+                traits.push(buildTrait('Shoe size', shoeSize, normalCdf(shoeSize, shoeMean, country.shoeSpread) * 100, 'US', `Uses a ${genderKey === 'neutral' ? 'general' : genderKey} shoe-size estimate.`));
+            }
+
+            const rarityParts = traits.map((trait) => Math.abs(trait.percentile - 50) * 2);
+            const rarityScore = Math.round(rarityParts.reduce((total, part) => total + part, 0) / rarityParts.length);
+            const badge = badgeForScore(rarityScore);
+
+            return {
+                country,
+                genderKey,
+                age,
+                height,
+                income,
+                netWorth,
+                shoeSize,
+                traits,
+                rarityScore,
+                badge
+            };
+        }
+
+        function traitSentence(trait) {
+            return `${trait.name}: top ${trait.topPercent}%, more common than ${trait.moreCommon}% of people, less common than ${trait.lessCommon}% of people.`;
+        }
+
+        function formatValue(trait) {
+            if (trait.name === 'Income' || trait.name === 'Net worth') {
+                return `$${Math.round(trait.value).toLocaleString()}`;
+            }
+            return `${Number.isInteger(trait.value) ? trait.value : Number(trait.value).toFixed(1)} ${trait.suffix}`;
+        }
+
+        function renderBars(result) {
+            if (!result) {
+                bars.innerHTML = `
+                    <div class="rounded-2xl border border-dashed border-gray-200 bg-white/80 p-4 text-sm text-gray-500">
+                        Your percentile bars will appear here after you calculate.
+                    </div>
+                `;
+                return;
+            }
+
+            bars.innerHTML = result.traits.map((trait, index) => `
+                <div class="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-sm" style="animation-delay:${index * 60}ms">
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <p class="text-sm font-bold text-gray-900">${trait.name}</p>
+                            <p class="text-xs text-gray-500">${trait.note}</p>
+                        </div>
+                        <p class="text-right text-xs font-semibold text-gray-600">${formatValue(trait)}</p>
+                    </div>
+                    <div class="mt-3 bar-track">
+                        <div class="bar-fill" data-fill="${Math.round(trait.percentile)}"></div>
+                    </div>
+                    <div class="mt-3 grid gap-2 sm:grid-cols-3 text-xs font-semibold text-gray-700">
+                        <span class="badge-pill badge-common justify-center">Top ${trait.topPercent}%</span>
+                        <span class="badge-pill badge-rare justify-center">More common than ${trait.moreCommon}%</span>
+                        <span class="badge-pill badge-very-rare justify-center">Less common than ${trait.lessCommon}%</span>
+                    </div>
+                </div>
+            `).join('');
+
+            requestAnimationFrame(() => {
+                bars.querySelectorAll('.bar-fill').forEach((fill) => {
+                    fill.style.width = `${fill.getAttribute('data-fill')}%`;
+                });
+            });
+        }
+
+        function updateSummary(result) {
+            if (!result) {
+                scoreValue.textContent = '--';
+                scoreRing.style.setProperty('--ring', '0%');
+                badge.className = 'badge-pill badge-common';
+                badge.textContent = 'Common';
+                summary.textContent = 'Enter your stats to see where you land.';
+                status.textContent = 'Fill in your details to see your estimated rarity.';
+                renderBars(null);
+                latestResult = null;
+                return;
+            }
+
+            latestResult = result;
+            scoreValue.textContent = result.rarityScore;
+            scoreRing.style.setProperty('--ring', `${result.rarityScore}%`);
+            badge.className = `badge-pill ${result.badge.className}`;
+            badge.textContent = result.badge.label;
+            summary.textContent = `You land in the ${result.badge.label.toLowerCase()} tier with an overall rarity score of ${result.rarityScore}/100.`;
+            status.textContent = `Country set to ${result.country.label}.`;
+            renderBars(result);
+        }
+
+        function calculate() {
+            updateSummary(getMetrics());
+        }
+
+        function buildCopyText(result) {
+            return [
+                `How Rare Am I?`,
+                `Overall score: ${result.rarityScore}/100 (${result.badge.label})`,
+                ...result.traits.map(traitSentence)
+            ].join('\n');
+        }
+
+        async function copyResults() {
+            const result = latestResult || getMetrics();
+            if (!result) {
+                status.textContent = 'Enter age, height and income first.';
+                return;
+            }
+
+            if (!navigator.clipboard || !navigator.clipboard.writeText) {
+                status.textContent = 'Clipboard copying is not supported in this browser.';
+                return;
+            }
+
+            try {
+                const text = buildCopyText(result);
+                await navigator.clipboard.writeText(text);
+                status.textContent = 'Results copied to clipboard.';
+            } catch (error) {
+                status.textContent = 'Could not copy results right now.';
+            }
+        }
+
+        function drawRoundedRect(x, y, width, height, radius) {
+            const r = Math.min(radius, width / 2, height / 2);
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.arcTo(x + width, y, x + width, y + height, r);
+            ctx.arcTo(x + width, y + height, x, y + height, r);
+            ctx.arcTo(x, y + height, x, y, r);
+            ctx.arcTo(x, y, x + width, y, r);
+            ctx.closePath();
+        }
+
+        function drawBadgeText(text, x, y) {
+            ctx.font = '700 22px system-ui';
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.fillText(text, x, y);
+        }
+
+        function renderResultCanvas(result) {
+            const width = resultsCanvas.width;
+            const height = resultsCanvas.height;
+            ctx.clearRect(0, 0, width, height);
+
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, '#fff7ed');
+            gradient.addColorStop(0.45, '#ffffff');
+            gradient.addColorStop(1, '#eef2ff');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#111827';
+            ctx.font = '900 58px system-ui';
+            ctx.fillText('How Rare Am I?', 72, 110);
+            ctx.font = '600 26px system-ui';
+            ctx.fillStyle = '#4b5563';
+            ctx.fillText('Percentile summary generated locally in your browser', 72, 158);
+
+            drawRoundedRect(72, 210, width - 144, 180, 36);
+            ctx.fillStyle = 'rgba(255,255,255,0.96)';
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(244,114,182,0.18)';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.fillStyle = '#7c3aed';
+            ctx.font = '700 26px system-ui';
+            ctx.fillText(`Overall rarity: ${result.rarityScore}/100`, 112, 272);
+            ctx.fillStyle = '#111827';
+            ctx.font = '900 42px system-ui';
+            ctx.fillText(result.badge.label, 112, 330);
+
+            const ringX = width - 190;
+            const ringY = 300;
+            ctx.beginPath();
+            ctx.arc(ringX, ringY, 68, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 18;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(ringX, ringY, 68, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * (result.rarityScore / 100));
+            ctx.strokeStyle = '#ec4899';
+            ctx.lineWidth = 18;
+            ctx.stroke();
+            ctx.fillStyle = '#111827';
+            ctx.font = '900 28px system-ui';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${result.rarityScore}`, ringX, ringY + 10);
+
+            ctx.textAlign = 'left';
+            let y = 440;
+            result.traits.forEach((trait) => {
+                drawRoundedRect(72, y, width - 144, 118, 24);
+                ctx.fillStyle = 'rgba(255,255,255,0.95)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(229,231,235,0.9)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = '#111827';
+                ctx.font = '800 26px system-ui';
+                ctx.textAlign = 'left';
+                ctx.fillText(trait.name, 104, y + 42);
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '600 20px system-ui';
+                ctx.fillText(formatValue(trait), 104, y + 74);
+
+                ctx.fillStyle = 'rgba(229,231,235,0.95)';
+                drawRoundedRect(440, y + 34, 300, 18, 999);
+                ctx.fill();
+                const fillWidth = 300 * (trait.percentile / 100);
+                const fillGradient = ctx.createLinearGradient(440, 0, 740, 0);
+                fillGradient.addColorStop(0, '#f59e0b');
+                fillGradient.addColorStop(0.5, '#ec4899');
+                fillGradient.addColorStop(1, '#6366f1');
+                ctx.fillStyle = fillGradient;
+                drawRoundedRect(440, y + 34, fillWidth, 18, 999);
+                ctx.fill();
+
+                ctx.fillStyle = '#7c3aed';
+                ctx.font = '700 18px system-ui';
+                ctx.fillText(`Top ${trait.topPercent}%`, 440, y + 82);
+                ctx.fillStyle = '#374151';
+                ctx.font = '600 18px system-ui';
+                ctx.fillText(`More common than ${trait.moreCommon}%`, 560, y + 82);
+                y += 138;
+            });
+
+            ctx.fillStyle = '#6b7280';
+            ctx.font = '600 18px system-ui';
+            ctx.fillText('Privacy-first: all calculations happen locally in your browser.', 72, 1370);
+            ctx.textAlign = 'left';
+        }
+
+        function blobFromCanvas(canvas) {
+            return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+        }
+
+        async function downloadImage() {
+            const result = latestResult || getMetrics();
+            if (!result) {
+                status.textContent = 'Enter age, height and income first.';
+                return;
+            }
+            renderResultCanvas(result);
+            const blob = await blobFromCanvas(resultsCanvas);
+            if (!blob) {
+                status.textContent = 'Could not create the PNG image.';
+                return;
+            }
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'how-rare-am-i.png';
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+            status.textContent = 'PNG downloaded.';
+        }
+
+        async function shareImage() {
+            const result = latestResult || getMetrics();
+            if (!result) {
+                status.textContent = 'Enter age, height and income first.';
+                return;
+            }
+            try {
+                renderResultCanvas(result);
+                const blob = await blobFromCanvas(resultsCanvas);
+                if (!blob) {
+                    status.textContent = 'Could not create the PNG image.';
+                    return;
+                }
+                const file = new File([blob], 'how-rare-am-i.png', { type: 'image/png' });
+                if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+                    await navigator.share({
+                        title: 'How Rare Am I?',
+                        text: buildCopyText(result),
+                        files: [file]
+                    });
+                    status.textContent = 'Share sheet opened.';
+                    return;
+                }
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'how-rare-am-i.png';
+                link.click();
+                setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+                status.textContent = 'Sharing is not supported here, so the image was downloaded instead.';
+            } catch (error) {
+                status.textContent = 'Could not share the image right now.';
+            }
+        }
+
+        function resetForm() {
+            fields.age.value = '';
+            fields.country.value = 'global';
+            fields.gender.value = '';
+            fields.height.value = '';
+            fields.income.value = '';
+            fields.netWorth.value = '';
+            fields.shoeSize.value = '';
+            calculate();
+        }
+
+        [fields.age, fields.country, fields.gender, fields.height, fields.income, fields.netWorth, fields.shoeSize].forEach((field) => {
+            field.addEventListener('input', calculate);
+            field.addEventListener('change', calculate);
+        });
+        calculateBtn.addEventListener('click', calculate);
+        copyBtn.addEventListener('click', copyResults);
+        shareBtn.addEventListener('click', shareImage);
+        downloadBtn.addEventListener('click', downloadImage);
+        resetBtn.addEventListener('click', resetForm);
+
+        calculate();
+    </script>
+</body>
+</html>
