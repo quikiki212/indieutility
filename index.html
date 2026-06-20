@@ -152,6 +152,46 @@
         }
         .tool-card a { display: block; }
         .tool-card .mt-1.text-sm { color: rgba(15,23,42,0.72); }
+        .fun-tool-card {
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(120% 120% at 0% 0%, rgba(253,224,71,0.48) 0%, rgba(236,72,153,0.22) 42%, rgba(59,130,246,0.2) 100%);
+            border: 1px solid rgba(236,72,153,0.3);
+            box-shadow: 0 12px 26px rgba(236,72,153,0.16), 0 10px 28px rgba(59,130,246,0.12);
+            transition: transform .2s ease, box-shadow .2s ease;
+            transform-style: preserve-3d;
+        }
+        .fun-tool-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(255,255,255,0.6), rgba(255,255,255,0));
+            opacity: .55;
+            pointer-events: none;
+        }
+        .fun-tool-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 16px 34px rgba(236,72,153,0.24), 0 16px 36px rgba(59,130,246,0.2);
+        }
+        .fun-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            border-radius: 9999px;
+            padding: .28rem .62rem;
+            font-size: .65rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: #7c2d12;
+            background: linear-gradient(120deg, #fde047, #f9a8d4);
+            box-shadow: 0 4px 12px rgba(244,114,182,0.25);
+        }
+        .fun-tip {
+            color: #7c3aed;
+            font-size: .75rem;
+            font-weight: 700;
+        }
 
         @media (max-width: 1024px) {
             .preview-popover {
@@ -262,9 +302,8 @@
                 <!-- Filter Buttons -->
                 <div class="flex flex-wrap gap-2" id="filter-btn-group">
                     <button type="button" data-category="all" class="filter-btn text-xs font-bold px-4 py-2 rounded-full bg-indigo-600 text-white transition focus:outline-none shadow-sm">All Utilities</button>
-                    <button type="button" data-category="text" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Text & Copy</button>
-                    <button type="button" data-category="dev" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Developer Tools</button>
-                    <button type="button" data-category="design" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Web Design</button>
+                    <button type="button" data-category="productivity" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition focus:outline-none">Productivity</button>
+                    <button type="button" data-category="fun" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full bg-pink-100 text-pink-700 hover:bg-pink-200 transition focus:outline-none">Fun</button>
                 </div>
             </div>
 
@@ -362,7 +401,7 @@
             <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Recently Added and Updated Tools</h2>
             <p class="mt-3 text-sm text-gray-600 max-w-3xl leading-relaxed">I update IndieUtility with new browser tools for code, design, content and productivity workflows when I build something useful enough to publish.</p>
             <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-                <a href="/tools/decision-wheel-spinner/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Productivity</span><h3 class="mt-2 font-bold text-gray-900">Decision Wheel Spinner</h3><p class="mt-1 text-sm text-gray-500">Spin a fun wheel to pick one of your saved options.</p></a>
+                <a href="/tools/decision-wheel-spinner/" class="rounded-2xl border border-pink-200 bg-gradient-to-br from-yellow-50 via-pink-50 to-indigo-50 p-5 hover:shadow-lg hover:-translate-y-0.5 transition transform"><span class="text-xs font-bold text-pink-700 uppercase tracking-wide">Fun</span><h3 class="mt-2 font-bold text-gray-900">Decision Wheel Spinner</h3><p class="mt-1 text-sm text-gray-600">Spin a colourful wheel with sound and confetti to pick one of your saved options.</p></a>
                 <a href="/tools/css-animation-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Web Design</span><h3 class="mt-2 font-bold text-gray-900">CSS Animation Generator</h3><p class="mt-1 text-sm text-gray-500">Generate keyframes and reusable animation snippets.</p></a>
                 <a href="/tools/color-palette-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Design</span><h3 class="mt-2 font-bold text-gray-900">Color Palette Generator</h3><p class="mt-1 text-sm text-gray-500">Create palettes, HEX values and CSS variables.</p></a>
                 <a href="/tools/regex-editor/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Developer</span><h3 class="mt-2 font-bold text-gray-900">Regex Editor & Tester</h3><p class="mt-1 text-sm text-gray-500">Test expressions and inspect live matches.</p></a>
@@ -407,7 +446,7 @@
                     desc: 'Create a custom wheel, spin it with sound and confetti, and save named wheels locally in your browser.',
                     useCase: 'Choosing quickly between multiple options for food, plans, tasks, or team decisions.',
                     path: '/tools/decision-wheel-spinner/',
-                    category: 'text',
+                    category: 'fun',
                     active: true,
                     icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v3m6.364.636l-2.121 2.121M21 12h-3m-1.636 5.364l-2.121-2.121M12 21v-3m-4.243-1.757l2.121-2.121M3 12h3m1.636-5.364l2.121 2.121M12 8a4 4 0 100 8 4 4 0 000-8z" />
@@ -547,21 +586,16 @@
                 },
             ];
 
-            const categoryLabels = {
-                text: 'Text & Copy',
-                dev: 'Developer Tools',
-                design: 'Web Design'
-            };
+            const getToolGroup = (tool) => tool.category === 'fun' ? 'fun' : 'productivity';
 
             const categoryOrder = {
-                text: 1,
-                dev: 2,
-                design: 3
+                productivity: 1,
+                fun: 2
             };
 
             toolsDb.sort((a, b) => {
-                const orderA = categoryOrder[a.category] || 99;
-                const orderB = categoryOrder[b.category] || 99;
+                const orderA = categoryOrder[getToolGroup(a)] || 99;
+                const orderB = categoryOrder[getToolGroup(b)] || 99;
                 if (orderA !== orderB) return orderA - orderB;
                 return a.name.localeCompare(b.name);
             });
@@ -575,13 +609,26 @@
             const filterBtnGroup = document.getElementById('filter-btn-group');
             const gridEmptyState = document.getElementById('grid-empty-state');
 
+            function attachFunCardEffects(card) {
+                card.addEventListener('mousemove', (event) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = ((event.clientX - rect.left) / rect.width) - 0.5;
+                    const y = ((event.clientY - rect.top) / rect.height) - 0.5;
+                    card.style.transform = `perspective(700px) rotateX(${(-y * 8).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg) translateY(-3px) scale(1.01)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            }
+
             // --- 2. Populate Cards Grid ---
             function buildCardsGrid(category = 'all', query = '') {
                 // clear previous results
                 toolsCardsGrid.innerHTML = '';
 
                 const filtered = toolsDb.filter(tool => {
-                    if (category !== 'all' && tool.category !== category) return false;
+                    const toolGroup = getToolGroup(tool);
+                    if (category !== 'all' && toolGroup !== category) return false;
                     if (query && !tool.name.toLowerCase().includes(query.toLowerCase())) return false;
                     return true;
                 });
@@ -594,20 +641,39 @@
                 }
 
                 filtered.forEach((tool, idx) => {
+                    const toolGroup = getToolGroup(tool);
+                    const isFun = toolGroup === 'fun';
                     const card = document.createElement('article');
-                    card.className = "rounded-2xl p-5 hover:shadow-md transition card-hover reveal tool-card";
-                    card.innerHTML = `
-                        <a href="${tool.path}" class="block focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg" aria-label="${tool.name}">
-                            <div class="flex items-start space-x-3">
-                                ${tool.icon}
-                                <div>
-                                    <h3 class="mt-0 font-bold text-gray-900 text-base">${tool.name}</h3>
-                                    <p class="mt-1 text-sm text-gray-500">${tool.desc}</p>
+                    card.className = `rounded-2xl p-5 hover:shadow-md transition card-hover reveal tool-card ${isFun ? 'fun-tool-card' : ''}`;
+                    if (isFun) {
+                        card.innerHTML = `
+                            <a href="${tool.path}" class="block focus:outline-none focus:ring-2 focus:ring-pink-500 rounded-lg" aria-label="${tool.name}">
+                                <div class="mb-3"><span class="fun-badge">🎉 Fun pick</span></div>
+                                <div class="flex items-start space-x-3">
+                                    ${tool.icon}
+                                    <div>
+                                        <h3 class="mt-0 font-bold text-gray-900 text-base">${tool.name}</h3>
+                                        <p class="mt-1 text-sm text-gray-700">${tool.desc}</p>
+                                        <p class="mt-2 fun-tip">Click in and play with it →</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    `;
+                            </a>
+                        `;
+                    } else {
+                        card.innerHTML = `
+                            <a href="${tool.path}" class="block focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg" aria-label="${tool.name}">
+                                <div class="flex items-start space-x-3">
+                                    ${tool.icon}
+                                    <div>
+                                        <h3 class="mt-0 font-bold text-gray-900 text-base">${tool.name}</h3>
+                                        <p class="mt-1 text-sm text-gray-500">${tool.desc}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        `;
+                    }
                     toolsCardsGrid.appendChild(card);
+                    if (isFun) attachFunCardEffects(card);
 
                     // subtle staggered reveal
                     card.style.setProperty('--reveal-delay', `${idx * 40}ms`);
