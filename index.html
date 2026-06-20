@@ -316,6 +316,7 @@
                     <ul class="mt-4 space-y-2 text-sm font-semibold text-indigo-700">
                         <li><a href="/tools/youtube-transcript-cleaner/" class="hover:underline">YouTube Transcript Cleaner</a></li>
                         <li><a href="/tools/image-format-converter/" class="hover:underline">Image Format Converter</a></li>
+                        <li><a href="/tools/decision-wheel-spinner/" class="hover:underline">Decision Wheel Spinner</a></li>
                     </ul>
                 </article>
             </div>
@@ -360,7 +361,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Recently Added and Updated Tools</h2>
             <p class="mt-3 text-sm text-gray-600 max-w-3xl leading-relaxed">I update IndieUtility with new browser tools for code, design, content and productivity workflows when I build something useful enough to publish.</p>
-            <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+                <a href="/tools/decision-wheel-spinner/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Productivity</span><h3 class="mt-2 font-bold text-gray-900">Decision Wheel Spinner</h3><p class="mt-1 text-sm text-gray-500">Spin a fun wheel to pick one of your saved options.</p></a>
                 <a href="/tools/css-animation-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Web Design</span><h3 class="mt-2 font-bold text-gray-900">CSS Animation Generator</h3><p class="mt-1 text-sm text-gray-500">Generate keyframes and reusable animation snippets.</p></a>
                 <a href="/tools/color-palette-generator/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Design</span><h3 class="mt-2 font-bold text-gray-900">Color Palette Generator</h3><p class="mt-1 text-sm text-gray-500">Create palettes, HEX values and CSS variables.</p></a>
                 <a href="/tools/regex-editor/" class="rounded-2xl border border-gray-200 bg-white p-5 hover:shadow-md transition"><span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Developer</span><h3 class="mt-2 font-bold text-gray-900">Regex Editor & Tester</h3><p class="mt-1 text-sm text-gray-500">Test expressions and inspect live matches.</p></a>
@@ -400,7 +402,7 @@
                 </div>
                 <div>
                     <h3 class="text-white font-bold mb-3">Creator Tools</h3>
-                    <ul class="space-y-2"><li><a href="/tools/youtube-transcript-cleaner/" class="hover:text-white">YouTube Transcript Cleaner</a></li><li><a href="/tools/image-format-converter/" class="hover:text-white">Image Format Converter</a></li><li><a href="/about.html" class="hover:text-white">About this project</a></li><li><a href="/privacy-policy.html" class="hover:text-white">Privacy Policy</a></li></ul>
+                    <ul class="space-y-2"><li><a href="/tools/youtube-transcript-cleaner/" class="hover:text-white">YouTube Transcript Cleaner</a></li><li><a href="/tools/image-format-converter/" class="hover:text-white">Image Format Converter</a></li><li><a href="/tools/decision-wheel-spinner/" class="hover:text-white">Decision Wheel Spinner</a></li><li><a href="/about.html" class="hover:text-white">About this project</a></li><li><a href="/privacy-policy.html" class="hover:text-white">Privacy Policy</a></li></ul>
                 </div>
             </div>
         </div>
@@ -421,6 +423,7 @@
                 <li><a href="/tools/css-animation-generator/">CSS Animation Generator</a></li>
                 <li><a href="/tools/url-encoder-decoder/">URL Encoder & Decoder</a></li>
                 <li><a href="/tools/image-format-converter/">Image Format Converter</a></li>
+                <li><a href="/tools/decision-wheel-spinner/">Decision Wheel Spinner</a></li>
             </ul>
         </div>
     </noscript>
@@ -431,6 +434,18 @@
 
             // DYNAMIC TOOLS ARRAY DATABASE: Populates dropdowns, search menus, and cards
             const toolsDb = [
+                {
+                    id: 'decision-wheel-spinner',
+                    name: 'Decision Wheel Spinner',
+                    desc: 'Create a custom wheel, spin it with sound and confetti, and save named wheels locally in your browser.',
+                    useCase: 'Choosing quickly between multiple options for food, plans, tasks, or team decisions.',
+                    path: '/tools/decision-wheel-spinner/',
+                    category: 'text',
+                    active: true,
+                    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v3m6.364.636l-2.121 2.121M21 12h-3m-1.636 5.364l-2.121-2.121M12 21v-3m-4.243-1.757l2.121-2.121M3 12h3m1.636-5.364l2.121 2.121M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                           </svg>`
+                },
                 {
                     id: 'yt-transcript',
                     name: 'YouTube Transcript Cleaner',

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QHL75YBPC0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-QHL75YBPC0');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <title>Decision Wheel Spinner | IndieUtility</title>
+    <meta name="description" content="Create a custom decision wheel, spin it with animations and sound, celebrate with confetti, and save your wheels locally in your browser.">
+    <link rel="canonical" href="https://indieutility.com/tools/decision-wheel-spinner/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://indieutility.com/tools/decision-wheel-spinner/">
+    <meta property="og:title" content="Decision Wheel Spinner | IndieUtility">
+    <meta property="og:description" content="Name your wheel, add options, spin with sound effects, and save everything locally in your browser.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="/assets/site-header.js?v=tools-3" defer></script>
+    <meta name="google-adsense-account" content="ca-pub-2704008668461544">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2704008668461544" crossorigin="anonymous"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { overflow-x: hidden; }
+        .wheel-shell {
+            background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.2), rgba(14, 116, 144, 0.08) 45%, rgba(255, 255, 255, 0.95) 80%);
+        }
+        .wheel-canvas {
+            width: min(520px, 100%);
+            aspect-ratio: 1 / 1;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 20px 30px rgba(15, 23, 42, 0.2));
+        }
+        .wheel-pointer {
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 28px solid #1f2937;
+            margin: 0 auto 10px;
+            filter: drop-shadow(0 8px 10px rgba(15, 23, 42, 0.3));
+        }
+        .result-glow {
+            animation: popIn 380ms ease-out;
+        }
+        .confetti-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        @keyframes popIn {
+            0% { transform: translateY(8px) scale(0.98); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans antialiased">
+    <header id="site-header" class="bg-white border-b border-gray-200 sticky top-0 z-50"></header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <section class="mb-8">
+            <div class="max-w-3xl">
+                <p class="text-sm uppercase tracking-widest text-indigo-600 font-bold">Productivity Tool</p>
+                <h1 class="mt-3 text-3xl sm:text-4xl font-extrabold text-gray-900">Decision Wheel Spinner</h1>
+                <p class="mt-4 text-base text-gray-600">Name your wheel, add options, and let fate decide. Spin with smooth animation, clicky sound effects, and celebratory confetti when a winner lands.</p>
+            </div>
+        </section>
+
+        <section class="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+            <article class="rounded-3xl border border-gray-200 bg-white shadow-sm p-6">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h2 class="text-xl font-bold text-gray-900">Build your wheel</h2>
+                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-600">100% local browser storage</p>
+                </div>
+
+                <div class="mt-5 space-y-4">
+                    <label class="block text-sm font-semibold text-gray-700">
+                        Wheel name
+                        <input id="wheel-name" type="text" maxlength="80" placeholder="Weekend Plan Wheel" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-gray-800 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">
+                    </label>
+
+                    <label class="block text-sm font-semibold text-gray-700">
+                        Decisions (one per line)
+                        <textarea id="decision-input" rows="9" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100">Pizza
+Sushi
+Tacos
+Burger
+Salad
+Pasta</textarea>
+                    </label>
+                    <p id="decision-count" class="text-xs text-gray-500">0 valid decisions</p>
+
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        <button id="save-wheel" class="rounded-2xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save wheel locally</button>
+                        <button id="shuffle-items" class="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">Shuffle decisions</button>
+                    </div>
+                    <p id="action-status" class="text-xs font-semibold text-gray-500" aria-live="polite"></p>
+                </div>
+
+                <div class="mt-6 rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                    <h3 class="text-sm font-bold text-gray-900">Saved wheels (this browser only)</h3>
+                    <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_auto_auto]">
+                        <select id="saved-wheels" class="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"></select>
+                        <button id="load-wheel" class="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition">Load</button>
+                        <button id="delete-wheel" class="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition">Delete</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="wheel-shell rounded-3xl border border-gray-200 shadow-sm p-6 relative overflow-hidden">
+                <h2 class="text-xl font-bold text-gray-900 text-center">Spin the wheel</h2>
+                <p class="mt-2 text-sm text-gray-600 text-center">Tap spin and watch the pointer pick a winner.</p>
+                <div class="mt-5 wheel-pointer" aria-hidden="true"></div>
+                <canvas id="wheel-canvas" class="wheel-canvas" width="520" height="520"></canvas>
+                <canvas id="confetti-canvas" class="confetti-layer" width="600" height="600"></canvas>
+
+                <div class="mt-5">
+                    <button id="spin-button" class="w-full rounded-2xl bg-emerald-600 px-4 py-3 text-base font-extrabold text-white hover:bg-emerald-700 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">🎯 Spin Now</button>
+                </div>
+
+                <div id="result-box" class="mt-4 hidden result-glow rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+                    <p class="text-xs uppercase tracking-[0.16em] font-bold text-emerald-700">Winner</p>
+                    <p id="result-text" class="mt-1 text-xl font-extrabold text-emerald-900"></p>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 py-8 mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-sm">&copy; 2026 IndieUtility. Privacy-first browser tools.</p>
+            <a href="/" class="text-sm font-semibold text-indigo-400 hover:text-white">Back to homepage</a>
+        </div>
+    </footer>
+
+    <script>
+        const STORAGE_KEY = 'indieutility-decision-wheel-spinner-v1';
+        const MAX_ITEMS = 24;
+        const wheelNameInput = document.getElementById('wheel-name');
+        const decisionInput = document.getElementById('decision-input');
+        const decisionCount = document.getElementById('decision-count');
+        const saveWheelBtn = document.getElementById('save-wheel');
+        const shuffleBtn = document.getElementById('shuffle-items');
+        const savedWheelsSelect = document.getElementById('saved-wheels');
+        const loadWheelBtn = document.getElementById('load-wheel');
+        const deleteWheelBtn = document.getElementById('delete-wheel');
+        const spinButton = document.getElementById('spin-button');
+        const resultBox = document.getElementById('result-box');
+        const resultText = document.getElementById('result-text');
+        const actionStatus = document.getElementById('action-status');
+
+        const wheelCanvas = document.getElementById('wheel-canvas');
+        const wheelCtx = wheelCanvas.getContext('2d');
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        const confettiCtx = confettiCanvas.getContext('2d');
+
+        let wheelRotation = 0;
+        let spinning = false;
+        let savedWheels = {};
+        let audioContext = null;
+
+        function setStatus(message, tone = 'neutral') {
+            actionStatus.textContent = message;
+            actionStatus.className = 'text-xs font-semibold';
+            if (tone === 'error') {
+                actionStatus.classList.add('text-red-600');
+            } else if (tone === 'success') {
+                actionStatus.classList.add('text-emerald-600');
+            } else {
+                actionStatus.classList.add('text-gray-500');
+            }
+        }
+
+        function getDecisions() {
+            return decisionInput.value
+                .split('\n')
+                .map((item) => item.trim())
+                .filter(Boolean)
+                .slice(0, MAX_ITEMS);
+        }
+
+        function updateDecisionCount() {
+            const count = getDecisions().length;
+            decisionCount.textContent = `${count} valid decision${count === 1 ? '' : 's'} (max ${MAX_ITEMS})`;
+            if (!spinning) {
+                const canSpin = count >= 2;
+                spinButton.disabled = !canSpin;
+                spinButton.classList.toggle('opacity-60', !canSpin);
+                spinButton.classList.toggle('cursor-not-allowed', !canSpin);
+            }
+        }
+
+        function makePalette(size) {
+            return Array.from({ length: size }, (_, index) => {
+                const hue = Math.round((index * 360) / Math.max(size, 1));
+                return `hsl(${hue} 88% 62%)`;
+            });
+        }
+
+        function drawWheel(rotationDeg = wheelRotation) {
+            const entries = getDecisions();
+            const width = wheelCanvas.width;
+            const height = wheelCanvas.height;
+            const radius = Math.min(width, height) / 2 - 12;
+            wheelCtx.clearRect(0, 0, width, height);
+
+            wheelCtx.save();
+            wheelCtx.translate(width / 2, height / 2);
+            wheelCtx.rotate((rotationDeg * Math.PI) / 180);
+
+            if (entries.length === 0) {
+                wheelCtx.fillStyle = '#e5e7eb';
+                wheelCtx.beginPath();
+                wheelCtx.arc(0, 0, radius, 0, Math.PI * 2);
+                wheelCtx.fill();
+                wheelCtx.fillStyle = '#6b7280';
+                wheelCtx.font = '600 20px system-ui';
+                wheelCtx.textAlign = 'center';
+                wheelCtx.textBaseline = 'middle';
+                wheelCtx.fillText('Add decisions to start', 0, 0);
+                wheelCtx.restore();
+                return;
+            }
+
+            const segmentAngle = (Math.PI * 2) / entries.length;
+            const colors = makePalette(entries.length);
+
+            entries.forEach((entry, index) => {
+                const start = -Math.PI / 2 + index * segmentAngle;
+                const end = start + segmentAngle;
+                wheelCtx.beginPath();
+                wheelCtx.moveTo(0, 0);
+                wheelCtx.arc(0, 0, radius, start, end);
+                wheelCtx.closePath();
+                wheelCtx.fillStyle = colors[index];
+                wheelCtx.fill();
+                wheelCtx.lineWidth = 2;
+                wheelCtx.strokeStyle = 'rgba(255,255,255,0.85)';
+                wheelCtx.stroke();
+
+                wheelCtx.save();
+                wheelCtx.rotate(start + segmentAngle / 2);
+                wheelCtx.fillStyle = '#0f172a';
+                wheelCtx.font = '600 16px system-ui';
+                wheelCtx.textAlign = 'right';
+                wheelCtx.textBaseline = 'middle';
+                const label = entry.length > 18 ? `${entry.slice(0, 16)}…` : entry;
+                wheelCtx.fillText(label, radius - 20, 0);
+                wheelCtx.restore();
+            });
+
+            wheelCtx.beginPath();
+            wheelCtx.arc(0, 0, 30, 0, Math.PI * 2);
+            wheelCtx.fillStyle = '#111827';
+            wheelCtx.fill();
+            wheelCtx.fillStyle = '#f9fafb';
+            wheelCtx.font = '700 12px system-ui';
+            wheelCtx.textAlign = 'center';
+            wheelCtx.textBaseline = 'middle';
+            wheelCtx.fillText('SPIN', 0, 0);
+
+            wheelCtx.restore();
+        }
+
+        function resizeCanvases() {
+            const box = wheelCanvas.getBoundingClientRect();
+            const size = Math.max(320, Math.floor(box.width));
+            wheelCanvas.width = size;
+            wheelCanvas.height = size;
+            confettiCanvas.width = size;
+            confettiCanvas.height = size;
+            drawWheel();
+        }
+
+        function getAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioContext;
+        }
+
+        function playTick() {
+            const ctx = getAudioContext();
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.value = 960;
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(0.09, now + 0.005);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.03);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.04);
+        }
+
+        function playWinChime() {
+            const ctx = getAudioContext();
+            const notes = [523.25, 659.25, 783.99];
+            notes.forEach((freq, i) => {
+                const now = ctx.currentTime + i * 0.1;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(0.12, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            });
+        }
+
+        function launchConfetti() {
+            const particles = [];
+            const colorPool = ['#10b981', '#6366f1', '#f59e0b', '#ef4444', '#06b6d4', '#ec4899'];
+            const centerX = confettiCanvas.width / 2;
+            const centerY = confettiCanvas.height * 0.22;
+
+            for (let i = 0; i < 170; i++) {
+                particles.push({
+                    x: centerX + (Math.random() - 0.5) * 70,
+                    y: centerY + (Math.random() - 0.5) * 12,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: Math.random() * -9 - 2,
+                    gravity: 0.17 + Math.random() * 0.08,
+                    size: 4 + Math.random() * 5,
+                    rotation: Math.random() * Math.PI * 2,
+                    vr: (Math.random() - 0.5) * 0.3,
+                    color: colorPool[Math.floor(Math.random() * colorPool.length)],
+                    alpha: 1
+                });
+            }
+
+            let frame = 0;
+            function animate() {
+                confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                particles.forEach((particle) => {
+                    particle.vy += particle.gravity;
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    particle.rotation += particle.vr;
+                    particle.alpha -= 0.008;
+
+                    confettiCtx.save();
+                    confettiCtx.translate(particle.x, particle.y);
+                    confettiCtx.rotate(particle.rotation);
+                    confettiCtx.globalAlpha = Math.max(particle.alpha, 0);
+                    confettiCtx.fillStyle = particle.color;
+                    confettiCtx.fillRect(-particle.size / 2, -particle.size / 2, particle.size, particle.size);
+                    confettiCtx.restore();
+                });
+
+                frame += 1;
+                const alive = particles.some((particle) => particle.alpha > 0 && particle.y < confettiCanvas.height + 40);
+                if (alive && frame < 260) {
+                    requestAnimationFrame(animate);
+                } else {
+                    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                }
+            }
+
+            animate();
+        }
+
+        function spinWheel() {
+            const entries = getDecisions();
+            if (entries.length < 2) {
+                setStatus('Add at least two decisions to spin.', 'error');
+                return;
+            }
+            if (spinning) return;
+            setStatus('');
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            spinning = true;
+            spinButton.disabled = true;
+            spinButton.classList.add('opacity-60', 'cursor-not-allowed');
+
+            const segment = 360 / entries.length;
+            const winnerIndex = Math.floor(Math.random() * entries.length);
+            const desiredAngle = (360 - ((winnerIndex + 0.5) * segment % 360)) % 360;
+            const currentAngle = ((wheelRotation % 360) + 360) % 360;
+            const angleDelta = (desiredAngle - currentAngle + 360) % 360;
+            const extraTurns = 8 + Math.floor(Math.random() * 4);
+            const totalRotation = extraTurns * 360 + angleDelta;
+            const duration = 4200 + Math.random() * 900;
+            const start = performance.now();
+            const startRotation = wheelRotation;
+            let prevTick = Math.floor(startRotation / segment);
+
+            function animate(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                wheelRotation = startRotation + totalRotation * eased;
+                drawWheel(wheelRotation);
+
+                const currentTick = Math.floor(wheelRotation / segment);
+                if (currentTick !== prevTick) {
+                    playTick();
+                    prevTick = currentTick;
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                    return;
+                }
+
+                const winner = entries[winnerIndex];
+                resultText.textContent = winner;
+                resultBox.classList.remove('hidden');
+                resultBox.classList.remove('result-glow');
+                void resultBox.offsetWidth;
+                resultBox.classList.add('result-glow');
+                launchConfetti();
+                playWinChime();
+
+                spinning = false;
+                spinButton.disabled = false;
+                spinButton.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        function loadSavedWheels() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                savedWheels = raw ? JSON.parse(raw) : {};
+            } catch (error) {
+                console.error('Unable to read saved wheels from localStorage.', error);
+                savedWheels = {};
+                setStatus('Saved wheels data was corrupted and could not be loaded.', 'error');
+            }
+        }
+
+        function persistSavedWheels() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savedWheels));
+        }
+
+        function refreshSavedList() {
+            const names = Object.keys(savedWheels).sort((a, b) => a.localeCompare(b));
+            savedWheelsSelect.innerHTML = '';
+            if (!names.length) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No saved wheels yet';
+                savedWheelsSelect.appendChild(option);
+                return;
+            }
+            names.forEach((name) => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                savedWheelsSelect.appendChild(option);
+            });
+        }
+
+        function saveCurrentWheel() {
+            const name = wheelNameInput.value.trim();
+            const decisions = getDecisions();
+            if (!name) {
+                setStatus('Add a wheel name before saving.', 'error');
+                return;
+            }
+            if (decisions.length < 2) {
+                setStatus('Add at least two decisions before saving.', 'error');
+                return;
+            }
+            savedWheels[name] = {
+                decisions,
+                updatedAt: Date.now()
+            };
+            persistSavedWheels();
+            refreshSavedList();
+            savedWheelsSelect.value = name;
+            setStatus(`Saved "${name}" locally in this browser.`, 'success');
+        }
+
+        function loadSelectedWheel() {
+            const name = savedWheelsSelect.value;
+            if (!name || !savedWheels[name]) {
+                setStatus('No saved wheel selected to load.', 'error');
+                return;
+            }
+            wheelNameInput.value = name;
+            decisionInput.value = savedWheels[name].decisions.join('\n');
+            resultBox.classList.add('hidden');
+            updateDecisionCount();
+            drawWheel();
+            setStatus(`Loaded "${name}".`, 'success');
+        }
+
+        function deleteSelectedWheel() {
+            const name = savedWheelsSelect.value;
+            if (!name || !savedWheels[name]) {
+                setStatus('No saved wheel selected to delete.', 'error');
+                return;
+            }
+            delete savedWheels[name];
+            persistSavedWheels();
+            refreshSavedList();
+            setStatus(`Deleted "${name}".`, 'success');
+        }
+
+        function shuffleDecisions() {
+            const entries = getDecisions();
+            for (let i = entries.length - 1; i > 0; i -= 1) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = entries[i];
+                entries[i] = entries[j];
+                entries[j] = temp;
+            }
+            decisionInput.value = entries.join('\n');
+            resultBox.classList.add('hidden');
+            drawWheel();
+            setStatus('Shuffled decisions.', 'success');
+        }
+
+        decisionInput.addEventListener('input', () => {
+            updateDecisionCount();
+            resultBox.classList.add('hidden');
+            drawWheel();
+        });
+        wheelNameInput.addEventListener('input', updateDecisionCount);
+        saveWheelBtn.addEventListener('click', saveCurrentWheel);
+        loadWheelBtn.addEventListener('click', loadSelectedWheel);
+        deleteWheelBtn.addEventListener('click', deleteSelectedWheel);
+        shuffleBtn.addEventListener('click', shuffleDecisions);
+        spinButton.addEventListener('click', spinWheel);
+        window.addEventListener('resize', resizeCanvases);
+
+        loadSavedWheels();
+        refreshSavedList();
+        updateDecisionCount();
+        setStatus('Everything runs locally in your browser.');
+        resizeCanvases();
+    </script>
+</body>
+</html>
